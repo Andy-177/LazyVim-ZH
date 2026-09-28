@@ -37,9 +37,9 @@ return {
     },
     -- stylua: ignore
     keys = {
-      { "<leader>ow", "<cmd>OverseerToggle!<cr>",    desc = "Task list" },
-      { "<leader>oo", "<cmd>OverseerRun<cr>",        desc = "Run task" },
-      { "<leader>ot", "<cmd>OverseerTaskAction<cr>", desc = "Task action" },
+      { "<leader>ow", "<cmd>OverseerToggle!<cr>",    desc = "任务列表" },
+      { "<leader>oo", "<cmd>OverseerRun<cr>",        desc = "运行任务" },
+      { "<leader>ot", "<cmd>OverseerTaskAction<cr>", desc = "任务操作" },
     },
   },
   {

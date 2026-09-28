@@ -71,7 +71,7 @@ return {
     },
   },
 
-  -- Markdown preview
+  -- Markdown 预览
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -84,7 +84,7 @@ return {
         "<leader>cp",
         ft = "markdown",
         "<cmd>MarkdownPreviewToggle<cr>",
-        desc = "Markdown Preview",
+        desc = "Markdown 预览",
       },
     },
     config = function()

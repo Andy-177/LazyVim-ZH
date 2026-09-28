@@ -1,4 +1,4 @@
--- measure startuptime
+-- 测量启动时间
 return {
   "dstein64/vim-startuptime",
   cmd = "StartupTime",

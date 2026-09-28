@@ -11,7 +11,7 @@ return {
         headers = {
           user = "  " .. user .. " ",
           assistant = "  Copilot ",
-          tool = "󰊳  Tool ",
+          tool = "󰊳  工具 ",
         },
         window = {
           width = 0.4,
@@ -19,14 +19,14 @@ return {
       }
     end,
     keys = {
-      { "<c-s>", "<CR>", ft = "copilot-chat", desc = "Submit Prompt", remap = true },
+      { "<c-s>", "<CR>", ft = "copilot-chat", desc = "提交提示词", remap = true },
       { "<leader>a", "", desc = "+ai", mode = { "n", "x" } },
       {
         "<leader>aa",
         function()
           return require("CopilotChat").toggle()
         end,
-        desc = "Toggle (CopilotChat)",
+        desc = "切换 (CopilotChat)",
         mode = { "n", "x" },
       },
       {
@@ -34,21 +34,21 @@ return {
         function()
           return require("CopilotChat").reset()
         end,
-        desc = "Clear (CopilotChat)",
+        desc = "清空 (CopilotChat)",
         mode = { "n", "x" },
       },
       {
         "<leader>aq",
         function()
           vim.ui.input({
-            prompt = "Quick Chat: ",
+            prompt = "快速对话：",
           }, function(input)
             if input ~= "" then
               require("CopilotChat").ask(input)
             end
           end)
         end,
-        desc = "Quick Chat (CopilotChat)",
+        desc = "快速对话 (CopilotChat)",
         mode = { "n", "x" },
       },
       {
@@ -56,7 +56,7 @@ return {
         function()
           require("CopilotChat").select_prompt()
         end,
-        desc = "Prompt Actions (CopilotChat)",
+        desc = "提示词操作 (CopilotChat)",
         mode = { "n", "x" },
       },
     },
@@ -75,7 +75,7 @@ return {
     end,
   },
 
-  -- Edgy integration
+  -- Edgy 集成
   {
     "folke/edgy.nvim",
     optional = true,
@@ -83,13 +83,13 @@ return {
       opts.right = opts.right or {}
       table.insert(opts.right, {
         ft = "copilot-chat",
-        title = "Copilot Chat",
+        title = "Copilot 对话",
         size = { width = 50 },
       })
     end,
   },
 
-  -- Blink integration
+  -- Blink 集成
   {
     "saghen/blink.cmp",
     optional = true,
@@ -99,7 +99,7 @@ return {
       sources = {
         providers = {
           path = {
-            -- Path sources triggered by "/" interfere with CopilotChat commands
+            -- 由 "/" 触发的路径数据源会与 CopilotChat 命令冲突
             enabled = function()
               return vim.bo.filetype ~= "copilot-chat"
             end,

@@ -1,4 +1,4 @@
--- Some extras need to be loaded before others
+-- 有些扩展需要先于其它扩展加载
 local prios = {
   ["lazyvim.plugins.extras.test.core"] = 1,
   ["lazyvim.plugins.extras.dap.core"] = 1,
@@ -9,8 +9,8 @@ local prios = {
   ["lazyvim.plugins.extras.coding.blink"] = 5,
   ["lazyvim.plugins.extras.lang.typescript"] = 5,
   ["lazyvim.plugins.extras.formatting.prettier"] = 10,
-  -- default core extra priority is 20
-  -- default priority is 50
+  -- 核心扩展的默认优先级为 20
+  -- 默认优先级为 50
   ["lazyvim.plugins.extras.editor.aerial"] = 100,
   ["lazyvim.plugins.extras.editor.outline"] = 100,
   ["lazyvim.plugins.extras.ui.alpha"] = 19,
@@ -28,7 +28,7 @@ local defaults = LazyVim.config.get_defaults()
 local changed = false
 local updated = {} ---@type string[]
 
--- Add extras from LazyExtras that are not disabled
+-- 添加来自 LazyExtras 且未被禁用的扩展
 for _, extra in ipairs(LazyVim.config.json.data.extras) do
   if LazyVim.plugin.renamed_extras[extra] then
     extra = LazyVim.plugin.renamed_extras[extra]
@@ -50,7 +50,7 @@ if changed then
   LazyVim.json.save()
 end
 
--- Add default extras
+-- 添加默认扩展
 for name, extra in pairs(defaults) do
   if extra.enabled then
     prios[name] = prios[name] or 20

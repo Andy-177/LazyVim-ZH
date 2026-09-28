@@ -1,4 +1,4 @@
--- Terminal Mappings
+-- 终端键位
 local function term_nav(dir)
   ---@param self snacks.terminal
   return function(self)
@@ -10,7 +10,7 @@ end
 
 return {
 
-  -- Snacks utils
+  -- Snacks 工具
   {
     "snacks.nvim",
     opts = {
@@ -19,11 +19,11 @@ return {
       terminal = {
         win = {
           keys = {
-            nav_h = { "<C-h>", term_nav("h"), desc = "Go to Left Window", expr = true, mode = "t" },
-            nav_j = { "<C-j>", term_nav("j"), desc = "Go to Lower Window", expr = true, mode = "t" },
-            nav_k = { "<C-k>", term_nav("k"), desc = "Go to Upper Window", expr = true, mode = "t" },
-            nav_l = { "<C-l>", term_nav("l"), desc = "Go to Right Window", expr = true, mode = "t" },
-            hide_slash = { "<C-/>", "hide", desc = "Hide Terminal", mode = "t" },
+            nav_h = { "<C-h>", term_nav("h"), desc = "跳到左侧窗口", expr = true, mode = "t" },
+            nav_j = { "<C-j>", term_nav("j"), desc = "跳到下方窗口", expr = true, mode = "t" },
+            nav_k = { "<C-k>", term_nav("k"), desc = "跳到上方窗口", expr = true, mode = "t" },
+            nav_l = { "<C-l>", term_nav("l"), desc = "跳到右侧窗口", expr = true, mode = "t" },
+            hide_slash = { "<C-/>", "hide", desc = "隐藏终端", mode = "t" },
             hide_underscore = { "<c-_>", "hide", desc = "which_key_ignore", mode = "t" },
           },
         },
@@ -31,28 +31,28 @@ return {
     },
     -- stylua: ignore
     keys = {
-      { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
-      { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
-      { "<leader>dps", function() Snacks.profiler.scratch() end, desc = "Profiler Scratch Buffer" },
+      { "<leader>.",  function() Snacks.scratch() end, desc = "切换草稿缓冲区" },
+      { "<leader>S",  function() Snacks.scratch.select() end, desc = "选择草稿缓冲区" },
+      { "<leader>dps", function() Snacks.profiler.scratch() end, desc = "性能分析草稿缓冲区" },
     },
   },
 
-  -- Session management. This saves your session in the background,
-  -- keeping track of open buffers, window arrangement, and more.
-  -- You can restore sessions when returning through the dashboard.
+  -- 会话管理。它会在后台保存你的会话，
+  -- 记录已打开的缓冲区、窗口布局等信息。
+  -- 你可以通过启动界面恢复会话。
   {
     "folke/persistence.nvim",
     event = "BufReadPre",
     opts = {},
     -- stylua: ignore
     keys = {
-      { "<leader>qs", function() require("persistence").load() end, desc = "Restore Session" },
-      { "<leader>qS", function() require("persistence").select() end,desc = "Select Session" },
-      { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
-      { "<leader>qd", function() require("persistence").stop() end, desc = "Don't Save Current Session" },
+      { "<leader>qs", function() require("persistence").load() end, desc = "恢复会话" },
+      { "<leader>qS", function() require("persistence").select() end,desc = "选择会话" },
+      { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "恢复上次会话" },
+      { "<leader>qd", function() require("persistence").stop() end, desc = "不保存当前会话" },
     },
   },
 
-  -- library used by other plugins
+  -- 供其它插件使用的库
   { "nvim-lua/plenary.nvim", lazy = true },
 }

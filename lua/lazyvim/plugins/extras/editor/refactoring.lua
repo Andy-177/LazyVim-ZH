@@ -1,6 +1,6 @@
 if LazyVim.has_extra("editor.refactoring") then
   if vim.fn.has("nvim-0.12") == 0 then
-    LazyVim.error("refactoring.nvim requires Neovim 0.12 or higher", { title = "refactoring.nvim" })
+    LazyVim.error("refactoring.nvim 需要 Neovim 0.12 或更高版本", { title = "refactoring.nvim" })
     return {}
   end
 end
@@ -19,7 +19,7 @@ return {
           return require("refactoring").select_refactor()
         end,
         mode = { "n", "x" },
-        desc = "Select Refactor",
+        desc = "选择重构操作",
       },
       {
         "<leader>ri",
@@ -27,7 +27,7 @@ return {
           return require("refactoring").inline_var()
         end,
         mode = { "n", "x" },
-        desc = "Inline Variable",
+        desc = "内联变量",
         expr = true,
       },
       {
@@ -35,7 +35,7 @@ return {
         function()
           return require("refactoring.debug").print_loc({ output_location = "below" })
         end,
-        desc = "Debug Print Location",
+        desc = "调试打印位置",
         expr = true,
       },
       {
@@ -44,7 +44,7 @@ return {
           return require("refactoring.debug").print_var({ output_location = "below" }) .. "iw"
         end,
         mode = { "n", "x" },
-        desc = "Debug Print Variable",
+        desc = "调试打印变量",
         expr = true,
       },
       {
@@ -52,7 +52,7 @@ return {
         function()
           return require("refactoring.debug").cleanup({ restore_view = true }) .. "ag"
         end,
-        desc = "Debug Cleanup",
+        desc = "调试清理",
         expr = true,
       },
       {
@@ -61,7 +61,7 @@ return {
           return require("refactoring").extract_func()
         end,
         mode = { "n", "x" },
-        desc = "Extract Function",
+        desc = "提取函数",
         expr = true,
       },
       {
@@ -70,7 +70,7 @@ return {
           return require("refactoring").extract_func_to_file()
         end,
         mode = { "n", "x" },
-        desc = "Extract Function To File",
+        desc = "提取函数到文件",
         expr = true,
       },
       {
@@ -79,7 +79,7 @@ return {
           return require("refactoring").extract_var()
         end,
         mode = { "n", "x" },
-        desc = "Extract Variable",
+        desc = "提取变量",
         expr = true,
       },
     },

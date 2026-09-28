@@ -54,29 +54,29 @@ function M.info(buf)
   local baf = vim.b[buf].autoformat
   local enabled = M.enabled(buf)
   local lines = {
-    "# Status",
-    ("- [%s] global **%s**"):format(gaf and "x" or " ", gaf and "enabled" or "disabled"),
+    "# 状态",
+    ("- [%s] global **%s**"):format(gaf and "x" or " ", gaf and "已启用" or "已禁用"),
     ("- [%s] buffer **%s**"):format(
       enabled and "x" or " ",
-      baf == nil and "inherit" or baf and "enabled" or "disabled"
+      baf == nil and "继承" or baf and "已启用" or "已禁用"
     ),
   }
   local have = false
   for _, formatter in ipairs(M.resolve(buf)) do
     if #formatter.resolved > 0 then
       have = true
-      lines[#lines + 1] = "\n# " .. formatter.name .. (formatter.active and " ***(active)***" or "")
+      lines[#lines + 1] = "\n# " .. formatter.name .. (formatter.active and " ***（使用中）***" or "")
       for _, line in ipairs(formatter.resolved) do
         lines[#lines + 1] = ("- [%s] **%s**"):format(formatter.active and "x" or " ", line)
       end
     end
   end
   if not have then
-    lines[#lines + 1] = "\n***No formatters available for this buffer.***"
+    lines[#lines + 1] = "\n***当前缓冲区没有可用的格式化程序。***"
   end
   LazyVim[enabled and "info" or "warn"](
     table.concat(lines, "\n"),
-    { title = "LazyFormat (" .. (enabled and "enabled" or "disabled") .. ")" }
+    { title = "LazyFormat（" .. (enabled and "已启用" or "已禁用") .. "）" }
   )
 end
 
@@ -86,12 +86,12 @@ function M.enabled(buf)
   local gaf = vim.g.autoformat
   local baf = vim.b[buf].autoformat
 
-  -- If the buffer has a local value, use that
+  -- 如果该缓冲区有局部值，则使用它
   if baf ~= nil then
     return baf
   end
 
-  -- Otherwise use the global value if set, or true by default
+  -- 否则使用已设置的全局值，若未设置则默认为 true
   return gaf == nil or gaf
 end
 
@@ -129,12 +129,12 @@ function M.format(opts)
       done = true
       LazyVim.try(function()
         return formatter.format(buf)
-      end, { msg = "Formatter `" .. formatter.name .. "` failed" })
+      end, { msg = "格式化程序 `" .. formatter.name .. "` 执行失败" })
     end
   end
 
   if not done and opts and opts.force then
-    LazyVim.warn("No formatter available", { title = "LazyVim" })
+    LazyVim.warn("没有可用的格式化程序", { title = "LazyVim" })
   end
 end
 
@@ -158,7 +158,7 @@ end
 function M.setup()
   M.health()
 
-  -- Autoformat autocmd
+  -- 自动格式化自动命令
   vim.api.nvim_create_autocmd("BufWritePre", {
     group = vim.api.nvim_create_augroup("LazyFormat", {}),
     callback = function(event)
@@ -166,21 +166,21 @@ function M.setup()
     end,
   })
 
-  -- Manual format
+  -- 手动格式化
   vim.api.nvim_create_user_command("LazyFormat", function()
     M.format({ force = true })
-  end, { desc = "Format selection or buffer" })
+  end, { desc = "格式化选中内容或当前缓冲区" })
 
-  -- Format info
+  -- 格式化信息
   vim.api.nvim_create_user_command("LazyFormatInfo", function()
     M.info()
-  end, { desc = "Show info about the formatters for the current buffer" })
+  end, { desc = "显示当前缓冲区所使用格式化程序的信息" })
 end
 
 ---@param buf? boolean
 function M.snacks_toggle(buf)
   return Snacks.toggle({
-    name = "Auto Format (" .. (buf and "Buffer" or "Global") .. ")",
+    name = "自动格式化（" .. (buf and "缓冲区" or "全局") .. "）",
     get = function()
       if not buf then
         return vim.g.autoformat == nil or vim.g.autoformat

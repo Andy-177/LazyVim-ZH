@@ -1,14 +1,14 @@
 if lazyvim_docs then
-  -- LSP Server to use for TypeScript.
+  -- 用于 TypeScript 的 LSP 服务器。
   ---@type "vtsls" | "tsgo"
-  vim.g.lazyvim_ts_lsp = "vtsls" -- currently the default
+  vim.g.lazyvim_ts_lsp = "vtsls" -- 当前默认值
 
-  -- To use the newer, much faster `tsc` LSP server, either:
-  -- * enable the `tsc` extra, or
-  -- * set `vim.g.lazyvim_ts_lsp = "tsc"` in your `options.lua`
+  -- 若要使用更新、更快的 `tsc` LSP 服务器，可以：
+  -- * 启用 `tsc` extra，或
+  -- * 在你的 `options.lua` 中设置 `vim.g.lazyvim_ts_lsp = "tsc"`
 end
 
--- change deprecated `tsgo` to `tsc` for now, since with TS7, `tsgo` == `tsc`
+-- 目前将已弃用的 `tsgo` 改为 `tsc`，因为在 TS7 中 `tsgo` == `tsc`
 if vim.g.lazyvim_ts_lsp == "tsgo" then
   vim.g.lazyvim_ts_lsp = "tsc"
 end
@@ -35,7 +35,7 @@ return {
 
   { import = extra.import },
 
-  -- correctly setup lspconfig
+  -- 正确配置 lspconfig
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
@@ -78,7 +78,7 @@ return {
           }
         end
 
-        -- Define adapters without the "pwa-" prefix for VSCode compatibility
+        -- 为了兼容 VSCode，定义不带 "pwa-" 前缀的 adapter
         if not dap.adapters[adapterType] then
           dap.adapters[adapterType] = function(cb, config)
             local nativeAdapter = dap.adapters[pwaType]
@@ -151,12 +151,12 @@ return {
     "jay-babu/mason-nvim-dap.nvim",
     optional = true,
     opts = {
-      -- chrome adapter is deprecated, use js-debug-adapter instead
+      -- chrome adapter 已弃用，请改用 js-debug-adapter
       automatic_installation = { exclude = { "chrome" } },
     },
   },
 
-  -- Filetype icons
+  -- 文件类型图标
   {
     "nvim-mini/mini.icons",
     opts = {

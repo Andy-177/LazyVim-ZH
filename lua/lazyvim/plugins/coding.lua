@@ -1,20 +1,20 @@
 return {
-  -- Auto pairs
-  -- Automatically inserts a matching closing character
-  -- when you type an opening character like `"`, `[`, or `(`.
+  -- 自动配对
+  -- 当你输入开引号类字符（如 `"`、`[`、`(`）时，
+  -- 会自动插入对应的闭合字符。
   {
     "nvim-mini/mini.pairs",
     event = "VeryLazy",
     opts = {
       modes = { insert = true, command = true, terminal = false },
-      -- skip autopair when next character is one of these
+      -- 当下一个字符是以下之一时跳过自动配对
       skip_next = [=[[%w%%%'%[%"%.%`%$]]=],
-      -- skip autopair when the cursor is inside these treesitter nodes
+      -- 当光标位于这些语法树节点内时跳过自动配对
       skip_ts = { "string" },
-      -- skip autopair when next character is closing pair
-      -- and there are more closing pairs than opening pairs
+      -- 当下一个字符是配对的闭合符时跳过自动配对
+      -- 且闭合符数量多于开启符时
       skip_unbalanced = true,
-      -- better deal with markdown code blocks
+      -- 更好地处理 markdown 代码块
       markdown = true,
     },
     config = function(_, opts)
@@ -22,18 +22,18 @@ return {
     end,
   },
 
-  -- Improves comment syntax, lets Neovim handle multiple
-  -- types of comments for a single language, and relaxes rules
-  -- for uncommenting.
+  -- 改进注释语法，让 Neovim 能够处理单一语言的多种
+  -- 注释类型，并放宽取消注释的规则。
+  --（for uncommenting 指取消注释的规则。）
   {
     "folke/ts-comments.nvim",
     event = "VeryLazy",
     opts = {},
   },
 
-  -- Extends the a & i text objects, this adds the ability to select
-  -- arguments, function calls, text within quotes and brackets, and to
-  -- repeat those selections to select an outer text object.
+  -- 扩展 a 与 i 文本对象，可以选中
+  -- 参数、函数调用、引号和括号内的文本，并且可以
+  -- 重复这些选择以选中外层文本对象。
   {
     "nvim-mini/mini.ai",
     event = "VeryLazy",
@@ -70,8 +70,8 @@ return {
     end,
   },
 
-  -- Configures LuaLS to support auto-completion and type checking
-  -- while editing your Neovim configuration.
+  -- 配置 LuaLS，以便在编辑 Neovim 配置时
+  -- 提供自动补全和类型检查。
   {
     "folke/lazydev.nvim",
     ft = "lua",

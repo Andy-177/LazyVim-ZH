@@ -13,15 +13,15 @@ return {
     })
   end,
 
-  -- correctly setup lspconfig
+  -- 正确配置 lspconfig
   {
     "neovim/nvim-lspconfig",
     opts = {
-      -- make sure mason installs the server
+      -- 确保 mason 安装该服务器
       servers = {
         vtsls = {
-          -- explicitly add default filetypes, so that we can extend
-          -- them in related extras
+          -- 显式添加默认文件类型，以便可以在相关的 extra 中
+          -- 中继续扩展
           filetypes = {
             "javascript",
             "javascriptreact",
@@ -69,7 +69,7 @@ return {
                   open = true,
                 })
               end,
-              desc = "Goto Source Definition",
+              desc = "转到源代码定义",
             },
             {
               "gR",
@@ -80,28 +80,28 @@ return {
                   open = true,
                 })
               end,
-              desc = "File References",
+              desc = "文件引用",
             },
             {
               "<leader>cM",
               LazyVim.lsp.action["source.addMissingImports.ts"],
-              desc = "Add missing imports",
+              desc = "添加缺失的导入",
             },
             {
               "<leader>cD",
               LazyVim.lsp.action["source.fixAll.ts"],
-              desc = "Fix all diagnostics",
+              desc = "修复所有诊断",
             },
             {
               "<leader>cV",
               function()
                 LazyVim.lsp.execute({
-                  title = "Select TypeScript Version",
+                  title = "选择 TypeScript 版本",
                   filter = "vtsls",
                   command = "typescript.selectTypeScriptVersion",
                 })
               end,
-              desc = "Select TS workspace version",
+              desc = "选择 TS 工作区版本",
             },
           },
         },
@@ -138,14 +138,14 @@ return {
                 local files = result.body.files
                 table.insert(files, 1, "Enter new path...")
                 vim.ui.select(files, {
-                  prompt = "Select move destination:",
+                  prompt = "选择移动目标位置：",
                   format_item = function(f)
                     return vim.fn.fnamemodify(f, ":~:.")
                   end,
                 }, function(f)
                   if f and f:find("^Enter new path") then
                     vim.ui.input({
-                      prompt = "Enter move destination:",
+                      prompt = "输入移动目标位置：",
                       default = vim.fn.fnamemodify(fname, ":h") .. "/",
                       completion = "file",
                     }, function(newf)
@@ -158,7 +158,7 @@ return {
               end)
             end
           end)
-          -- copy typescript settings to javascript
+          -- 将 typescript 的设置复制到 javascript
           opts.settings.javascript =
             vim.tbl_deep_extend("force", {}, opts.settings.typescript, opts.settings.javascript or {})
         end,
@@ -166,7 +166,7 @@ return {
     },
   },
 
-  -- correctly setup lspconfig
+  -- 正确配置 lspconfig
   {
     "neovim/nvim-lspconfig",
     opts = {},

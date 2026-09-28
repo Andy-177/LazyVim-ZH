@@ -51,7 +51,7 @@ end
 
 return {
   {
-    -- highlighting for chezmoi files template files
+    -- 为 chezmoi 模板文件提供高亮
     "alker0/chezmoi.vim",
     init = function()
       vim.g["chezmoi#use_tmp_buffer"] = 1
@@ -83,7 +83,7 @@ return {
       },
     },
     init = function()
-      -- run chezmoi edit on file enter
+      -- 进入文件时运行 chezmoi edit
       vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
         pattern = { vim.env.HOME .. "/.local/share/chezmoi/*" },
         callback = function()
@@ -98,15 +98,15 @@ return {
     opts = function(_, opts)
       local projects = {
         action = pick_chezmoi,
-        desc = "  Config",
+        desc = "  配置",
         icon = "",
         key = "c",
       }
 
-      projects.desc = projects.desc .. string.rep(" ", 43 - #projects.desc)
+      projects.desc = projects.desc .. string.rep(" ", 43 - vim.fn.strdisplaywidth(projects.desc))
       projects.key_format = "  %s"
 
-      -- remove lazyvim config property
+      -- 移除 lazyvim 配置属性
       for i = #opts.config.center, 1, -1 do
         if opts.config.center[i].key == "c" then
           table.remove(opts.config.center, i)
@@ -123,7 +123,7 @@ return {
       local chezmoi_entry = {
         icon = " ",
         key = "c",
-        desc = "Config",
+        desc = "配置",
         action = pick_chezmoi,
       }
       local config_index
@@ -138,7 +138,7 @@ return {
     end,
   },
 
-  -- Filetype icons
+  -- 文件类型图标
   {
     "nvim-mini/mini.icons",
     opts = {

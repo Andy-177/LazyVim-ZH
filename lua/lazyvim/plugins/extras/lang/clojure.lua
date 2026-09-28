@@ -6,13 +6,13 @@ return {
     })
   end,
 
-  -- Add Clojure & related to treesitter
+  -- 将 Clojure 及相关内容添加到 treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     opts = { ensure_installed = { "clojure" } },
   },
 
-  -- Extend auto completion
+  -- 扩展自动补全
   {
     "hrsh7th/nvim-cmp",
     optional = true,
@@ -26,10 +26,10 @@ return {
     end,
   },
 
-  -- Add s-exp mappings
+  -- 添加 s-exp 键位映射
   { "julienvincent/nvim-paredit", opts = {}, event = "LazyFile" },
 
-  -- Colorize the output of the log buffer
+  -- 为日志缓冲区的输出着色
   {
     "m00qek/baleia.nvim",
     opts = {
@@ -46,7 +46,7 @@ return {
     end,
   },
 
-  -- Use Clojure REPL
+  -- 使用 Clojure REPL
   {
     "Olical/conjure",
     event = "LazyFile",
@@ -54,7 +54,7 @@ return {
       require("conjure.main").main()
     end,
     init = function()
-      -- print color codes if baleia.nvim is available
+      -- 如果 baleia.nvim 可用，则输出颜色代码
       local colorize = require("lazyvim.util").has("baleia.nvim")
 
       if colorize then
@@ -63,7 +63,7 @@ return {
         vim.g["conjure#log#strip_ansi_escape_sequences_line_limit"] = 1
       end
 
-      -- disable diagnostics in log buffer and colorize it
+      -- 在日志缓冲区中禁用诊断并为其着色
       vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
         pattern = "conjure-log-*",
         callback = function()
@@ -78,19 +78,19 @@ return {
             { "n", "x" },
             "[c",
             "<CMD>call search('^; -\\+$', 'bw')<CR>",
-            { silent = true, buffer = true, desc = "Jumps to the begining of previous evaluation output." }
+            { silent = true, buffer = true, desc = "跳转到上一次求值输出的开头。" }
           )
           vim.keymap.set(
             { "n", "x" },
             "]c",
             "<CMD>call search('^; -\\+$', 'w')<CR>",
-            { silent = true, buffer = true, desc = "Jumps to the begining of next evaluation output." }
+            { silent = true, buffer = true, desc = "跳转到下一次求值输出的开头。" }
           )
         end,
       })
 
-      -- prefer LSP for jump-to-definition and symbol-doc, and use conjure
-      -- alternatives with <localleader>K and <localleader>gd
+      -- 跳转定义和符号文档优先使用 LSP，并使用 conjure
+      -- 作为替代方案（<localleader>K 和 <localleader>gd）
       vim.g["conjure#mapping#doc_word"] = "K"
       vim.g["conjure#mapping#def_word"] = "gd"
     end,

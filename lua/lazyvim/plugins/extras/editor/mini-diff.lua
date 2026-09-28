@@ -1,11 +1,11 @@
 return {
-  -- disable gitsigns.nvim
+  -- 禁用 gitsigns.nvim
   {
     "lewis6991/gitsigns.nvim",
     enabled = false,
   },
 
-  -- setup mini.diff
+  -- 配置 mini.diff
   {
     "nvim-mini/mini.diff",
     event = "VeryLazy",
@@ -15,7 +15,7 @@ return {
         function()
           require("mini.diff").toggle_overlay(0)
         end,
-        desc = "Toggle mini.diff overlay",
+        desc = "切换 mini.diff 浮层",
       },
     },
     opts = {
@@ -44,7 +44,7 @@ return {
           else
             require("mini.diff").disable(0)
           end
-          -- HACK: redraw to update the signs
+          -- HACK：重绘以更新符号标记
           vim.defer_fn(function()
             vim.cmd([[redraw!]])
           end, 200)
@@ -53,7 +53,7 @@ return {
     end,
   },
 
-  -- lualine integration
+  -- lualine 集成
   {
     "nvim-lualine/lualine.nvim",
     opts = function(_, opts)

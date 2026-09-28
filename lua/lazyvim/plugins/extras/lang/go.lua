@@ -55,7 +55,7 @@ return {
       },
       setup = {
         gopls = function(_, opts)
-          -- workaround for gopls not supporting semanticTokensProvider
+          -- 解决 gopls 不支持 semanticTokensProvider 的问题
           -- https://github.com/golang/go/issues/54531#issuecomment-1464982242
           Snacks.util.lsp.on({ name = "gopls" }, function(_, client)
             if
@@ -75,12 +75,12 @@ return {
               }
             end
           end)
-          -- end workaround
+          -- 解决结束
         end,
       },
     },
   },
-  -- Ensure Go tools are installed
+  -- 确保已安装 Go 工具
   {
     "mason-org/mason.nvim",
     opts = { ensure_installed = { "goimports", "gofumpt" } },
@@ -104,7 +104,7 @@ return {
       })
     end,
   },
-  -- Add linting
+  -- 添加代码检查
   {
     "mfussenegger/nvim-lint",
     optional = true,
@@ -152,15 +152,15 @@ return {
     opts = {
       adapters = {
         ["neotest-golang"] = {
-          -- Here we can set options for neotest-golang, e.g.
+          -- 在这里可以设置 neotest-golang 的选项，例如：
           -- go_test_args = { "-v", "-race", "-count=1", "-timeout=60s" },
-          dap_go_enabled = true, -- requires leoluz/nvim-dap-go
+          dap_go_enabled = true, -- 需要 leoluz/nvim-dap-go
         },
       },
     },
   },
 
-  -- Filetype icons
+  -- 文件类型图标
   {
     "nvim-mini/mini.icons",
     opts = {

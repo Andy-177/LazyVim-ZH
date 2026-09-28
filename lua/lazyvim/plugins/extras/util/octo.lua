@@ -1,6 +1,6 @@
 return {
 
-  -- depends on the git extra for highlighting and auto-completion of github issues/prs
+  -- 依赖 git 扩展来高亮和自动补全 github 的 issue/pr
   { import = "lazyvim.plugins.extras.lang.git" },
 
   {
@@ -25,12 +25,12 @@ return {
       picker = "telescope",
     },
     keys = {
-      { "<leader>gi", "<cmd>Octo issue list<CR>", desc = "List Issues (Octo)" },
-      { "<leader>gI", "<cmd>Octo issue search<CR>", desc = "Search Issues (Octo)" },
-      { "<leader>gp", "<cmd>Octo pr list<CR>", desc = "List PRs (Octo)" },
-      { "<leader>gP", "<cmd>Octo pr search<CR>", desc = "Search PRs (Octo)" },
-      { "<leader>gr", "<cmd>Octo repo list<CR>", desc = "List Repos (Octo)" },
-      { "<leader>gS", "<cmd>Octo search<CR>", desc = "Search (Octo)" },
+      { "<leader>gi", "<cmd>Octo issue list<CR>", desc = "列出 Issue (Octo)" },
+      { "<leader>gI", "<cmd>Octo issue search<CR>", desc = "搜索 Issue (Octo)" },
+      { "<leader>gp", "<cmd>Octo pr list<CR>", desc = "列出 PR (Octo)" },
+      { "<leader>gP", "<cmd>Octo pr search<CR>", desc = "搜索 PR (Octo)" },
+      { "<leader>gr", "<cmd>Octo repo list<CR>", desc = "列出仓库 (Octo)" },
+      { "<leader>gS", "<cmd>Octo search<CR>", desc = "搜索 (Octo)" },
 
       { "<localleader>a", "", desc = "+assignee (Octo)", ft = "octo" },
       { "<localleader>c", "", desc = "+comment/code (Octo)", ft = "octo" },
@@ -47,7 +47,7 @@ return {
     },
   },
 
-  -- Octo Picker
+  -- Octo 选择器
   {
     "pwntester/octo.nvim",
     opts = function(_, opts)
@@ -59,10 +59,10 @@ return {
       elseif LazyVim.has_extra("editor.snacks_picker") then
         opts.picker = "snacks"
       else
-        LazyVim.error("`octo.nvim` requires `telescope.nvim` or `fzf-lua` or `snacks.nvim`")
+        LazyVim.error("`octo.nvim` 需要 `telescope.nvim`、`fzf-lua` 或 `snacks.nvim`")
       end
 
-      -- Keep some empty windows in sessions
+      -- 在会话中保留一些空窗口
       vim.api.nvim_create_autocmd("ExitPre", {
         group = vim.api.nvim_create_augroup("octo_exit_pre", { clear = true }),
         callback = function(ev)

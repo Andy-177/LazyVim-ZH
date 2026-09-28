@@ -11,7 +11,7 @@ return {
       virtual_text = {
         enabled = not vim.g.ai_cmp,
         key_bindings = {
-          accept = false, -- handled by nvim-cmp / blink.cmp
+          accept = false, -- 由 nvim-cmp / blink.cmp 处理
           next = "<M-]>",
           prev = "<M-[>",
         },
@@ -19,7 +19,7 @@ return {
     },
   },
 
-  -- add ai_accept action
+  -- 添加 ai_accept 操作
   {
     "Exafunction/codeium.nvim",
     opts = function()
@@ -33,7 +33,7 @@ return {
     end,
   },
 
-  -- codeium cmp source
+  -- codeium cmp 数据源
   {
     "hrsh7th/nvim-cmp",
     optional = true,

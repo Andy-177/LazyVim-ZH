@@ -6,7 +6,7 @@ return {
     })
   end,
 
-  -- Add BibTeX/LaTeX to treesitter
+  -- 将 BibTeX/LaTeX 添加到 treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
@@ -34,7 +34,7 @@ return {
     },
   },
 
-  -- Correctly setup lspconfig for LaTeX 🚀
+  -- 正确配置 LaTeX 的 lspconfig 🚀
   {
     "neovim/nvim-lspconfig",
     optional = true,
@@ -42,7 +42,7 @@ return {
       servers = {
         texlab = {
           keys = {
-            { "<Leader>K", "<plug>(vimtex-doc-package)", desc = "Vimtex Docs", silent = true },
+            { "<Leader>K", "<plug>(vimtex-doc-package)", desc = "Vimtex 文档", silent = true },
           },
         },
       },

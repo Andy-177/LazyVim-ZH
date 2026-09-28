@@ -27,7 +27,7 @@ return {
           require("ansible").run()
         end,
         ft = "yaml.ansible",
-        desc = "Ansible Run Playbook/Role",
+        desc = "运行 Ansible Playbook/Role",
         silent = true,
       },
     },

@@ -22,15 +22,15 @@ M.picker = nil
 
 ---@param picker LazyPicker
 function M.register(picker)
-  -- this only happens when using :LazyExtras
-  -- so allow to get the full spec
+  -- 这只会在使用 :LazyExtras 时发生
+  -- 因此允许获取完整的 spec
   if vim.v.vim_did_enter == 1 then
     return true
   end
 
   if M.picker and M.picker.name ~= picker.name then
     LazyVim.warn(
-      "`LazyVim.pick`: picker already set to `" .. M.picker.name .. "`,\nignoring new picker `" .. picker.name .. "`"
+      "`LazyVim.pick`：选择器已设置为 `" .. M.picker.name .. "`，\n忽略新的选择器 `" .. picker.name .. "`"
     )
     return false
   end
@@ -42,7 +42,7 @@ end
 ---@param opts? lazyvim.util.pick.Opts
 function M.open(command, opts)
   if not M.picker then
-    return LazyVim.error("LazyVim.pick: picker not set")
+    return LazyVim.error("LazyVim.pick：未设置选择器")
   end
 
   command = command ~= "auto" and command or "files"
@@ -51,7 +51,7 @@ function M.open(command, opts)
   opts = vim.deepcopy(opts)
 
   if type(opts.cwd) == "boolean" then
-    LazyVim.warn("LazyVim.pick: opts.cwd should be a string or nil")
+    LazyVim.warn("LazyVim.pick：opts.cwd 应为字符串或 nil")
     opts.cwd = nil
   end
 

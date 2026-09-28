@@ -1,8 +1,8 @@
 ---@diagnostic disable: missing-fields
 if lazyvim_docs then
-  -- set to `true` to follow the main branch
-  -- you need to have a working rust toolchain to build the plugin
-  -- in this case.
+  -- 设为 `true` 以跟踪 main 分支
+  -- 在这种情况下，你需要可用的
+  -- rust 工具链来构建该插件
   vim.g.lazyvim_blink_main = false
 end
 
@@ -23,7 +23,7 @@ return {
     },
     dependencies = {
       "rafamadriz/friendly-snippets",
-      -- add blink.compat to dependencies
+      -- 把 blink.compat 加入依赖
       {
         "saghen/blink.compat",
         optional = true, -- make optional so it's only enabled if any extras need it
@@ -41,18 +41,18 @@ return {
       },
 
       appearance = {
-        -- sets the fallback highlight groups to nvim-cmp's highlight groups
-        -- useful for when your theme doesn't support blink.cmp
-        -- will be removed in a future release, assuming themes add support
+        -- 把回退的高亮组设为 nvim-cmp 的高亮组
+        -- 在你的主题不支持 blink.cmp 时很有用
+        -- 如果主题后续支持，此项将在未来的版本中移除
         use_nvim_cmp_as_default = false,
-        -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-        -- adjusts spacing to ensure icons are aligned
+        -- 'Nerd Font Mono' 设为 'mono'，'Nerd Font' 设为 'normal'
+        -- 调整间距以确保图标对齐
         nerd_font_variant = "mono",
       },
 
       completion = {
         accept = {
-          -- experimental auto-brackets support
+          -- 实验性的自动括号支持
           auto_brackets = {
             enabled = true,
           },
@@ -71,12 +71,12 @@ return {
         },
       },
 
-      -- experimental signature help support
+      -- 实验性的签名帮助支持
       -- signature = { enabled = true },
 
       sources = {
-        -- adding any nvim-cmp sources here will enable them
-        -- with blink.compat
+        -- 在这里添加任何 nvim-cmp 数据源都会启用它们
+        -- 通过 blink.compat
         compat = {},
         default = { "lsp", "path", "snippets", "buffer" },
       },
@@ -109,7 +109,7 @@ return {
       if opts.snippets and opts.snippets.preset == "default" then
         opts.snippets.expand = LazyVim.cmp.expand
       end
-      -- setup compat sources
+      -- 配置 compat 数据源
       local enabled = opts.sources.default
       for _, source in ipairs(opts.sources.compat or {}) do
         opts.sources.providers[source] = vim.tbl_deep_extend(
@@ -122,7 +122,7 @@ return {
         end
       end
 
-      -- add ai_accept to <Tab> key
+      -- 把 ai_accept 加到 <Tab> 键
       if not opts.keymap["<Tab>"] then
         if opts.keymap.preset == "super-tab" then -- super-tab
           opts.keymap["<Tab>"] = {
@@ -138,10 +138,10 @@ return {
         end
       end
 
-      -- Unset custom prop to pass blink.cmp validation
+      -- 清除自定义属性以通过 blink.cmp 校验
       opts.sources.compat = nil
 
-      -- check if we need to override symbol kinds
+      -- 检查是否需要覆盖符号种类
       for _, provider in pairs(opts.sources.providers or {}) do
         ---@cast provider blink.cmp.SourceProviderConfig|{kind?:string}
         if provider.kind then
@@ -165,7 +165,7 @@ return {
             return items
           end
 
-          -- Unset custom prop to pass blink.cmp validation
+          -- 清除自定义属性以通过 blink.cmp 校验
           provider.kind = nil
         end
       end
@@ -174,7 +174,7 @@ return {
     end,
   },
 
-  -- add icons
+  -- 添加图标
   {
     "saghen/blink.cmp",
     opts = function(_, opts)
@@ -201,7 +201,7 @@ return {
       },
     },
   },
-  -- catppuccin support
+  -- catppuccin 支持
   {
     "catppuccin",
     optional = true,

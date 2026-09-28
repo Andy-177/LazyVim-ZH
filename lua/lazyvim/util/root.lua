@@ -155,11 +155,11 @@ M.cache = {}
 function M.setup()
   vim.api.nvim_create_user_command("LazyRoot", function()
     LazyVim.root.info()
-  end, { desc = "LazyVim roots for the current buffer" })
+  end, { desc = "当前缓冲区的 LazyVim 根目录" })
 
-  -- FIX: doesn't properly clear cache in neo-tree `set_root` (which should happen presumably on `DirChanged`),
-  -- probably because the event is triggered in the neo-tree buffer, therefore add `BufEnter`
-  -- Maybe this is too frequent on `BufEnter` and something else should be done instead??
+  -- 修正：neo-tree 的 `set_root` 没有正确清空缓存（本应发生在 `DirChanged` 时），
+  -- 可能是因为事件在 neo-tree 缓冲区中触发，因此这里额外加上 `BufEnter`
+  -- 也许在 `BufEnter` 上触发过于频繁，应该换一种做法？
   vim.api.nvim_create_autocmd({ "LspAttach", "BufWritePost", "DirChanged", "BufEnter" }, {
     group = vim.api.nvim_create_augroup("lazyvim_root_cache", { clear = true }),
     callback = function(event)
@@ -168,11 +168,11 @@ function M.setup()
   })
 end
 
--- returns the root directory based on:
--- * lsp workspace folders
+-- 基于以下内容返回根目录：
+-- * lsp 工作区文件夹
 -- * lsp root_dir
--- * root pattern of filename of the current buffer
--- * root pattern of cwd
+-- * 当前缓冲区文件名的根模式
+-- * cwd 的根模式
 ---@param opts? {normalize?:boolean, buf?:number}
 ---@return string
 function M.get(opts)

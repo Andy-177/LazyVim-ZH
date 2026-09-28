@@ -17,7 +17,7 @@ return {
       servers = {
         julials = {
           settings = {
-            -- use the same default settings as the Julia VS Code extension
+            -- 使用与 Julia VS Code 扩展相同的默认设置
             julia = {
               completionmode = "qualify",
               lint = { missingrefs = "none" },
@@ -28,7 +28,7 @@ return {
     },
   },
 
-  -- cmp integration
+  -- cmp 集成
   {
     "hrsh7th/nvim-cmp",
     optional = true,
@@ -43,7 +43,7 @@ return {
     end,
   },
 
-  -- blink.cmp integration
+  -- blink.cmp 集成
   {
     "saghen/blink.cmp",
     optional = true,

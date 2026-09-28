@@ -1,8 +1,8 @@
 return {
 
   { "folke/snacks.nvim", opts = { dashboard = { enabled = false } } },
-  -- Dashboard. This runs when neovim starts, and is what displays
-  -- the "LAZYVIM" banner.
+  -- 启动页。neovim 启动时会运行它，用于显示
+  -- "LAZYVIM" 横幅。
   {
     "goolord/alpha-nvim",
     event = "VimEnter",
@@ -43,7 +43,7 @@ return {
       return dashboard
     end,
     config = function(_, dashboard)
-      -- close Lazy and re-open when the dashboard is ready
+      -- 启动页就绪后关闭 Lazy 并重新打开
       if vim.o.filetype == "lazy" then
         vim.cmd.close()
         vim.api.nvim_create_autocmd("User", {

@@ -54,7 +54,7 @@ return {
               end or function()
                 require("omnisharp_extended").lsp_definitions()
               end,
-              desc = "Goto Definition",
+              desc = "转到定义",
             },
           },
           enable_roslyn_analyzers = true,
@@ -106,7 +106,7 @@ return {
     opts = {
       adapters = {
         ["neotest-vstest"] = {
-          -- Here we can set options for neotest-vstest
+          -- 你可以在这里为 neotest-vstest 设置选项
         },
       },
     },

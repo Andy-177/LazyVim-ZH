@@ -13,16 +13,16 @@ return {
     })
   end,
 
-  -- correctly setup lspconfig
+  -- 正确配置 lspconfig
   {
     "neovim/nvim-lspconfig",
     opts = {
-      -- make sure mason installs the server
+      -- 确保 mason 安装该服务器
       servers = {
         tsgo = { enabled = false },
         tsc = {
-          -- explicitly add default filetypes, so that we can extend
-          -- them in related extras
+          -- 显式添加默认文件类型，以便可以在相关的 extra 中
+          -- 中继续扩展
           filetypes = {
             "javascript",
             "javascriptreact",
@@ -51,7 +51,7 @@ return {
       },
     },
   },
-  -- correctly setup lspconfig
+  -- 正确配置 lspconfig
   {
     "neovim/nvim-lspconfig",
     opts = {},

@@ -34,7 +34,7 @@ return {
       local nls = require("null-ls")
       opts.sources = opts.sources or {}
       table.insert(opts.sources, nls.builtins.diagnostics.twigcs)
-      -- Twig-CS-Fixer builtin not available in none-ls
+      -- none-ls 中没有内置的 Twig-CS-Fixer
     end,
   },
   {

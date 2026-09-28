@@ -63,7 +63,7 @@ pick = function()
             local ok = project.set_pwd(path)
             if ok then
               vim.api.nvim_win_close(0, false)
-              LazyVim.info("Change project dir to " .. path)
+              LazyVim.info("将项目目录切换到 " .. path)
             end
           end,
         },
@@ -110,7 +110,7 @@ return {
     "nvim-telescope/telescope.nvim",
     optional = true,
     keys = {
-      { "<leader>fp", pick, desc = "Projects" },
+      { "<leader>fp", pick, desc = "项目" },
     },
   },
 
@@ -118,7 +118,7 @@ return {
     "ibhagwan/fzf-lua",
     optional = true,
     keys = {
-      { "<leader>fp", pick, desc = "Projects" },
+      { "<leader>fp", pick, desc = "项目" },
     },
   },
 
@@ -157,12 +157,12 @@ return {
       end
       local projects = {
         action = pick,
-        desc = " Projects (util.project)",
+        desc = " 项目 (util.project)",
         icon = " ",
         key = "P",
       }
 
-      projects.desc = projects.desc .. string.rep(" ", 43 - #projects.desc)
+      projects.desc = projects.desc .. string.rep(" ", 43 - vim.fn.strdisplaywidth(projects.desc))
       projects.key_format = "  %s"
 
       table.insert(opts.config.center, 3, projects)
@@ -175,7 +175,7 @@ return {
     opts = function(_, opts)
       table.insert(opts.dashboard.preset.keys, 3, {
         action = pick,
-        desc = "Projects (util.project)",
+        desc = "项目 (util.project)",
         icon = " ",
         key = "P",
       })

@@ -8,26 +8,26 @@ LazyVim.config = M
 
 ---@class LazyVimOptions
 local defaults = {
-  -- colorscheme can be a string like `catppuccin` or a function that will load the colorscheme
+  -- colorscheme 可以是形如 `catppuccin` 的字符串，也可以是一个负责加载配色方案的函数
   ---@type string|fun()
   colorscheme = function()
     require("tokyonight").load()
   end,
-  -- load the default settings
+  -- 加载默认配置
   defaults = {
     autocmds = true, -- lazyvim.config.autocmds
     keymaps = true, -- lazyvim.config.keymaps
-    -- lazyvim.config.options can't be configured here since that's loaded before lazyvim setup
-    -- if you want to disable loading options, add `package.loaded["lazyvim.config.options"] = true` to the top of your init.lua
+    -- lazyvim.config.options 不能在这里配置，因为它在 lazyvim setup 之前就已加载
+    -- 如果你想禁用 options 的加载，请在 init.lua 顶部添加 `package.loaded["lazyvim.config.options"] = true`
   },
   news = {
-    -- When enabled, NEWS.md will be shown when changed.
-    -- This only contains big new features and breaking changes.
+    -- 启用后，NEWS.md 发生变化时会显示。
+    -- 这里只包含重要的新功能和不兼容变更。
     lazyvim = true,
-    -- Same but for Neovim's news.txt
+    -- 同上，但用于 Neovim 的 news.txt
     neovim = false,
   },
-  -- icons used by other plugins
+  -- 供其它插件使用的图标
   -- stylua: ignore
   icons = {
     misc = {
@@ -118,7 +118,7 @@ local defaults = {
     },
     markdown = false,
     help = false,
-    -- you can specify a different filter for each filetype
+    -- 你可以为每种文件类型指定不同的过滤列表
     lua = {
       "Class",
       "Constructor",
@@ -129,7 +129,7 @@ local defaults = {
       "Method",
       "Module",
       "Namespace",
-      -- "Package", -- remove package since luals uses it for control flow structures
+      -- "Package", -- 移除 package，因为 luals 将其用于控制流结构
       "Property",
       "Struct",
       "Trait",
@@ -175,7 +175,7 @@ local lazy_clipboard
 function M.setup(opts)
   options = vim.tbl_deep_extend("force", defaults, opts or {}) or {}
 
-  -- autocmds can be loaded lazily when not opening a file
+  -- 未打开文件时，autocmds 可以延迟加载
   local lazy_autocmds = vim.fn.argc(-1) == 0
   if not lazy_autocmds then
     M.load("autocmds")
@@ -200,12 +200,12 @@ function M.setup(opts)
 
       vim.api.nvim_create_user_command("LazyExtras", function()
         LazyVim.extras.show()
-      end, { desc = "Manage LazyVim extras" })
+      end, { desc = "管理 LazyVim 扩展" })
 
       vim.api.nvim_create_user_command("LazyHealth", function()
         vim.cmd([[Lazy! load all]])
         vim.cmd([[checkhealth]])
-      end, { desc = "Load all plugins and run :checkhealth" })
+      end, { desc = "加载所有插件并运行 :checkhealth" })
 
       local health = require("lazy.health")
       vim.list_extend(health.valid, {
@@ -218,7 +218,7 @@ function M.setup(opts)
         return
       end
 
-      -- Check lazy.nvim import order
+      -- 检查 lazy.nvim 的导入顺序
       local imports = require("lazy.core.config").spec.modules
       local function find(pat, last)
         for i = last and #imports or 1, last and 1 or #imports, last and -1 or 1 do
@@ -232,12 +232,12 @@ function M.setup(opts)
       local plugins = find("^plugins$") or math.huge
       if lazyvim_plugins ~= 1 or extras > plugins then
         local msg = {
-          "The order of your `lazy.nvim` imports is incorrect:",
-          "- `lazyvim.plugins` should be first",
-          "- followed by any `lazyvim.plugins.extras`",
-          "- and finally your own `plugins`",
+          "你的 `lazy.nvim` 导入顺序不正确：",
+          "- `lazyvim.plugins` 应当排在最前",
+          "- 其次是任意 `lazyvim.plugins.extras`",
+          "- 最后是你自己的 `plugins`",
           "",
-          "If you think you know what you're doing, you can disable this check with:",
+          "如果你清楚自己在做什么，可以用下面的方式关闭该检查：",
           "```lua",
           "vim.g.lazyvim_check_order = false",
           "```",
@@ -255,7 +255,7 @@ function M.setup(opts)
       vim.cmd.colorscheme(M.colorscheme)
     end
   end, {
-    msg = "Could not load your colorscheme",
+    msg = "无法加载你的配色方案",
     on_error = function(msg)
       LazyVim.error(msg)
       vim.cmd.colorscheme("habamax")
@@ -288,18 +288,18 @@ function M.load(name)
     if require("lazy.core.cache").find(mod)[1] then
       LazyVim.try(function()
         require(mod)
-      end, { msg = "Failed loading " .. mod })
+      end, { msg = "加载失败 " .. mod })
     end
   end
   local pattern = "LazyVim" .. name:sub(1, 1):upper() .. name:sub(2)
-  -- always load lazyvim, then user file
+  -- 总是先加载 lazyvim，再加载用户文件
   if M.defaults[name] or name == "options" then
     _load("lazyvim.config." .. name)
     vim.api.nvim_exec_autocmds("User", { pattern = pattern .. "Defaults", modeline = false })
   end
   _load("config." .. name)
   if vim.bo.filetype == "lazy" then
-    -- HACK: LazyVim may have overwritten options of the Lazy ui, so reset this here
+    -- 变通方案：LazyVim 可能覆盖了 Lazy 界面的选项，所以在这里重置
     vim.cmd([[do VimResized]])
   end
   vim.api.nvim_exec_autocmds("User", { pattern = pattern, modeline = false })
@@ -323,20 +323,20 @@ function M.init()
     return LazyVim.format
   end
 
-  -- delay notifications till vim.notify was replaced or after 500ms
+  -- 延迟通知，直到 vim.notify 被替换或超过 500 毫秒
   LazyVim.lazy_notify()
 
-  -- load options here, before lazy init while sourcing plugin modules
-  -- this is needed to make sure options will be correctly applied
-  -- after installing missing plugins
+  -- 在这里加载 options，即在 lazy 初始化、加载插件模块之前
+  -- 这样可以确保在安装缺失的插件之后
+  -- options 能够被正确应用
   M.load("options")
 
-  -- save some options to track defaults
+  -- 保存部分选项以跟踪默认值
   M._options.indentexpr = vim.o.indentexpr
   M._options.foldmethod = vim.o.foldmethod
   M._options.foldexpr = vim.o.foldexpr
 
-  -- defer built-in clipboard handling: "xsel" and "pbcopy" can be slow
+  -- 延迟处理内置剪贴板："xsel" 和 "pbcopy" 可能较慢
   lazy_clipboard = vim.opt.clipboard:get()
   vim.opt.clipboard = ""
 
@@ -355,7 +355,7 @@ local default_extras ---@type table<string, LazyVimDefault>
 ---@param name string
 ---@param extras LazyVimDefault[]
 function M.register_defaults(name, extras)
-  assert(default_extras, "defaults should be loaded by now, this should never happen")
+  assert(default_extras, "默认值此时应该已经加载，这不应发生")
   local valid = vim.tbl_map(function(extra)
     return extra.name
   end, extras) --[[@as string[] ]]
@@ -366,12 +366,12 @@ function M.register_defaults(name, extras)
 
   local global = vim.g["lazyvim_" .. name]
   if vim.tbl_contains(valid, global) then
-    origin = "global" -- was set by the user in their config
+    origin = "global" -- 由用户在配置中设置
     use = global
   else
     if global and global ~= "auto" then
       vim.notify(
-        ("Invalid value for `vim.g.lazyvim_%s`: `%s`\nValid options are: %s"):format(
+        ("`vim.g.lazyvim_%s` 的值无效：`%s`\n可选值为：%s"):format(
           name,
           global,
           table.concat(valid, ", ")
@@ -382,14 +382,14 @@ function M.register_defaults(name, extras)
     end
     for _, extra in ipairs(extras) do
       if LazyVim.has_extra(extra.extra) then
-        use = extra.name -- was imported by the user in their lazy spec or added by LazyExtras
+        use = extra.name -- 由用户在 lazy 配置中导入，或通过 LazyExtras 添加
         origin = "extra"
         break
       end
     end
   end
 
-  use = use or valid[1] -- fallback to the first one if nothing was set
+  use = use or valid[1] -- 若未设置任何值，则回退到第一个
 
   for _, extra in ipairs(extras) do
     local import = "lazyvim.plugins.extras." .. extra.extra
@@ -404,7 +404,7 @@ function M.register_defaults(name, extras)
     default_extras[import] = extra
   end
 
-  return assert(ret, "One of the extras should be enabled, this should never happen")
+  return assert(ret, "应该至少有一个扩展被启用，这不应发生")
 end
 
 ---@param group string
@@ -440,7 +440,7 @@ function M.get_defaults()
     },
   }
 
-  -- existing installs keep their defaults
+  -- 已有的安装保留其默认值
   if (LazyVim.config.json.data.install_version or 7) < 8 then
     table.insert(checks.picker, 1, table.remove(checks.picker, 2))
     table.insert(checks.explorer, 1, table.remove(checks.explorer, 2))

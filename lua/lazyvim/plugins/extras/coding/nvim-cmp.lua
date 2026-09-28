@@ -5,7 +5,7 @@ return {
     optional = true,
   },
 
-  -- Setup nvim-cmp
+  -- 配置 nvim-cmp
   {
     "hrsh7th/nvim-cmp",
     version = false, -- last release is way too old
@@ -15,9 +15,9 @@ return {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
     },
-    -- Not all LSP servers add brackets when completing a function.
-    -- To better deal with this, LazyVim adds a custom option to cmp,
-    -- that you can configure. For example:
+    -- 并非所有 LSP 服务器在补全函数时都会添加括号。
+    -- 为了更好地处理这一点，LazyVim 为 cmp 添加了一个自定义选项，
+    -- 你可以进行配置。例如：
     --
     -- ```lua
     -- opts = {
@@ -25,7 +25,7 @@ return {
     -- }
     -- ```
     opts = function()
-      -- Register nvim-cmp lsp capabilities
+      -- 注册 nvim-cmp 的 lsp 能力
       vim.lsp.config("*", { capabilities = require("cmp_nvim_lsp").default_capabilities() })
 
       vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
@@ -84,7 +84,7 @@ return {
           end,
         },
         experimental = {
-          -- only show ghost text when we show ai completions
+          -- 仅在显示 ai 补全时才显示幽灵文本
           ghost_text = vim.g.ai_cmp and {
             hl_group = "CmpGhostText",
           } or false,
@@ -95,7 +95,7 @@ return {
     main = "lazyvim.util.cmp",
   },
 
-  -- snippets
+  -- 代码片段
   {
     "hrsh7th/nvim-cmp",
     dependencies = {

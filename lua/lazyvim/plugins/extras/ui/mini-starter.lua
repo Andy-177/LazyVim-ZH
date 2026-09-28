@@ -1,9 +1,9 @@
--- start screen
+-- 启动画面
 return {
-  -- disable alpha
+  -- 禁用 alpha
   { "folke/snacks.nvim", opts = { dashboard = { enabled = false } } },
 
-  -- enable mini.starter
+  -- 启用 mini.starter
   {
     "nvim-mini/mini.starter",
     version = false, -- wait till new 0.7.0 release to put it back on semver
@@ -46,7 +46,7 @@ return {
       return config
     end,
     config = function(_, config)
-      -- close Lazy and re-open when starter is ready
+      -- starter 就绪后关闭 Lazy 并重新打开
       if vim.o.filetype == "lazy" then
         vim.cmd.close()
         vim.api.nvim_create_autocmd("User", {
@@ -67,7 +67,7 @@ return {
           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
           local pad_footer = string.rep(" ", 8)
           starter.config.footer = pad_footer .. "⚡ Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
-          -- INFO: based on @nvim-mini's recommendation (thanks a lot!!!)
+          -- 信息：基于 @nvim-mini 的建议（非常感谢！！！）
           if vim.bo[ev.buf].filetype == "ministarter" then
             pcall(starter.refresh)
           end

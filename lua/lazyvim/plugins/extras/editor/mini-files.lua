@@ -7,8 +7,8 @@ return {
       width_preview = 30,
     },
     options = {
-      -- Whether to use for editing directories
-      -- Disabled by default in LazyVim because neo-tree is used for that
+      -- 是否将其用于编辑目录
+      -- LazyVim 中默认禁用，因为这部分由 neo-tree 负责
       use_as_default_explorer = false,
     },
   },
@@ -18,14 +18,14 @@ return {
       function()
         require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
       end,
-      desc = "Open mini.files (Directory of Current File)",
+      desc = "打开 mini.files（当前文件所在目录）",
     },
     {
       "<leader>fM",
       function()
         require("mini.files").open(vim.uv.cwd(), true)
       end,
-      desc = "Open mini.files (cwd)",
+      desc = "打开 mini.files（cwd）",
     },
   },
   config = function(_, opts)
@@ -60,7 +60,7 @@ return {
         end
       end
 
-      local desc = "Open in " .. direction .. " split"
+      local desc = "在 " .. direction .. " 分屏中打开"
       if close_on_file then
         desc = desc .. " and close"
       end
@@ -84,14 +84,14 @@ return {
           "n",
           opts.mappings and opts.mappings.toggle_hidden or "g.",
           toggle_dotfiles,
-          { buffer = buf_id, desc = "Toggle hidden files" }
+          { buffer = buf_id, desc = "切换隐藏文件" }
         )
 
         vim.keymap.set(
           "n",
           opts.mappings and opts.mappings.change_cwd or "gc",
           files_set_cwd,
-          { buffer = args.data.buf_id, desc = "Set cwd" }
+          { buffer = args.data.buf_id, desc = "设置 cwd" }
         )
 
         map_split(buf_id, opts.mappings and opts.mappings.go_in_horizontal or "<C-w>s", "horizontal", false)

@@ -11,114 +11,113 @@ return {
     "nvim-lua/plenary.nvim",
   },
 
-  -- see details below for full configuration options
+  -- 完整的配置选项请参见下文
   opts = {
-    -- Enable the Lean language server(s)?
+    -- 是否启用 Lean 语言服务器？
     --
-    -- false to disable, otherwise should be a table of options to pass to `leanls`
+    -- 设为 false 表示禁用，否则应为传递给 `leanls` 的选项表
     --
-    -- See https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#leanls for details.
-    -- In particular ensure you have followed instructions setting up a callback
-    -- for `LspAttach` which sets your key bindings!
+    -- 详情参见 https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#leanls 。
+    -- 尤其要确保你已按照说明设置好 `LspAttach` 的回调，
+    -- 该回调用于设置你的键位！
     lsp = {
       init_options = {
-        -- See Lean.Lsp.InitializationOptions for details and further options.
+        -- 更多选项和详情参见 Lean.Lsp.InitializationOptions。
 
-        -- Time (in milliseconds) which must pass since latest edit until elaboration begins.
-        -- Lower values may make editing feel faster at the cost of higher CPU usage.
-        -- Note that lean.nvim changes the Lean default for this value!
+        -- 从最近一次编辑到开始 elaboration 之前必须经过的时间（毫秒）。
+        -- 该值越小编辑感觉越快，但 CPU 占用会更高。
+        -- 注意 lean.nvim 修改了 Lean 对该值的默认值！
         editDelay = 0,
 
-        -- Whether to signal that widgets are supported.
+        -- 是否声明支持 widgets。
         hasWidgets = true,
       },
     },
 
     ft = {
-      -- A list of patterns which will be used to protect any matching
-      -- Lean file paths from being accidentally modified (by marking the
-      -- buffer as `nomodifiable`).
+      -- 用于匹配的模式列表，可防止匹配的
+      -- Lean 文件路径被意外修改（通过将缓冲区
+      -- 标记为 `nomodifiable`）。
       nomodifiable = {
-        -- by default, this list includes the Lean standard libraries,
-        -- as well as files within dependency directories (e.g. `_target`)
-        -- Set this to an empty table to disable.
+        -- 默认情况下，该列表包含 Lean 标准库，
+        -- 以及依赖目录中的文件（例如 `_target`）
+        -- 设为空表即可禁用。
       },
     },
 
-    -- Abbreviation support
+    -- 缩写支持
     abbreviations = {
-      -- Enable expanding of unicode abbreviations?
+      -- 是否启用 unicode 缩写的展开？
       enable = true,
-      -- additional abbreviations:
+      -- 额外缩写：
       extra = {
-        -- Add a \wknight abbreviation to insert ♘
+        -- 添加一个 \wknight 缩写用于插入 ♘
         --
-        -- Note that the backslash is implied, and that you of
-        -- course may also use a snippet engine directly to do
-        -- this if so desired.
+        -- 注意反斜杠是隐含的，当然你也可以直接使用
+        -- 片段引擎来完成同样的事情。
         wknight = "♘",
       },
-      -- Change if you don't like the backslash
-      -- (comma is a popular choice on French keyboards)
+      -- 如果你不喜欢反斜杠，可以改成别的
+      -- （在法语键盘上逗号是常见选择）
       leader = "\\",
     },
 
-    -- Enable suggested mappings?
+    -- 是否启用推荐的键位映射？
     --
-    -- false by default, true to enable
+    -- 默认 false，设为 true 启用
     mappings = true,
 
-    -- Infoview support
+    -- Infoview 支持
     infoview = {
-      -- Automatically open an infoview on entering a Lean buffer?
-      -- Should be a function that will be called anytime a new Lean file
-      -- is opened. Return true to open an infoview, otherwise false.
-      -- Setting this to `true` is the same as `function() return true end`,
-      -- i.e. autoopen for any Lean file, or setting it to `false` is the
-      -- same as `function() return false end`, i.e. never autoopen.
+      -- 进入 Lean 缓冲区时是否自动打开 infoview？
+      -- 应为一个函数，每次打开新的 Lean 文件时都会调用。
+      -- 返回 true 则打开 infoview，否则返回 false。
+      -- 设为 `true` 等同于 `function() return true end`，
+      -- 即对任意 Lean 文件都自动打开；设为 `false` 则
+      -- 等同于 `function() return false end`，即永不自动打开。
       autoopen = true,
 
-      -- Set infoview windows' starting dimensions.
-      -- Windows are opened horizontally or vertically depending on spacing.
+      -- 设置 infoview 窗口的初始尺寸。
+      -- 窗口会根据间距以水平或垂直方式打开。
       width = 50,
       height = 20,
 
-      -- Put the infoview on the top or bottom when horizontal?
+      -- 水平放置时，infoview 位于上方还是下方？
       -- top | bottom
       horizontal_position = "bottom",
 
-      -- Always open the infoview window in a separate tabpage.
-      -- Might be useful if you are using a screen reader and don't want too
-      -- many dynamic updates in the terminal at the same time.
-      -- Note that `height` and `width` will be ignored in this case.
+      -- 是否总在单独的标签页中打开 infoview 窗口。
+      -- 如果你在使用屏幕阅读器，不希望终端中同时出现
+      -- 太多动态更新，这个选项会很有用。
+      -- 注意此时 `height` 和 `width` 将被忽略。
       separate_tab = false,
 
-      -- Show indicators for pin locations when entering an infoview window?
-      -- always | never | auto (= only when there are multiple pins)
+      -- 进入 infoview 窗口时是否显示固定位置的指示器？
+      -- always | never | auto（= 仅当存在多个固定位置时）
       indicators = "auto",
     },
 
-    -- Progress bar support
+    -- 进度条支持
     progress_bars = {
-      -- Enable the progress bars?
+      -- 是否启用进度条？
       enable = true,
-      -- What character should be used for the bars?
+      -- 进度条使用什么字符？
       character = "│",
-      -- Use a different priority for the signs
+      -- 为符号标记使用不同的优先级
       priority = 10,
     },
 
-    -- Redirect Lean's stderr messages somewhere (to a buffer by default)
+    -- 将 Lean 的 stderr 消息重定向到某处（默认输出到缓冲区）
     stderr = {
       enable = true,
-      -- height of the window
+      -- 窗口高度
       height = 5,
-      -- a callback which will be called with (multi-line) stderr output
-      -- e.g., use:
+      -- 接收（多行）stderr 输出的回调
+      -- 例如使用：
       --   on_lines = function(lines) vim.notify(lines) end
-      -- if you want to redirect stderr to `vim.notify`.
-      -- The default implementation will redirect to a dedicated stderr
-      -- window.
+      -- 即可把 stderr 重定向到 `vim.notify`。
+      -- 默认实现会重定向到专用的 stderr
+      -- 窗口。
       on_lines = nil,
     },
   },

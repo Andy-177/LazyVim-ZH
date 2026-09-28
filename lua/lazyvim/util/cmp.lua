@@ -4,7 +4,7 @@ local M = {}
 ---@alias lazyvim.util.cmp.Action fun():boolean?
 ---@type table<string, lazyvim.util.cmp.Action>
 M.actions = {
-  -- Native Snippets
+  -- 原生代码片段
   snippet_forward = function()
     if vim.snippet.active({ direction = 1 }) then
       vim.schedule(function()
@@ -48,7 +48,7 @@ function M.snippet_replace(snippet, fn)
   end) or snippet
 end
 
--- This function resolves nested placeholders in a snippet.
+-- 该函数用于解析代码片段中嵌套的占位符。
 ---@param snippet string
 ---@return string
 function M.snippet_preview(snippet)
@@ -61,7 +61,7 @@ function M.snippet_preview(snippet)
     end):gsub("%$0", "")
 end
 
--- This function replaces nested placeholders in a snippet with LSP placeholders.
+-- 该函数用 LSP 占位符替换代码片段中嵌套的占位符。
 function M.snippet_fix(snippet)
   local texts = {} ---@type table<number, string>
   return M.snippet_replace(snippet, function(placeholder)
@@ -85,8 +85,8 @@ function M.auto_brackets(entry)
   end
 end
 
--- This function adds missing documentation to snippets.
--- The documentation is a preview of the snippet.
+-- 该函数为代码片段补充缺失的文档。
+-- 该文档是代码片段的预览。
 ---@param window cmp.CustomEntriesView|cmp.NativeEntriesView
 function M.add_missing_snippet_docs(window)
   local cmp = require("cmp")
@@ -105,10 +105,10 @@ function M.add_missing_snippet_docs(window)
   end
 end
 
--- This is a better implementation of `cmp.confirm`:
---  * check if the completion menu is visible without waiting for running sources
---  * create an undo point before confirming
--- This function is both faster and more reliable.
+-- 这是对 `cmp.confirm` 更好的实现：
+--  * 无需等待正在运行的数据源即可检查补全菜单是否可见
+--  * 在确认前创建一个撤销点
+-- 该实现既更快也更可靠。
 ---@param opts? {select: boolean, behavior: cmp.ConfirmBehavior}
 function M.confirm(opts)
   local cmp = require("cmp")
@@ -128,11 +128,11 @@ function M.confirm(opts)
 end
 
 function M.expand(snippet)
-  -- Native sessions don't support nested snippet sessions.
-  -- Always use the top-level session.
-  -- Otherwise, when on the first placeholder and selecting a new completion,
-  -- the nested session will be used instead of the top-level session.
-  -- See: https://github.com/LazyVim/LazyVim/issues/3199
+  -- 原生会话不支持嵌套的代码片段会话。
+  -- 始终使用最顶层的会话。
+  -- 否则，当光标位于第一个占位符并选择新的补全项时，
+  -- 将会使用嵌套会话而非顶层会话。
+  -- 参见：https://github.com/LazyVim/LazyVim/issues/3199
   local session = vim.snippet.active() and vim.snippet._session or nil
 
   local ok, err = pcall(vim.snippet.expand, snippet)
@@ -140,8 +140,8 @@ function M.expand(snippet)
     local fixed = M.snippet_fix(snippet)
     ok = pcall(vim.snippet.expand, fixed)
 
-    local msg = ok and "Failed to parse snippet,\nbut was able to fix it automatically."
-      or ("Failed to parse snippet.\n" .. err)
+    local msg = ok and "无法解析代码片段，\n但已自动修复。"
+      or ("无法解析代码片段。\n" .. err)
 
     LazyVim[ok and "warn" or "error"](
       ([[%s
@@ -152,7 +152,7 @@ function M.expand(snippet)
     )
   end
 
-  -- Restore top-level session when needed
+  -- 必要时恢复顶层会话
   if session then
     vim.snippet._session = session
   end

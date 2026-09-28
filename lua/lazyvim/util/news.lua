@@ -24,7 +24,7 @@ function M.setup()
 end
 
 function M.welcome()
-  LazyVim.info("Welcome to LazyVim!")
+  LazyVim.info("欢迎使用 LazyVim！")
 end
 
 function M.changelog()
@@ -47,17 +47,17 @@ function M.open(file, opts)
   if opts.plugin then
     local plugin = require("lazy.core.config").plugins[opts.plugin] --[[@as LazyPlugin?]]
     if not plugin then
-      return LazyVim.error("plugin not found: " .. opts.plugin)
+      return LazyVim.error("未找到插件：" .. opts.plugin)
     end
     file = plugin.dir .. "/" .. file
   elseif opts.rtp then
-    -- first check if file exists in VIMRUNTIME, then check the full runtimepath
+    -- 先检查文件是否存在于 VIMRUNTIME，再检查完整的 runtimepath
     local path = vim.env.VIMRUNTIME .. "/" .. file --[[@as string]]
     file = vim.uv.fs_stat(path) and path or vim.api.nvim_get_runtime_file(file, false)[1]
   end
 
   if not file then
-    return LazyVim.error("File not found")
+    return LazyVim.error("未找到文件")
   end
 
   if opts.when_changed then
@@ -68,7 +68,7 @@ function M.open(file, opts)
     end
     LazyVim.config.json.data.news[ref] = hash
     LazyVim.json.save()
-    -- don't open if file has never been opened
+    -- 如果文件从未打开过，则不打开
     if is_new then
       return
     end

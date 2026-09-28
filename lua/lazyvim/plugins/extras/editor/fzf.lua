@@ -1,6 +1,6 @@
 if lazyvim_docs then
-  -- In case you don't want to use `:LazyExtras`,
-  -- then you need to set the option below.
+  -- 如果你不想使用 `:LazyExtras`，
+  -- 则需要设置下面的选项。
   vim.g.lazyvim_picker = "fzf"
 end
 
@@ -39,7 +39,7 @@ local function symbols_filter(entry, ctx)
 end
 
 return {
-  desc = "Awesome picker for FZF (alternative to Telescope)",
+  desc = "优秀的 FZF 选择器（Telescope 的替代品）",
   {
     "ibhagwan/fzf-lua",
     cmd = "FzfLua",
@@ -48,7 +48,7 @@ return {
       local config = fzf.config
       local actions = fzf.actions
 
-      -- Quickfix
+      -- 快速修复
       config.defaults.keymap.fzf["ctrl-q"] = "select-all+accept"
       config.defaults.keymap.fzf["ctrl-u"] = "half-page-up"
       config.defaults.keymap.fzf["ctrl-d"] = "half-page-down"
@@ -63,7 +63,7 @@ return {
         config.defaults.actions.files["ctrl-t"] = require("trouble.sources.fzf").actions.open
       end
 
-      -- Toggle root dir / cwd
+      -- 切换根目录 / 当前目录
       config.defaults.actions.files["ctrl-r"] = function(_, ctx)
         local o = vim.deepcopy(ctx.__call_opts)
         o.root = o.root == false
@@ -93,7 +93,7 @@ return {
           ["--no-scrollbar"] = true,
         },
         defaults = {
-          -- formatter = "path.filename_first",
+          -- 格式化器
           formatter = "path.dirname_first",
         },
         previewers = {
@@ -108,18 +108,18 @@ return {
             ueberzug_scaler = "fit_contain",
           },
         },
-        -- Custom LazyVim option to configure vim.ui.select
+        -- 用于配置 vim.ui.select 的 LazyVim 自定义选项
         ui_select = function(fzf_opts, items)
           return vim.tbl_deep_extend("force", fzf_opts, {
             prompt = " ",
             winopts = {
-              title = " " .. vim.trim((fzf_opts.prompt or "Select"):gsub("%s*:%s*$", "")) .. " ",
+              title = " " .. vim.trim((fzf_opts.prompt or "选择"):gsub("%s*:%s*$", "")) .. " ",
               title_pos = "center",
             },
           }, fzf_opts.kind == "codeaction" and {
             winopts = {
               layout = "vertical",
-              -- height is number of items minus 15 lines for the preview, with a max of 80% screen height
+              -- 高度为条目数减去用于预览的 15 行，最大为屏幕高度的 80%
               height = math.floor(math.min(vim.o.lines * 0.8 - 16, #items + 4) + 0.5) + 16,
               width = 0.5,
               preview = not vim.tbl_isempty(vim.lsp.get_clients({ bufnr = 0, name = "vtsls" })) and {
@@ -134,7 +134,7 @@ return {
           } or {
             winopts = {
               width = 0.5,
-              -- height is number of items, with a max of 80% screen height
+              -- 高度为条目数，最大为屏幕高度的 80%
               height = math.floor(math.min(vim.o.lines * 0.8, #items + 4) + 0.5),
             },
           })
@@ -179,8 +179,8 @@ return {
     end,
     config = function(_, opts)
       if opts[1] == "default-title" then
-        -- use the same prompt for all pickers for profile `default-title` and
-        -- profiles that use `default-title` as base profile
+        -- 对于 profile `default-title` 以及以 `default-title` 为基础 profile 的
+        -- 配置，为所有选择器使用相同的提示符
         local function fix(t)
           t.prompt = t.prompt ~= nil and " " or nil
           for _, v in pairs(t) do
@@ -211,51 +211,51 @@ return {
       {
         "<leader>,",
         "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>",
-        desc = "Switch Buffer",
+        desc = "切换缓冲区",
       },
-      { "<leader>/", LazyVim.pick("live_grep"), desc = "Grep (Root Dir)" },
-      { "<leader>:", "<cmd>FzfLua command_history<cr>", desc = "Command History" },
-      { "<leader><space>", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
-      -- find
-      { "<leader>fb", "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffers" },
-      { "<leader>fB", "<cmd>FzfLua buffers<cr>", desc = "Buffers (all)" },
-      { "<leader>fc", LazyVim.pick.config_files(), desc = "Find Config File" },
-      { "<leader>ff", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
-      { "<leader>fF", LazyVim.pick("files", { root = false }), desc = "Find Files (cwd)" },
-      { "<leader>fg", "<cmd>FzfLua git_files<cr>", desc = "Find Files (git-files)" },
-      { "<leader>fr", "<cmd>FzfLua oldfiles<cr>", desc = "Recent" },
-      { "<leader>fR", LazyVim.pick("oldfiles", { cwd = vim.uv.cwd() }), desc = "Recent (cwd)" },
+      { "<leader>/", LazyVim.pick("live_grep"), desc = "搜索文本（根目录）" },
+      { "<leader>:", "<cmd>FzfLua command_history<cr>", desc = "命令历史" },
+      { "<leader><space>", LazyVim.pick("files"), desc = "查找文件（根目录）" },
+      -- 查找
+      { "<leader>fb", "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>", desc = "缓冲区" },
+      { "<leader>fB", "<cmd>FzfLua buffers<cr>", desc = "缓冲区（全部）" },
+      { "<leader>fc", LazyVim.pick.config_files(), desc = "查找配置文件" },
+      { "<leader>ff", LazyVim.pick("files"), desc = "查找文件（根目录）" },
+      { "<leader>fF", LazyVim.pick("files", { root = false }), desc = "查找文件（cwd）" },
+      { "<leader>fg", "<cmd>FzfLua git_files<cr>", desc = "查找文件（git-files）" },
+      { "<leader>fr", "<cmd>FzfLua oldfiles<cr>", desc = "最近" },
+      { "<leader>fR", LazyVim.pick("oldfiles", { cwd = vim.uv.cwd() }), desc = "最近（cwd）" },
       -- git
-      { "<leader>gc", "<cmd>FzfLua git_commits<CR>", desc = "Commits" },
-      { "<leader>gd", "<cmd>FzfLua git_diff<cr>", desc = "Git Diff (files)" },
-      { "<leader>gl", "<cmd>FzfLua git_commits<CR>", desc = "Commits" },
-      { "<leader>gs", "<cmd>FzfLua git_status<CR>", desc = "Status" },
-      { "<leader>gS", "<cmd>FzfLua git_stash<cr>", desc = "Git Stash" },
-      -- search
-      { '<leader>s"', "<cmd>FzfLua registers<cr>", desc = "Registers" },
-      { "<leader>s/", "<cmd>FzfLua search_history<cr>", desc = "Search History" },
-      { "<leader>sa", "<cmd>FzfLua autocmds<cr>", desc = "Auto Commands" },
-      { "<leader>sb", "<cmd>FzfLua lines<cr>", desc = "Buffer Lines" },
-      { "<leader>sc", "<cmd>FzfLua command_history<cr>", desc = "Command History" },
-      { "<leader>sC", "<cmd>FzfLua commands<cr>", desc = "Commands" },
-      { "<leader>sd", "<cmd>FzfLua diagnostics_workspace<cr>", desc = "Diagnostics" },
-      { "<leader>sD", "<cmd>FzfLua diagnostics_document<cr>", desc = "Buffer Diagnostics" },
-      { "<leader>sg", LazyVim.pick("live_grep"), desc = "Grep (Root Dir)" },
-      { "<leader>sG", LazyVim.pick("live_grep", { root = false }), desc = "Grep (cwd)" },
-      { "<leader>sh", "<cmd>FzfLua help_tags<cr>", desc = "Help Pages" },
-      { "<leader>sH", "<cmd>FzfLua highlights<cr>", desc = "Search Highlight Groups" },
-      { "<leader>sj", "<cmd>FzfLua jumps<cr>", desc = "Jumplist" },
-      { "<leader>sk", "<cmd>FzfLua keymaps<cr>", desc = "Key Maps" },
-      { "<leader>sl", "<cmd>FzfLua loclist<cr>", desc = "Location List" },
-      { "<leader>sM", "<cmd>FzfLua man_pages<cr>", desc = "Man Pages" },
-      { "<leader>sm", "<cmd>FzfLua marks<cr>", desc = "Jump to Mark" },
-      { "<leader>sR", "<cmd>FzfLua resume<cr>", desc = "Resume" },
-      { "<leader>sq", "<cmd>FzfLua quickfix<cr>", desc = "Quickfix List" },
-      { "<leader>sw", LazyVim.pick("grep_cword"), desc = "Word (Root Dir)" },
-      { "<leader>sW", LazyVim.pick("grep_cword", { root = false }), desc = "Word (cwd)" },
-      { "<leader>sw", LazyVim.pick("grep_visual"), mode = "x", desc = "Selection (Root Dir)" },
-      { "<leader>sW", LazyVim.pick("grep_visual", { root = false }), mode = "x", desc = "Selection (cwd)" },
-      { "<leader>uC", LazyVim.pick("colorschemes"), desc = "Colorscheme with Preview" },
+      { "<leader>gc", "<cmd>FzfLua git_commits<CR>", desc = "提交记录" },
+      { "<leader>gd", "<cmd>FzfLua git_diff<cr>", desc = "Git 差异（文件）" },
+      { "<leader>gl", "<cmd>FzfLua git_commits<CR>", desc = "提交记录" },
+      { "<leader>gs", "<cmd>FzfLua git_status<CR>", desc = "状态" },
+      { "<leader>gS", "<cmd>FzfLua git_stash<cr>", desc = "Git 储藏" },
+      -- 搜索
+      { '<leader>s"', "<cmd>FzfLua registers<cr>", desc = "寄存器" },
+      { "<leader>s/", "<cmd>FzfLua search_history<cr>", desc = "搜索历史" },
+      { "<leader>sa", "<cmd>FzfLua autocmds<cr>", desc = "自动命令" },
+      { "<leader>sb", "<cmd>FzfLua lines<cr>", desc = "缓冲区行" },
+      { "<leader>sc", "<cmd>FzfLua command_history<cr>", desc = "命令历史" },
+      { "<leader>sC", "<cmd>FzfLua commands<cr>", desc = "命令" },
+      { "<leader>sd", "<cmd>FzfLua diagnostics_workspace<cr>", desc = "诊断" },
+      { "<leader>sD", "<cmd>FzfLua diagnostics_document<cr>", desc = "缓冲区诊断" },
+      { "<leader>sg", LazyVim.pick("live_grep"), desc = "搜索文本（根目录）" },
+      { "<leader>sG", LazyVim.pick("live_grep", { root = false }), desc = "搜索文本（cwd）" },
+      { "<leader>sh", "<cmd>FzfLua help_tags<cr>", desc = "帮助页面" },
+      { "<leader>sH", "<cmd>FzfLua highlights<cr>", desc = "搜索高亮组" },
+      { "<leader>sj", "<cmd>FzfLua jumps<cr>", desc = "跳转列表" },
+      { "<leader>sk", "<cmd>FzfLua keymaps<cr>", desc = "键位映射" },
+      { "<leader>sl", "<cmd>FzfLua loclist<cr>", desc = "位置列表" },
+      { "<leader>sM", "<cmd>FzfLua man_pages<cr>", desc = "Man 页面" },
+      { "<leader>sm", "<cmd>FzfLua marks<cr>", desc = "跳到标记" },
+      { "<leader>sR", "<cmd>FzfLua resume<cr>", desc = "继续上次选择" },
+      { "<leader>sq", "<cmd>FzfLua quickfix<cr>", desc = "快速修复列表" },
+      { "<leader>sw", LazyVim.pick("grep_cword"), desc = "单词（根目录）" },
+      { "<leader>sW", LazyVim.pick("grep_cword", { root = false }), desc = "单词（cwd）" },
+      { "<leader>sw", LazyVim.pick("grep_visual"), mode = "x", desc = "可视区域（根目录）" },
+      { "<leader>sW", LazyVim.pick("grep_visual", { root = false }), mode = "x", desc = "可视区域（cwd）" },
+      { "<leader>uC", LazyVim.pick("colorschemes"), desc = "配色方案（带预览）" },
       {
         "<leader>ss",
         function()
@@ -263,7 +263,7 @@ return {
             regex_filter = symbols_filter,
           })
         end,
-        desc = "Goto Symbol",
+        desc = "转到符号",
       },
       {
         "<leader>sS",
@@ -272,7 +272,7 @@ return {
             regex_filter = symbols_filter,
           })
         end,
-        desc = "Goto Symbol (Workspace)",
+        desc = "转到符号（工作区）",
       },
     },
   },
@@ -282,8 +282,8 @@ return {
     optional = true,
     -- stylua: ignore
     keys = {
-      { "<leader>st", function() require("todo-comments.fzf").todo() end, desc = "Todo" },
-      { "<leader>sT", function () require("todo-comments.fzf").todo({ keywords = { "TODO", "FIX", "FIXME" } }) end, desc = "Todo/Fix/Fixme" },
+      { "<leader>st", function() require("todo-comments.fzf").todo() end, desc = "待办事项" },
+      { "<leader>sT", function () require("todo-comments.fzf").todo({ keywords = { "TODO", "FIX", "FIXME" } }) end, desc = "待办/修复/待修复" },
     },
   },
 
@@ -294,10 +294,10 @@ return {
         -- stylua: ignore
         ["*"] = {
           keys = {
-            { "gd", "<cmd>FzfLua lsp_definitions     jump1=true ignore_current_line=true<cr>", desc = "Goto Definition", has = "definition" },
-            { "gr", "<cmd>FzfLua lsp_references      jump1=true ignore_current_line=true<cr>", desc = "References", nowait = true },
-            { "gI", "<cmd>FzfLua lsp_implementations jump1=true ignore_current_line=true<cr>", desc = "Goto Implementation" },
-            { "gy", "<cmd>FzfLua lsp_typedefs        jump1=true ignore_current_line=true<cr>", desc = "Goto T[y]pe Definition" },
+            { "gd", "<cmd>FzfLua lsp_definitions     jump1=true ignore_current_line=true<cr>", desc = "转到定义", has = "definition" },
+            { "gr", "<cmd>FzfLua lsp_references      jump1=true ignore_current_line=true<cr>", desc = "引用", nowait = true },
+            { "gI", "<cmd>FzfLua lsp_implementations jump1=true ignore_current_line=true<cr>", desc = "转到实现" },
+            { "gy", "<cmd>FzfLua lsp_typedefs        jump1=true ignore_current_line=true<cr>", desc = "转到类[y]型定义" },
           }
         },
       },

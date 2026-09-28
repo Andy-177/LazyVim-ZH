@@ -1,13 +1,13 @@
 ---@class lazyvim.util.mini
 local M = {}
 
--- taken from MiniExtra.gen_ai_spec.buffer
+-- 取自 MiniExtra.gen_ai_spec.buffer
 function M.ai_buffer(ai_type)
   local start_line, end_line = 1, vim.fn.line("$")
   if ai_type == "i" then
-    -- Skip first and last blank lines for `i` textobject
+    -- 对 `i` 文本对象，跳过首尾的空行
     local first_nonblank, last_nonblank = vim.fn.nextnonblank(start_line), vim.fn.prevnonblank(end_line)
-    -- Do nothing for buffer with all blanks
+    -- 对于全为空白字符的缓冲区不做任何处理
     if first_nonblank == 0 or last_nonblank == 0 then
       return { from = { line = start_line, col = 1 } }
     end
@@ -18,37 +18,37 @@ function M.ai_buffer(ai_type)
   return { from = { line = start_line, col = 1 }, to = { line = end_line, col = to_col } }
 end
 
--- register all text objects with which-key
+-- 向 which-key 注册所有文本对象
 ---@param opts table
 function M.ai_whichkey(opts)
   local objects = {
-    { " ", desc = "whitespace" },
-    { '"', desc = '" string' },
-    { "'", desc = "' string" },
-    { "(", desc = "() block" },
-    { ")", desc = "() block with ws" },
-    { "<", desc = "<> block" },
-    { ">", desc = "<> block with ws" },
-    { "?", desc = "user prompt" },
-    { "U", desc = "use/call without dot" },
-    { "[", desc = "[] block" },
-    { "]", desc = "[] block with ws" },
-    { "_", desc = "underscore" },
-    { "`", desc = "` string" },
-    { "a", desc = "argument" },
-    { "b", desc = ")]} block" },
-    { "c", desc = "class" },
-    { "d", desc = "digit(s)" },
+    { " ", desc = "空白字符" },
+    { '"', desc = '" 字符串' },
+    { "'", desc = "' 字符串" },
+    { "(", desc = "() 块" },
+    { ")", desc = "() 块（含空白）" },
+    { "<", desc = "<> 块" },
+    { ">", desc = "<> 块（含空白）" },
+    { "?", desc = "用户提示符" },
+    { "U", desc = "不带点的 use/call" },
+    { "[", desc = "[] 块" },
+    { "]", desc = "[] 块（含空白）" },
+    { "_", desc = "下划线" },
+    { "`", desc = "` 字符串" },
+    { "a", desc = "参数" },
+    { "b", desc = ")]} 块" },
+    { "c", desc = "类" },
+    { "d", desc = "数字" },
     { "e", desc = "CamelCase / snake_case" },
-    { "f", desc = "function" },
-    { "g", desc = "entire file" },
-    { "i", desc = "indent" },
-    { "o", desc = "block, conditional, loop" },
-    { "q", desc = "quote `\"'" },
-    { "t", desc = "tag" },
+    { "f", desc = "函数" },
+    { "g", desc = "整个文件" },
+    { "i", desc = "缩进块" },
+    { "o", desc = "块、条件语句、循环" },
+    { "q", desc = "引号 `\"'" },
+    { "t", desc = "标签" },
     { "u", desc = "use/call" },
-    { "{", desc = "{} block" },
-    { "}", desc = "{} with ws" },
+    { "{", desc = "{} 块" },
+    { "}", desc = "{} 块（含空白）" },
   }
 
   ---@type wk.Spec[]

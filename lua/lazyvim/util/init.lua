@@ -57,24 +57,24 @@ function M.has(plugin)
   return M.get_plugin(plugin) ~= nil
 end
 
---- Checks if the extras is enabled:
---- * If the module was imported
---- * If the module was added by LazyExtras
---- * If the module is in the user's lazy imports
+-- 检查某个扩展是否已启用：
+-- * 该模块已被导入
+-- * 该模块由 LazyExtras 添加
+-- * 该模块出现在用户的 lazy 导入中
 ---@param extra string
 function M.has_extra(extra)
   local Config = require("lazyvim.config")
   local modname = "lazyvim.plugins.extras." .. extra
   local LazyConfig = require("lazy.core.config")
-  -- check if it was imported already
+  -- 检查是否已经被导入
   if vim.tbl_contains(LazyConfig.spec.modules, modname) then
     return true
   end
-  -- check if it was added by LazyExtras
+  -- 检查是否由 LazyExtras 添加
   if vim.tbl_contains(Config.json.data.extras, modname) then
     return true
   end
-  -- check if it's in the imports
+  -- 检查它是否在导入列表中
   local spec = LazyConfig.options.spec
   if type(spec) == "table" then
     for _, s in ipairs(spec) do
@@ -96,9 +96,9 @@ function M.on_very_lazy(fn)
   })
 end
 
---- This extends a deeply nested list with a key in a table
---- that is a dot-separated string.
---- The nested list will be created if it does not exist.
+--- 这会向表中的某个键（以点分隔的字符串表示）追加一个深层嵌套列表
+-- 若该嵌套列表不存在则会被创建。
+
 ---@generic T
 ---@param t T[]
 ---@param key string
@@ -130,7 +130,7 @@ end
 ---@param opts? LazyNotifyOpts
 function M.deprecate(old, new, opts)
   M.warn(
-    ("`%s` is deprecated. Please use `%s` instead"):format(old, new),
+    ("`%s` 已废弃，请改用 `%s`"):format(old, new),
     vim.tbl_extend("force", {
       title = "LazyVim",
       once = true,
@@ -140,7 +140,7 @@ function M.deprecate(old, new, opts)
   )
 end
 
--- delay notifications till vim.notify was replaced or after 500ms
+-- 延迟通知，直到 vim.notify 被替换或超过 500 毫秒
 function M.lazy_notify()
   local notifs = {}
   local function temp(...)
@@ -157,7 +157,7 @@ function M.lazy_notify()
     timer:stop()
     check:stop()
     if vim.notify == temp then
-      vim.notify = orig -- put back the original notify if needed
+      -- 如有需要，恢复原有的 notify
     end
     vim.schedule(function()
       ---@diagnostic disable-next-line: no-unknown
@@ -167,13 +167,13 @@ function M.lazy_notify()
     end)
   end
 
-  -- wait till vim.notify has been replaced
+  -- 等待 vim.notify 被替换
   check:start(function()
     if vim.notify ~= temp then
       replay()
     end
   end)
-  -- or if it took more than 500ms, then something went wrong
+  -- 若超过 500 毫秒仍未替换，说明出了问题
   timer:start(500, 0, replay)
 end
 
@@ -200,9 +200,9 @@ function M.on_load(name, fn)
   end
 end
 
--- Wrapper around vim.keymap.set that will
--- not create a keymap if a lazy key handler exists.
--- It will also set `silent` to true by default.
+-- vim.keymap.set 的安全包装，
+-- 当存在 lazy 键位处理器时不会创建键位。
+-- 同时默认将 `silent` 设为 true。
 function M.safe_keymap_set(mode, lhs, rhs, opts)
   local keys = require("lazy.core.handler").handlers.keys
   ---@cast keys LazyKeysHandler
@@ -213,7 +213,7 @@ function M.safe_keymap_set(mode, lhs, rhs, opts)
     return not (keys.have and keys:have(lhs, m))
   end, modes)
 
-  -- do not create the keymap if a lazy keys handler exists
+  -- 若存在 lazy 键位处理器，则不创建该键位
   if #modes > 0 then
     opts = opts or {}
     opts.silent = opts.silent ~= false
@@ -247,14 +247,14 @@ function M.create_undo()
   end
 end
 
---- Gets a path to a package in the Mason registry.
---- Prefer this to `get_package`, since the package might not always be
---- available yet and trigger errors.
+-- 获取 Mason 注册表中某个包的路径。
+-- 优先使用它而不是 `get_package`，因为该包不一定总是
+-- 可用，从而触发错误。
 ---@param pkg string
 ---@param path? string
 ---@param opts? { warn?: boolean }
 function M.get_pkg_path(pkg, path, opts)
-  pcall(require, "mason") -- make sure Mason is loaded. Will fail when generating docs
+  -- pcall(require, "mason") -- 确保 Mason 已加载。生成文档时会失败
   local root = vim.env.MASON or (vim.fn.stdpath("data") .. "/mason")
   opts = opts or {}
   opts.warn = opts.warn == nil and true or opts.warn
@@ -264,7 +264,7 @@ function M.get_pkg_path(pkg, path, opts)
     vim.schedule(function()
       if not require("lazy.core.config").headless() and not vim.loop.fs_stat(ret) then
         M.warn(
-          ("Mason package path not found for **%s**:\n- `%s`\nYou may need to force update the package."):format(
+          ("未找到 **%s** 的 Mason 包路径：\n- `%s`\n你可能需要强制更新该包。"):format(
             pkg,
             path
           )
@@ -275,7 +275,7 @@ function M.get_pkg_path(pkg, path, opts)
   return ret
 end
 
---- Override the default title for notifications.
+-- 覆盖通知的默认标题。
 for _, level in ipairs({ "info", "warn", "error" }) do
   M[level] = function(msg, opts)
     opts = opts or {}
@@ -299,19 +299,19 @@ function M.memoize(fn)
   end
 end
 
--- Safe wrapper around snacks to prevent errors when LazyVim is still installing
+-- snacks 的安全包装，避免 LazyVim 仍在安装时出错
 function M.statuscolumn()
   return package.loaded.snacks and require("snacks.statuscolumn").get() or ""
 end
 
 local _defaults = {} ---@type table<string, boolean>
 
--- Determines whether it's safe to set an option to a default value.
+-- 判断将某个选项设为默认值是否安全。
 --
--- It will only set the option if:
--- * it is the same as the global value
--- * it's current value is a default value
--- * it was last set by a script in $VIMRUNTIME
+-- 只有在满足以下条件时才会设置该选项：
+-- * 它与全局值相同
+-- * 它的当前值是默认值
+-- * 它最后是由 $VIMRUNTIME 中的脚本设置的
 ---@param option string
 ---@param value string|number|boolean
 ---@return boolean was_set
@@ -324,8 +324,8 @@ function M.set_default(option, value)
 
   local source = ""
   if l ~= g and not _defaults[key] then
-    -- Option does not match global and is not a default value
-    -- Check if it was set by a script in $VIMRUNTIME
+    -- 该选项与全局值不同，且不是默认值
+    -- 检查它是否由 $VIMRUNTIME 中的脚本设置
     local info = vim.api.nvim_get_option_info2(option, { scope = "local" })
     ---@param e vim.fn.getscriptinfo.ret
     local scriptinfo = vim.tbl_filter(function(e)
@@ -336,7 +336,7 @@ function M.set_default(option, value)
     if not by_rtp then
       if vim.g.lazyvim_debug_set_default then
         LazyVim.warn(
-          ("Not setting option `%s` to `%q` because it was changed by a plugin."):format(option, value),
+          ("未将选项 `%s` 设为 `%q`，因为它已被某个插件修改。"):format(option, value),
           { title = "LazyVim", once = true }
         )
       end
@@ -346,10 +346,10 @@ function M.set_default(option, value)
 
   if vim.g.lazyvim_debug_set_default then
     LazyVim.info({
-      ("Setting option `%s` to `%q`"):format(option, value),
-      ("Was: %q"):format(l),
-      ("Global: %q"):format(g),
-      source ~= "" and ("Last set by: %s"):format(source) or "",
+      ("将选项 `%s` 设为 `%q`"):format(option, value),
+      ("原值：%q"):format(l),
+      ("全局值：%q"):format(g),
+      source ~= "" and ("最后设置者：%s"):format(source) or "",
       "buf: " .. vim.api.nvim_buf_get_name(0),
     }, { title = "LazyVim", once = true })
   end

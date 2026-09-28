@@ -1,8 +1,9 @@
 if vim.fn.has("nvim-0.11.2") == 0 then
   vim.api.nvim_echo({
-    { "LazyVim requires Neovim >= 0.11.2\n", "ErrorMsg" },
-    { "For more info, see: https://github.com/LazyVim/LazyVim/issues/6421\n", "Comment" },
-    { "Press any key to exit", "MoreMsg" },
+    { { "LazyVim 需要 Neovim >= 0.11.2\n", "ErrorMsg" },
+      { "更多信息请参见：https://github.com/LazyVim/LazyVim/issues/6421\n", "Comment" },
+      { "按任意键退出", "MoreMsg" },
+    },
   }, true, {})
   vim.fn.getchar()
   vim.cmd([[quit]])
@@ -22,8 +23,8 @@ return {
     config = function(_, opts)
       local notify = vim.notify
       require("snacks").setup(opts)
-      -- HACK: restore vim.notify after snacks setup and let noice.nvim take over
-      -- this is needed to have early notifications show up in noice history
+      -- 变通方案：在 snacks 设置完成后恢复 vim.notify，并让 noice.nvim 接管
+      -- 这样早期通知才会显示在 noice 历史记录中
       if LazyVim.has("noice.nvim") then
         vim.notify = notify
       end

@@ -1,8 +1,7 @@
--- Automatically highlights other instances of the word under your cursor.
--- This works with LSP, Treesitter, and regexp matching to find the other
--- instances.
+-- 自动高亮光标下单词的其他出现位置。
+-- 通过 LSP、Treesitter 和正则匹配来查找其他出现位置。
 return {
-  -- disable snacks words
+  -- 禁用 snacks words
   { "snacks.nvim", opts = { words = { enabled = false } } },
 
   {
@@ -42,7 +41,7 @@ return {
       map("]]", "next")
       map("[[", "prev")
 
-      -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
+      -- 在加载 ftplugins 之后也要设置，因为很多插件会覆盖 [[ 和 ]]
       vim.api.nvim_create_autocmd("FileType", {
         callback = function()
           local buffer = vim.api.nvim_get_current_buf()
@@ -52,8 +51,8 @@ return {
       })
     end,
     keys = {
-      { "]]", desc = "Next Reference" },
-      { "[[", desc = "Prev Reference" },
+      { "]]", desc = "下一个引用" },
+      { "[[", desc = "上一个引用" },
     },
   },
 }

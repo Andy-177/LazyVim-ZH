@@ -1,16 +1,16 @@
 ---@diagnostic disable: missing-fields
 if lazyvim_docs then
-  -- Native inline completions don't support being shown as regular completions
+  -- 原生内联补全不支持作为常规补全显示
   vim.g.ai_cmp = false
 end
 
 if LazyVim.has_extra("ai.copilot-native") then
   if vim.fn.has("nvim-0.12") == 0 then
-    LazyVim.error("You need Neovim >= 0.12 to use the `ai.copilot-native` extra.")
+    LazyVim.error("使用 `ai.copilot-native` 扩展需要 Neovim >= 0.12。")
     return {}
   end
   if LazyVim.has_extra("ai.copilot") then
-    LazyVim.error("Please disable the `ai.copilot` extra if you want to use `ai.copilot-native`")
+    LazyVim.error("如果想使用 `ai.copilot-native`，请先禁用 `ai.copilot` 扩展")
     return {}
   end
 end
@@ -19,7 +19,7 @@ vim.g.ai_cmp = false
 local status = {} ---@type table<number, "ok" | "error" | "pending">
 
 return {
-  desc = "Native Copilot LSP integration. Requires Neovim >= 0.12",
+  desc = "原生 Copilot LSP 集成，需要 Neovim >= 0.12",
   -- copilot-language-server
   {
     "neovim/nvim-lspconfig",
@@ -31,13 +31,13 @@ return {
             {
               "<M-]>",
               function() vim.lsp.inline_completion.select({ count = 1 }) end,
-              desc = "Next Copilot Suggestion",
+              desc = "下一个 Copilot 建议",
               mode = { "i", "n" },
             },
             {
               "<M-[>",
               function() vim.lsp.inline_completion.select({ count = -1 }) end,
-              desc = "Prev Copilot Suggestion",
+              desc = "上一个 Copilot 建议",
               mode = { "i", "n" },
             },
           },
@@ -48,7 +48,7 @@ return {
           vim.schedule(function()
             vim.lsp.inline_completion.enable()
           end)
-          -- Accept inline suggestions or next edits
+          -- 接受内联建议或后续编辑
           LazyVim.cmp.actions.ai_accept = function()
             return vim.lsp.inline_completion.get()
           end
@@ -62,7 +62,7 @@ return {
                   end
                   status[ctx.client_id] = res.kind ~= "Normal" and "error" or res.busy and "pending" or "ok"
                   if res.status == "Error" then
-                    LazyVim.error("Please use `:LspCopilotSignIn` to sign in to Copilot")
+                    LazyVim.error("请使用 `:LspCopilotSignIn` 登录 Copilot")
                   end
                 end,
               },

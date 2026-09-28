@@ -24,14 +24,14 @@ return {
                 local buf_name = vim.api.nvim_buf_get_name(0)
                 local file_name = vim.fn.fnamemodify(buf_name, ":t")
                 LazyVim.lsp.execute({
-                  title = "Pin Main",
+                  title = "固定主文件",
                   filter = "tinymist",
                   command = "tinymist.pinMain",
                   arguments = { buf_name },
                 })
-                LazyVim.info("Tinymist: Pinned " .. file_name)
+                LazyVim.info("Tinymist: 已固定 " .. file_name)
               end,
-              desc = "Pin main file",
+              desc = "固定主文件",
             },
           },
           single_file_support = true, -- Fixes LSP attachment in non-Git directories
@@ -61,7 +61,7 @@ return {
         "<leader>cp",
         ft = "typst",
         "<cmd>TypstPreviewToggle<cr>",
-        desc = "Toggle Typst Preview",
+        desc = "切换 Typst 预览",
       },
     },
     opts = {

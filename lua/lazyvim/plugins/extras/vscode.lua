@@ -31,11 +31,11 @@ Config.options.defaults.cond = function(plugin)
 end
 vim.g.snacks_animate = false
 
--- Add some vscode specific keymaps
+-- 添加一些 vscode 专用的键位
 vim.api.nvim_create_autocmd("User", {
   pattern = "LazyVimKeymapsDefaults",
   callback = function()
-    -- VSCode-specific keymaps for search and navigation
+    -- 用于搜索和导航的 VSCode 专用键位
     vim.keymap.set("n", "<leader><space>", "<cmd>Find<cr>")
     vim.keymap.set("n", "<leader>/", function()
       vscode.call("workbench.action.findInFiles")
@@ -44,14 +44,14 @@ vim.api.nvim_create_autocmd("User", {
       vscode.call("workbench.action.gotoSymbol")
     end)
 
-    -- Toggle VS Code integrated terminal
+    -- 切换 VS Code 集成终端
     for _, lhs in ipairs({ "<leader>ft", "<leader>fT", "<c-/>" }) do
       vim.keymap.set("n", lhs, function()
         vscode.call("workbench.action.terminal.toggleTerminal")
       end)
     end
 
-    -- Navigate VSCode tabs like lazyvim buffers
+    -- 像切换 lazyvim 缓冲区一样浏览 VSCode 标签页
     vim.keymap.set("n", "<S-h>", function()
       vscode.call("workbench.action.previousEditor")
     end)
@@ -80,7 +80,7 @@ return {
     "LazyVim/LazyVim",
     config = function(_, opts)
       opts = opts or {}
-      -- disable the colorscheme
+      -- 禁用配色方案
       opts.colorscheme = function() end
       require("lazyvim").setup(opts)
     end,

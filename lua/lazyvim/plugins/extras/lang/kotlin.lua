@@ -3,8 +3,8 @@ return {
     return LazyVim.extras.wants({
       ft = "kotlin",
       root = {
-        "settings.gradle", -- Gradle (multi-project)
-        "settings.gradle.kts", -- Gradle (multi-project)
+        "settings.gradle", -- Gradle（多项目）
+        "settings.gradle.kts", -- Gradle（多项目）
         "build.xml", -- Ant
         "pom.xml", -- Maven
         "build.gradle", -- Gradle
@@ -12,17 +12,17 @@ return {
       },
     })
   end,
-  -- Add packages(linting, debug adapter)
+  -- 添加软件包（代码检查、调试适配器）
   {
     "mason-org/mason.nvim",
     opts = { ensure_installed = { "ktlint" } },
   },
-  -- Add syntax highlighting
+  -- 添加语法高亮
   {
     "nvim-treesitter/nvim-treesitter",
     opts = { ensure_installed = { "kotlin" } },
   },
-  -- Add language server
+  -- 添加语言服务器
   {
     "neovim/nvim-lspconfig",
     opts = {
@@ -31,7 +31,7 @@ return {
       },
     },
   },
-  -- Add linting
+  -- 添加代码检查
   {
     "mfussenegger/nvim-lint",
     optional = true,
@@ -40,7 +40,7 @@ return {
       linters_by_ft = { kotlin = { "ktlint" } },
     },
   },
-  -- Add formatting
+  -- 添加格式化
   {
     "stevearc/conform.nvim",
     optional = true,
@@ -48,7 +48,7 @@ return {
       formatters_by_ft = { kotlin = { "ktlint" } },
     },
   },
-  -- Add formatting and linting
+  -- 添加格式化和代码检查
   {
     "nvimtools/none-ls.nvim",
     optional = true,
@@ -60,7 +60,7 @@ return {
       })
     end,
   },
-  -- Add debugger
+  -- 添加调试器
   {
     "mfussenegger/nvim-dap",
     optional = true,
@@ -80,9 +80,9 @@ return {
           type = "kotlin",
           request = "launch",
           name = "This file",
-          -- may differ, when in doubt, whatever your project structure may be,
-          -- it has to correspond to the class file located at `build/classes/`
-          -- and of course you have to build before you debug
+          -- 可能不同，无论如何，如果对你的项目结构有疑问，
+          -- 它必须对应位于 `build/classes/` 下的 class 文件
+          -- 当然，调试前必须先构建
           mainClass = function()
             local root = vim.fs.find("src", { path = vim.uv.cwd(), upward = true, stop = vim.env.HOME })[1] or ""
             local fname = vim.api.nvim_buf_get_name(0)
@@ -94,10 +94,10 @@ return {
           enableJsonLogging = false,
         },
         {
-          -- Use this for unit tests
-          -- First, run
+          -- 将其用于单元测试
+          -- 首先，运行
           -- ./gradlew --info cleanTest test --debug-jvm
-          -- then attach the debugger to it
+          -- 然后将调试器附加到它
           type = "kotlin",
           request = "attach",
           name = "Attach to debugging session",

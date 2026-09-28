@@ -18,23 +18,23 @@ return {
       local opts = {
         theme = "doom",
         hide = {
-          -- this is taken care of by lualine
-          -- enabling this messes up the actual laststatus setting after loading a file
+          -- 这部分由 lualine 处理
+          -- 启用它会在加载文件后破坏实际的 laststatus 设置
           statusline = false,
         },
         config = {
           header = vim.split(logo, "\n"),
           -- stylua: ignore
           center = {
-            { action = 'lua LazyVim.pick()()',                           desc = " Find File",       icon = " ", key = "f" },
-            { action = "ene | startinsert",                              desc = " New File",        icon = " ", key = "n" },
-            { action = 'lua LazyVim.pick("oldfiles")()',                 desc = " Recent Files",    icon = " ", key = "r" },
-            { action = 'lua LazyVim.pick("live_grep")()',                desc = " Find Text",       icon = " ", key = "g" },
-            { action = 'lua LazyVim.pick.config_files()()',              desc = " Config",          icon = " ", key = "c" },
-            { action = 'lua require("persistence").load()',              desc = " Restore Session", icon = " ", key = "s" },
-            { action = "LazyExtras",                                     desc = " Lazy Extras",     icon = " ", key = "x" },
+            { action = 'lua LazyVim.pick()()',                           desc = " 查找文件",       icon = " ", key = "f" },
+            { action = "ene | startinsert",                              desc = " 新建文件",        icon = " ", key = "n" },
+            { action = 'lua LazyVim.pick("oldfiles")()',                 desc = " 最近的文件",    icon = " ", key = "r" },
+            { action = 'lua LazyVim.pick("live_grep")()',                desc = " 查找文本",       icon = " ", key = "g" },
+            { action = 'lua LazyVim.pick.config_files()()',              desc = " 配置",          icon = " ", key = "c" },
+            { action = 'lua require("persistence").load()',              desc = " 恢复会话", icon = " ", key = "s" },
+            { action = "LazyExtras",                                     desc = " Lazy 扩展",     icon = " ", key = "x" },
             { action = "Lazy",                                           desc = " Lazy",            icon = "󰒲 ", key = "l" },
-            { action = function() vim.api.nvim_input("<cmd>qa<cr>") end, desc = " Quit",            icon = " ", key = "q" },
+            { action = function() vim.api.nvim_input("<cmd>qa<cr>") end, desc = " 退出",            icon = " ", key = "q" },
           },
           footer = function()
             local stats = require("lazy").stats()
@@ -45,11 +45,11 @@ return {
       }
 
       for _, button in ipairs(opts.config.center) do
-        button.desc = button.desc .. string.rep(" ", 43 - #button.desc)
+        button.desc = button.desc .. string.rep(" ", 43 - vim.fn.strdisplaywidth(button.desc))
         button.key_format = "  %s"
       end
 
-      -- open dashboard after closing lazy
+      -- 关闭 lazy 后打开启动页
       if vim.o.filetype == "lazy" then
         vim.api.nvim_create_autocmd("WinClosed", {
           pattern = tostring(vim.api.nvim_get_current_win()),

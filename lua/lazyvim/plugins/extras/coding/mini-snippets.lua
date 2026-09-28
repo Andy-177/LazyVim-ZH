@@ -1,32 +1,32 @@
 if lazyvim_docs then
-  -- Set to `false` to prevent "non-lsp snippets"" from appearing inside completion windows
-  -- Motivation: Less clutter in completion windows and a more direct usage of snippets
+  -- 设为 `false` 可防止 "non-lsp snippets"" 出现在补全窗口中
+  -- 初衷：减少补全窗口中的杂乱内容，让代码片段使用起来更直接
   vim.g.lazyvim_mini_snippets_in_completion = true
 
-  -- NOTE: Please also read:
+  -- 注意：请同时阅读：
   -- https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-snippets.md#expand
   -- :h MiniSnippets-session
 
-  -- Example override for your own config:
+  -- 覆盖为你自己配置的示例：
   --[[
   return {
     {
       "nvim-mini/mini.snippets",
       opts = function(_, opts)
-        -- By default, for opts.snippets, the extra for mini.snippets only adds gen_loader.from_lang()
-        -- This provides a sensible quickstart, integrating with friendly-snippets
-        -- and your own language-specific snippets
+        -- 默认情况下，对于 opts.snippets，mini.snippets 扩展只添加 gen_loader.from_lang()
+        -- 这提供了一个合理的快速上手方案，并集成了 friendly-snippets
+        -- 以及你自己语言特定的代码片段
         --
-        -- In order to change opts.snippets, replace the entire table inside your own opts
+        -- 若要修改 opts.snippets，请在自己的 opts 中替换整个表
 
         local snippets, config_path = require("mini.snippets"), vim.fn.stdpath("config")
 
         opts.snippets = { -- override opts.snippets provided by extra...
-          -- Load custom file with global snippets first (order matters)
+          -- 先加载包含全局代码片段的自定义文件（顺序很重要）
           snippets.gen_loader.from_file(config_path .. "/snippets/global.json"),
 
-          -- Load snippets based on current language by reading files from
-          -- "snippets/" subdirectories from 'runtimepath' directories.
+          -- 从 'runtimepath' 目录下的子目录读取文件，
+          -- 根据当前语言加载 "snippets/" 代码片段
           snippets.gen_loader.from_lang(), -- this is the default in the extra...
         }
       end,
@@ -55,13 +55,13 @@ end
 local expand_select_override = nil
 
 return {
-  -- disable builtin snippet support:
+  -- 禁用内置代码片段支持：
   { "garymjr/nvim-snippets", optional = true, enabled = false },
-  -- disable luasnip:
+  -- 禁用 luasnip：
   { "L3MON4D3/LuaSnip", optional = true, enabled = false },
 
-  -- add mini.snippets
-  desc = "Manage and expand snippets (alternative to Luasnip)",
+  -- 添加 mini.snippets
+  desc = "管理和展开代码片段（Luasnip 的替代品）",
   {
     "nvim-mini/mini.snippets",
     event = "InsertEnter", -- don't depend on other plugins to load...
@@ -78,16 +78,16 @@ return {
       return {
         snippets = { mini_snippets.gen_loader.from_lang() },
 
-        -- Following the behavior of vim.snippets,
-        -- the intended usage of <esc> is to be able to temporarily exit into normal mode for quick edits.
+        -- 沿用 vim.snippets 的行为，
+        -- <esc> 的预期用法是能临时回到普通模式进行快速编辑。
         --
-        -- If you'd rather stop the snippet on <esc>, activate the line below in your own config:
-        -- mappings = { stop = "<esc>" }, -- <c-c> by default, see :h MiniSnippets-session
+        -- 如果你更想用 <esc> 结束代码片段，请在自己的配置中启用下面这行：
+        -- mappings = { stop = "<esc>" }, -- 默认是 <c-c>，参见 :h MiniSnippets-session
 
         expand = {
           select = function(snippets, insert)
-            -- Close completion window on snippet select - vim.ui.select
-            -- Needed to remove virtual text for fzf-lua and telescope, but not for mini.pick...
+            -- 选择代码片段时关闭补全窗口 —— vim.ui.select
+            -- 需要为 fzf-lua 和 telescope 移除虚拟文本，但 mini.pick 不需要...
             local select = expand_select_override or MiniSnippets.default_select
             select(snippets, insert)
           end,
@@ -96,7 +96,7 @@ return {
     end,
   },
 
-  -- nvim-cmp integration
+  -- nvim-cmp 集成
   {
     "hrsh7th/nvim-cmp",
     optional = true,
@@ -124,33 +124,33 @@ return {
       end
     end,
     -- stylua: ignore
-    -- counterpart to <tab> defined in cmp.mappings
+    -- 与 cmp.mappings 中定义的 <tab> 相对应
     keys = include_in_completion and { { "<s-tab>", function() jump("prev") end, mode = "i" } } or nil,
   },
 
-  -- blink.cmp integration
+  -- blink.cmp 集成
   {
     "saghen/blink.cmp",
     optional = true,
     opts = function(_, opts)
-      -- Return early
+      -- 提前返回
       if include_in_completion then
         opts.snippets = { preset = "mini_snippets" }
         return
       end
 
-      -- Standalone --
+      -- 独立模式 --
       local blink = require("blink.cmp")
       expand_select_override = function(snippets, insert)
-        -- Schedule, otherwise blink's virtual text is not removed on vim.ui.select
+        -- 需要 schedule，否则 vim.ui.select 时 blink 的虚拟文本不会被移除
         blink.cancel()
         vim.schedule(function()
           MiniSnippets.default_select(snippets, insert)
         end)
       end
       --
-      -- Blink performs a require on blink.cmp.sources.snippets.default
-      -- By removing the source, that default engine will not be used
+      -- Blink 会对 blink.cmp.sources.snippets.default 执行 require
+      -- 移除该数据源后，就不会使用那个默认引擎
       opts.sources.default = vim.tbl_filter(function(source)
         return source ~= "snippets"
       end, opts.sources.default)

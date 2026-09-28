@@ -5,21 +5,21 @@ return {
     })
   end,
 
-  -- yaml schema support
+  -- yaml schema 支持
   {
     "b0o/SchemaStore.nvim",
     lazy = true,
     version = false, -- last release is way too old
   },
 
-  -- correctly setup lspconfig
+  -- 正确配置 lspconfig
   {
     "neovim/nvim-lspconfig",
     opts = {
-      -- make sure mason installs the server
+      -- 确保 mason 安装该服务器
       servers = {
         yamlls = {
-          -- Have to add this for yamlls to understand that we support line folding
+          -- 必须添加此项，yamlls 才知道我们支持行折叠
           capabilities = {
             textDocument = {
               foldingRange = {
@@ -28,7 +28,7 @@ return {
               },
             },
           },
-          -- lazy-load schemastore when needed
+          -- 在需要时懒加载 schemastore
           before_init = function(_, new_config)
             new_config.settings.yaml.schemas = vim.tbl_deep_extend(
               "force",
@@ -45,10 +45,10 @@ return {
               },
               validate = true,
               schemaStore = {
-                -- Must disable built-in schemaStore support to use
-                -- schemas from SchemaStore.nvim plugin
+                -- 必须禁用内置的 schemaStore 支持，才能使用
+                -- SchemaStore.nvim 插件提供的 schema
                 enable = false,
-                -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+                -- 避免 TypeError: Cannot read properties of undefined (reading 'length')
                 url = "",
               },
             },

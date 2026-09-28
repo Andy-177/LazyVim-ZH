@@ -1,5 +1,5 @@
 return {
-  -- Disable `<leader>cs` keymap so it doesn't conflict with `outline.nvim`
+  -- 禁用 `<leader>cs` 键位，避免与 `outline.nvim` 冲突
   {
     "folke/trouble.nvim",
     optional = true,
@@ -9,7 +9,7 @@ return {
   },
   {
     "hedyhli/outline.nvim",
-    keys = { { "<leader>cs", "<cmd>Outline<cr>", desc = "Toggle Outline" } },
+    keys = { { "<leader>cs", "<cmd>Outline<cr>", desc = "切换 Outline" } },
     cmd = "Outline",
     opts = function()
       local defaults = require("outline.config").defaults
@@ -34,7 +34,7 @@ return {
     end,
   },
 
-  -- edgy integration
+  -- edgy 集成
   {
     "folke/edgy.nvim",
     optional = true,
@@ -44,7 +44,7 @@ return {
 
       if edgy_idx and edgy_idx > symbols_idx then
         LazyVim.warn(
-          "The `edgy.nvim` extra must be **imported** before the `outline.nvim` extra to work properly.",
+          "必须先 **导入** `edgy.nvim` extra，再导入 `outline.nvim` extra，才能正常工作。",
           { title = "LazyVim" }
         )
       end

@@ -1,21 +1,21 @@
 return {
-  -- This is what powers LazyVim's fancy-looking
-  -- tabs, which include filetype icons and close buttons.
+  -- 这个插件为 LazyVim 提供了精美的标签栏，
+  -- 标签栏上会显示文件类型图标和关闭按钮。
   {
     "akinsho/bufferline.nvim",
     event = "VeryLazy",
     keys = {
-      { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle Pin" },
-      { "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete Non-Pinned Buffers" },
-      { "<leader>br", "<Cmd>BufferLineCloseRight<CR>", desc = "Delete Buffers to the Right" },
-      { "<leader>bl", "<Cmd>BufferLineCloseLeft<CR>", desc = "Delete Buffers to the Left" },
-      { "<S-h>", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev Buffer" },
-      { "<S-l>", "<cmd>BufferLineCycleNext<cr>", desc = "Next Buffer" },
-      { "[b", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev Buffer" },
-      { "]b", "<cmd>BufferLineCycleNext<cr>", desc = "Next Buffer" },
-      { "[B", "<cmd>BufferLineMovePrev<cr>", desc = "Move buffer prev" },
-      { "]B", "<cmd>BufferLineMoveNext<cr>", desc = "Move buffer next" },
-      { "<leader>bj", "<cmd>BufferLinePick<cr>", desc = "Pick Buffer" },
+      { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "切换固定" },
+      { "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "删除未固定的缓冲区" },
+      { "<leader>br", "<Cmd>BufferLineCloseRight<CR>", desc = "删除右侧的缓冲区" },
+      { "<leader>bl", "<Cmd>BufferLineCloseLeft<CR>", desc = "删除左侧的缓冲区" },
+      { "<S-h>", "<cmd>BufferLineCyclePrev<cr>", desc = "上一个缓冲区" },
+      { "<S-l>", "<cmd>BufferLineCycleNext<cr>", desc = "下一个缓冲区" },
+      { "[b", "<cmd>BufferLineCyclePrev<cr>", desc = "上一个缓冲区" },
+      { "]b", "<cmd>BufferLineCycleNext<cr>", desc = "下一个缓冲区" },
+      { "[B", "<cmd>BufferLineMovePrev<cr>", desc = "向左移动缓冲区" },
+      { "]B", "<cmd>BufferLineMoveNext<cr>", desc = "向右移动缓冲区" },
+      { "<leader>bj", "<cmd>BufferLinePick<cr>", desc = "选择缓冲区" },
     },
     opts = {
       options = {
@@ -50,7 +50,7 @@ return {
     },
     config = function(_, opts)
       require("bufferline").setup(opts)
-      -- Fix bufferline when restoring a session
+      -- 修复恢复会话时的 bufferline 问题
       vim.api.nvim_create_autocmd({ "BufAdd", "BufDelete" }, {
         callback = function()
           vim.schedule(function()
@@ -61,23 +61,23 @@ return {
     end,
   },
 
-  -- Displays a fancy status line with git status,
-  -- LSP diagnostics, filetype information, and more.
+  -- 显示精美的状态栏，包含 git 状态、
+  -- LSP 诊断、文件类型等信息。
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     init = function()
       vim.g.lualine_laststatus = vim.o.laststatus
       if vim.fn.argc(-1) > 0 then
-        -- set an empty statusline till lualine loads
+        -- 在 lualine 加载完成前先使用空状态栏
         vim.o.statusline = " "
       else
-        -- hide the statusline on the starter page
+        -- 在启动页隐藏状态栏
         vim.o.laststatus = 0
       end
     end,
     opts = function()
-      -- PERF: we don't need this lualine require madness 🤷
+      -- 性能：不需要 lualine 那套 require 花活 🤷
       local lualine_require = require("lualine_require")
       lualine_require.require = require
 
@@ -167,8 +167,8 @@ return {
         extensions = { "neo-tree", "lazy", "fzf" },
       }
 
-      -- do not add trouble symbols if aerial is enabled
-      -- And allow it to be overriden for some buffer types (see autocmds)
+      -- 启用 aerial 时不要添加 trouble 符号
+      -- 同时允许针对某些缓冲区类型覆盖该设置（参见 autocmds）
       if vim.g.trouble_lualine and LazyVim.has("trouble.nvim") then
         local trouble = require("trouble")
         local symbols = trouble.statusline({
@@ -191,7 +191,7 @@ return {
     end,
   },
 
-  -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
+  -- 高度实验性的插件，完全替代消息、命令行和弹出菜单的界面。
   {
     "folke/noice.nvim",
     event = "VeryLazy",
@@ -225,19 +225,19 @@ return {
     -- stylua: ignore
     keys = {
       { "<leader>sn", "", desc = "+noice"},
-      { "<S-Enter>", function() require("noice").redirect(vim.fn.getcmdline()) end, mode = "c", desc = "Redirect Cmdline" },
-      { "<leader>snl", function() require("noice").cmd("last") end, desc = "Noice Last Message" },
-      { "<leader>snh", function() require("noice").cmd("history") end, desc = "Noice History" },
-      { "<leader>sna", function() require("noice").cmd("all") end, desc = "Noice All" },
-      { "<leader>snd", function() require("noice").cmd("dismiss") end, desc = "Dismiss All" },
-      { "<leader>snt", function() require("noice").cmd("pick") end, desc = "Noice Picker (Telescope/FzfLua)" },
-      { "<c-f>", function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end, silent = true, expr = true, desc = "Scroll Forward", mode = {"i", "n", "s"} },
-      { "<c-b>", function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end, silent = true, expr = true, desc = "Scroll Backward", mode = {"i", "n", "s"}},
+      { "<S-Enter>", function() require("noice").redirect(vim.fn.getcmdline()) end, mode = "c", desc = "重定向命令行" },
+      { "<leader>snl", function() require("noice").cmd("last") end, desc = "Noice 上条消息" },
+      { "<leader>snh", function() require("noice").cmd("history") end, desc = "Noice 历史记录" },
+      { "<leader>sna", function() require("noice").cmd("all") end, desc = "Noice 全部消息" },
+      { "<leader>snd", function() require("noice").cmd("dismiss") end, desc = "关闭全部" },
+      { "<leader>snt", function() require("noice").cmd("pick") end, desc = "Noice 选择器（Telescope/FzfLua）" },
+      { "<c-f>", function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end, silent = true, expr = true, desc = "向下滚动", mode = {"i", "n", "s"} },
+      { "<c-b>", function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end, silent = true, expr = true, desc = "向上滚动", mode = {"i", "n", "s"}},
     },
     config = function(_, opts)
-      -- HACK: noice shows messages from before it was enabled,
-      -- but this is not ideal when Lazy is installing plugins,
-      -- so clear the messages in this case.
+      -- 变通方案：noice 会显示启用之前产生的消息，
+      -- 但在 Lazy 安装插件时这样并不理想，
+      -- 因此这种情况下清空消息。
       if vim.o.filetype == "lazy" then
         vim.cmd([[messages clear]])
       end
@@ -266,7 +266,7 @@ return {
     end,
   },
 
-  -- ui components
+  -- 界面组件
   { "MunifTanjim/nui.nvim", lazy = true },
 
   {
@@ -289,8 +289,8 @@ return {
         else
           Snacks.notifier.show_history()
         end
-      end, desc = "Notification History" },
-      { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
+      end, desc = "通知历史" },
+      { "<leader>un", function() Snacks.notifier.hide() end, desc = "关闭全部通知" },
     },
   },
 
@@ -313,15 +313,15 @@ return {
           -- stylua: ignore
           ---@type snacks.dashboard.Item[]
           keys = {
-            { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
-            { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-            { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
-            { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-            { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
-            { icon = " ", key = "s", desc = "Restore Session", section = "session" },
-            { icon = " ", key = "x", desc = "Lazy Extras", action = ":LazyExtras" },
+            { icon = " ", key = "f", desc = "查找文件", action = ":lua Snacks.dashboard.pick('files')" },
+            { icon = " ", key = "n", desc = "新建文件", action = ":ene | startinsert" },
+            { icon = " ", key = "g", desc = "查找文本", action = ":lua Snacks.dashboard.pick('live_grep')" },
+            { icon = " ", key = "r", desc = "最近的文件", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+            { icon = " ", key = "c", desc = "配置", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+            { icon = " ", key = "s", desc = "恢复会话", section = "会话" },
+            { icon = " ", key = "x", desc = "Lazy 扩展", action = ":LazyExtras" },
             { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
-            { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+            { icon = " ", key = "q", desc = "退出", action = ":qa" },
           },
         },
       },

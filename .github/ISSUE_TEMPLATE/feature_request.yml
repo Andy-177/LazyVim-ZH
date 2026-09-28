@@ -1,43 +1,43 @@
-name: Feature Request
-description: Suggest a new feature
+name: 功能建议
+description: 提出新功能建议
 title: "feature: "
 labels: [enhancement]
 body:
   - type: markdown
     attributes:
       value: |
-        **IMPORTANT:** ideas or requests related to extras, should go in the [Extra Requests](https://github.com/LazyVim/LazyVim/discussions/categories/extra-requests)
-        discussion forum.
+        **重要：** 与 extras 相关的想法或需求，请发布到[Extras 需求](https://github.com/LazyVim/LazyVim/discussions/categories/extra-requests)
+        讨论区。
   - type: checkboxes
     attributes:
-      label: Did you check the docs?
-      description: Make sure you read all the docs before submitting a feature request
+      label: 你是否已查看文档？
+      description: 提交功能建议前请确认你已阅读全部文档
       options:
-        - label: I have read all the LazyVim docs
+        - label: 我已阅读全部 LazyVim 文档
           required: true
-        - label: This is not a request for a new or existing extra (see above)
+        - label: 这不是请求新增或已有的 extra（见上）
           required: true
   - type: textarea
     validations:
       required: true
     attributes:
-      label: Is your feature request related to a problem? Please describe.
-      description: A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+      label: 你的功能建议是否与某个问题相关？请描述一下。
+      description: 清晰、简洁地描述这个问题是什么。例如：我总是被 [...] 困扰。
   - type: textarea
     validations:
       required: true
     attributes:
-      label: Describe the solution you'd like
-      description: A clear and concise description of what you want to happen.
+      label: 描述你期望的解决方案
+      description: 清晰、简洁地描述你希望发生什么。
   - type: textarea
     validations:
       required: true
     attributes:
-      label: Describe alternatives you've considered
-      description: A clear and concise description of any alternative solutions or features you've considered.
+      label: 描述你考虑过的其他方案
+      description: 清晰、简洁地描述你考虑过的其他解决方案或功能。
   - type: textarea
     validations:
       required: false
     attributes:
-      label: Additional context
-      description: Add any other context or screenshots about the feature request here.
+      label: 补充说明
+      description: 在这里补充与该功能建议有关的其他信息或截图。

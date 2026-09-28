@@ -1,5 +1,5 @@
 return {
-  -- Tabnine cmp source
+  -- Tabnine cmp 数据源
   {
     "tzachar/cmp-tabnine",
     build = LazyVim.is_win() and "pwsh -noni .\\install.ps1" or "./install.sh",
@@ -26,7 +26,7 @@ return {
       })
 
       opts.formatting.format = LazyVim.inject.args(opts.formatting.format, function(entry, item)
-        -- Hide percentage in the menu
+        -- 在菜单中隐藏百分比
         if entry.source.name == "cmp_tabnine" then
           item.menu = ""
         end
@@ -52,7 +52,7 @@ return {
     },
   },
 
-  -- Show TabNine status in lualine
+  -- 在 lualine 中显示 TabNine 状态
   {
     "nvim-lualine/lualine.nvim",
     optional = true,

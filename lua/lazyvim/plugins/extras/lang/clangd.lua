@@ -15,7 +15,7 @@ return {
     })
   end,
 
-  -- Add C/C++ to treesitter
+  -- 将 C/C++ 添加到 treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     opts = { ensure_installed = { "cpp" } },
@@ -29,7 +29,7 @@ return {
         inline = false,
       },
       ast = {
-        --These require codicons (https://github.com/microsoft/vscode-codicons)
+        --这些需要 codicons（https://github.com/microsoft/vscode-codicons）
         role_icons = {
           type = "",
           declaration = "",
@@ -51,15 +51,15 @@ return {
     },
   },
 
-  -- Correctly setup lspconfig for clangd 🚀
+  -- 正确配置 clangd 的 lspconfig 🚀
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        -- Ensure mason installs the server
+        -- 确保 mason 安装该服务器
         clangd = {
           keys = {
-            { "<leader>ch", "<cmd>LspClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
+            { "<leader>ch", "<cmd>LspClangdSwitchSourceHeader<cr>", desc = "切换源文件/头文件 (C/C++)" },
           },
           root_markers = {
             "compile_commands.json",
@@ -110,7 +110,7 @@ return {
     "mfussenegger/nvim-dap",
     optional = true,
     dependencies = {
-      -- Ensure C/C++ debugger is installed
+      -- 确保已安装 C/C++ 调试器
       "mason-org/mason.nvim",
       optional = true,
       opts = { ensure_installed = { "codelldb" } },

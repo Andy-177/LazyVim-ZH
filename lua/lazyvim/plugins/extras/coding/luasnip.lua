@@ -1,8 +1,8 @@
 return {
-  -- disable builtin snippet support
+  -- 禁用内置代码片段支持
   { "garymjr/nvim-snippets", optional = true, enabled = false },
 
-  -- add luasnip
+  -- 添加 luasnip
   {
     "L3MON4D3/LuaSnip",
     lazy = true,
@@ -24,7 +24,7 @@ return {
     },
   },
 
-  -- add snippet_forward action
+  -- 添加 snippet_forward 操作
   {
     "L3MON4D3/LuaSnip",
     opts = function()
@@ -45,7 +45,7 @@ return {
     end,
   },
 
-  -- nvim-cmp integration
+  -- nvim-cmp 集成
   {
     "hrsh7th/nvim-cmp",
     optional = true,
@@ -65,7 +65,7 @@ return {
     },
   },
 
-  -- blink.cmp integration
+  -- blink.cmp 集成
   {
     "saghen/blink.cmp",
     optional = true,

@@ -6,27 +6,27 @@ return {
     })
   end,
 
-  -- add json to treesitter
+  -- 将 json 添加到 treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     opts = { ensure_installed = { "json5" } },
   },
 
-  -- yaml schema support
+  -- yaml schema 支持
   {
     "b0o/SchemaStore.nvim",
     lazy = true,
     version = false, -- last release is way too old
   },
 
-  -- correctly setup lspconfig
+  -- 正确配置 lspconfig
   {
     "neovim/nvim-lspconfig",
     opts = {
-      -- make sure mason installs the server
+      -- 确保 mason 安装该服务器
       servers = {
         jsonls = {
-          -- lazy-load schemastore when needed
+          -- 在需要时懒加载 schemastore
           before_init = function(_, new_config)
             new_config.settings.json.schemas = new_config.settings.json.schemas or {}
             vim.list_extend(new_config.settings.json.schemas, require("schemastore").json.schemas())

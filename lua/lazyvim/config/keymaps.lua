@@ -1,127 +1,127 @@
--- This file is automatically loaded by lazyvim.config.init
+-- 此文件由 lazyvim.config.init 自动加载
 
--- DO NOT USE `LazyVim.safe_keymap_set` IN YOUR OWN CONFIG!!
--- use `vim.keymap.set` instead
+-- 请勿在自己的配置中使用 `LazyVim.safe_keymap_set`！！
+-- 请改用 `vim.keymap.set`
 local map = LazyVim.safe_keymap_set
 
--- better up/down
-map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
-map({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
-map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
-map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+-- 更好的上下移动
+map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "向下移动", expr = true, silent = true })
+map({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "向下移动", expr = true, silent = true })
+map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "向上移动", expr = true, silent = true })
+map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "向上移动", expr = true, silent = true })
 
--- Move to window using the <ctrl> hjkl keys
-map("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", remap = true })
-map("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
-map("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
-map("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
+-- 使用 <ctrl> hjkl 移动窗口
+map("n", "<C-h>", "<C-w>h", { desc = "跳到左侧窗口", remap = true })
+map("n", "<C-j>", "<C-w>j", { desc = "跳到下方窗口", remap = true })
+map("n", "<C-k>", "<C-w>k", { desc = "跳到上方窗口", remap = true })
+map("n", "<C-l>", "<C-w>l", { desc = "跳到右侧窗口", remap = true })
 
--- Resize window using <ctrl> arrow keys
-map("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
-map("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
-map("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
-map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
+-- 使用 <ctrl> 方向键调整窗口大小
+map("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "增加窗口高度" })
+map("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "减少窗口高度" })
+map("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "减少窗口宽度" })
+map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "增加窗口宽度" })
 
--- Move Lines
-map("n", "<A-j>", "<cmd>execute 'move .+' . v:count1<cr>==", { desc = "Move Down" })
-map("n", "<A-k>", "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==", { desc = "Move Up" })
-map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move Down" })
-map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
-map("v", "<A-j>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc = "Move Down" })
-map("v", "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "Move Up" })
+-- 移动行
+map("n", "<A-j>", "<cmd>execute 'move .+' . v:count1<cr>==", { desc = "下移" })
+map("n", "<A-k>", "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==", { desc = "上移" })
+map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "下移" })
+map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "上移" })
+map("v", "<A-j>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc = "下移" })
+map("v", "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "上移" })
 
--- buffers
-map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
-map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
-map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
-map("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
-map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-map("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+-- 缓冲区
+map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "上一个缓冲区" })
+map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "下一个缓冲区" })
+map("n", "[b", "<cmd>bprevious<cr>", { desc = "上一个缓冲区" })
+map("n", "]b", "<cmd>bnext<cr>", { desc = "下一个缓冲区" })
+map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "切换到其它缓冲区" })
+map("n", "<leader>`", "<cmd>e #<cr>", { desc = "切换到其它缓冲区" })
 map("n", "<leader>bd", function()
   Snacks.bufdelete()
-end, { desc = "Delete Buffer" })
+end, { desc = "删除缓冲区" })
 map("n", "<leader>bo", function()
   Snacks.bufdelete.other()
-end, { desc = "Delete Other Buffers" })
+end, { desc = "删除其它缓冲区" })
 map("n", "<leader>bi", function()
   Snacks.bufdelete.invisible()
-end, { desc = "Delete Invisible Buffers" })
-map("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
+end, { desc = "删除隐藏缓冲区" })
+map("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "删除缓冲区和窗口" })
 
--- Clear search and stop snippet on escape
+-- 按 esc 时清除搜索高亮并结束代码片段
 map({ "i", "n", "s" }, "<esc>", function()
   vim.cmd("noh")
   LazyVim.cmp.actions.snippet_stop()
   return "<esc>"
-end, { expr = true, desc = "Escape and Clear hlsearch" })
+end, { expr = true, desc = "转义并清除搜索高亮" })
 
--- Clear search, diff update and redraw
--- taken from runtime/lua/_editor.lua
+-- 清除搜索、刷新差异并重绘
+-- 取自 runtime/lua/_editor.lua
 map(
   "n",
   "<leader>ur",
   "<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>",
-  { desc = "Redraw / Clear hlsearch / Diff Update" }
+  { desc = "重绘 / 清除搜索高亮 / 更新差异" }
 )
 
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
-map("n", "n", "'Nn'[v:searchforward].'zv'", { expr = true, desc = "Next Search Result" })
-map("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })
-map("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })
-map("n", "N", "'nN'[v:searchforward].'zv'", { expr = true, desc = "Prev Search Result" })
-map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
-map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
+map("n", "n", "'Nn'[v:searchforward].'zv'", { expr = true, desc = "下一个搜索结果" })
+map("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "下一个搜索结果" })
+map("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "下一个搜索结果" })
+map("n", "N", "'nN'[v:searchforward].'zv'", { expr = true, desc = "上一个搜索结果" })
+map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "上一个搜索结果" })
+map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "上一个搜索结果" })
 
--- Add undo break-points
+-- 添加撤销断点
 map("i", ",", ",<c-g>u")
 map("i", ".", ".<c-g>u")
 map("i", ";", ";<c-g>u")
 
--- save file
-map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
+-- 保存文件
+map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "保存文件" })
 
 --keywordprg
-map("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
+map("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "关键字文档" })
 
--- better indenting
+-- 更好的缩进
 map("x", "<", "<gv")
 map("x", ">", ">gv")
 
--- commenting
-map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })
-map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above" })
+-- 注释
+map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "在下方添加注释" })
+map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "在上方添加注释" })
 
 -- lazy
 map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
--- new file
-map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
+-- 新建文件
+map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "新建文件" })
 
--- location list
+-- 位置列表
 map("n", "<leader>xl", function()
   local success, err = pcall(vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 and vim.cmd.lclose or vim.cmd.lopen)
   if not success and err then
     vim.notify(err, vim.log.levels.ERROR)
   end
-end, { desc = "Location List" })
+end, { desc = "位置列表" })
 
--- quickfix list
+-- 快速修复列表
 map("n", "<leader>xq", function()
   local success, err = pcall(vim.fn.getqflist({ winid = 0 }).winid ~= 0 and vim.cmd.cclose or vim.cmd.copen)
   if not success and err then
     vim.notify(err, vim.log.levels.ERROR)
   end
-end, { desc = "Quickfix List" })
+end, { desc = "快速修复列表" })
 
-map("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
-map("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
+map("n", "[q", vim.cmd.cprev, { desc = "上一个快速修复" })
+map("n", "]q", vim.cmd.cnext, { desc = "下一个快速修复" })
 
--- formatting
+-- 格式化
 map({ "n", "x" }, "<leader>cf", function()
   LazyVim.format({ force = true })
-end, { desc = "Format" })
+end, { desc = "格式化" })
 
--- diagnostic
+-- 诊断
 local diagnostic_goto = function(next, severity)
   return function()
     vim.diagnostic.jump({
@@ -131,28 +131,28 @@ local diagnostic_goto = function(next, severity)
     })
   end
 end
-map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
-map("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
-map("n", "[d", diagnostic_goto(false), { desc = "Prev Diagnostic" })
-map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
-map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
-map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
-map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
+map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "行诊断信息" })
+map("n", "]d", diagnostic_goto(true), { desc = "下一个诊断" })
+map("n", "[d", diagnostic_goto(false), { desc = "上一个诊断" })
+map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "下一个错误" })
+map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "上一个错误" })
+map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "下一个警告" })
+map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "上一个警告" })
 
 -- stylua: ignore start
 
--- toggle options
+-- 切换选项
 LazyVim.format.snacks_toggle():map("<leader>uf")
 LazyVim.format.snacks_toggle(true):map("<leader>uF")
-Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
-Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
-Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
+Snacks.toggle.option("spell", { name = "拼写检查" }):map("<leader>us")
+Snacks.toggle.option("wrap", { name = "自动换行" }):map("<leader>uw")
+Snacks.toggle.option("relativenumber", { name = "相对行号" }):map("<leader>uL")
 Snacks.toggle.diagnostics():map("<leader>ud")
 Snacks.toggle.line_number():map("<leader>ul")
-Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2, name = "Conceal Level" }):map("<leader>uc")
-Snacks.toggle.option("showtabline", { off = 0, on = vim.o.showtabline > 0 and vim.o.showtabline or 2, name = "Tabline" }):map("<leader>uA")
+Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2, name = "隐藏字符级别" }):map("<leader>uc")
+Snacks.toggle.option("showtabline", { off = 0, on = vim.o.showtabline > 0 and vim.o.showtabline or 2, name = "标签栏" }):map("<leader>uA")
 Snacks.toggle.treesitter():map("<leader>uT")
-Snacks.toggle.option("background", { off = "light", on = "dark" , name = "Dark Background" }):map("<leader>ub")
+Snacks.toggle.option("background", { off = "light", on = "dark" , name = "深色背景" }):map("<leader>ub")
 Snacks.toggle.dim():map("<leader>uD")
 Snacks.toggle.animate():map("<leader>ua")
 Snacks.toggle.indent():map("<leader>ug")
@@ -166,50 +166,50 @@ end
 
 -- lazygit
 if vim.fn.executable("lazygit") == 1 then
-  map("n", "<leader>gg", function() Snacks.lazygit( { cwd = LazyVim.root.git() }) end, { desc = "Lazygit (Root Dir)" })
-  map("n", "<leader>gG", function() Snacks.lazygit() end, { desc = "Lazygit (cwd)" })
+  map("n", "<leader>gg", function() Snacks.lazygit( { cwd = LazyVim.root.git() }) end, { desc = "Lazygit（根目录）" })
+  map("n", "<leader>gG", function() Snacks.lazygit() end, { desc = "Lazygit（当前目录）" })
 end
 
-map("n", "<leader>gL", function() Snacks.picker.git_log() end, { desc = "Git Log (cwd)" })
-map("n", "<leader>gb", function() Snacks.picker.git_log_line() end, { desc = "Git Blame Line" })
-map("n", "<leader>gf", function() Snacks.picker.git_log_file() end, { desc = "Git Current File History" })
-map("n", "<leader>gl", function() Snacks.picker.git_log({ cwd = LazyVim.root.git() }) end, { desc = "Git Log" })
-map({ "n", "x" }, "<leader>gB", function() Snacks.gitbrowse() end, { desc = "Git Browse (open)" })
+map("n", "<leader>gL", function() Snacks.picker.git_log() end, { desc = "Git 日志（当前目录）" })
+map("n", "<leader>gb", function() Snacks.picker.git_log_line() end, { desc = "Git 逐行溯源" })
+map("n", "<leader>gf", function() Snacks.picker.git_log_file() end, { desc = "Git 当前文件历史" })
+map("n", "<leader>gl", function() Snacks.picker.git_log({ cwd = LazyVim.root.git() }) end, { desc = "Git 日志" })
+map({ "n", "x" }, "<leader>gB", function() Snacks.gitbrowse() end, { desc = "Git 浏览（打开）" })
 map({"n", "x" }, "<leader>gY", function()
   Snacks.gitbrowse({ open = function(url) vim.fn.setreg("+", url) end, notify = false })
-end, { desc = "Git Browse (copy)" })
+end, { desc = "Git 浏览（复制）" })
 
--- quit
-map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
+-- 退出
+map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "退出全部" })
 
--- highlights under cursor
-map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
-map("n", "<leader>uI", function() vim.treesitter.inspect_tree() vim.api.nvim_input("I") end, { desc = "Inspect Tree" })
+-- 光标下的高亮
+map("n", "<leader>ui", vim.show_pos, { desc = "查看光标位置" })
+map("n", "<leader>uI", function() vim.treesitter.inspect_tree() vim.api.nvim_input("I") end, { desc = "查看语法树" })
 
--- LazyVim Changelog
-map("n", "<leader>L", function() LazyVim.news.changelog() end, { desc = "LazyVim Changelog" })
+-- LazyVim 更新日志
+map("n", "<leader>L", function() LazyVim.news.changelog() end, { desc = "LazyVim 更新日志" })
 
--- floating terminal
-map("n", "<leader>fT", function() Snacks.terminal() end, { desc = "Terminal (cwd)" })
-map("n", "<leader>ft", function() Snacks.terminal(nil, { cwd = LazyVim.root() }) end, { desc = "Terminal (Root Dir)" })
-map({"n","t"}, "<c-/>",function() Snacks.terminal.focus(nil, { cwd = LazyVim.root() }) end, { desc = "Terminal (Root Dir)" })
+-- 浮动终端
+map("n", "<leader>fT", function() Snacks.terminal() end, { desc = "终端（当前目录）" })
+map("n", "<leader>ft", function() Snacks.terminal(nil, { cwd = LazyVim.root() }) end, { desc = "终端（根目录）" })
+map({"n","t"}, "<c-/>",function() Snacks.terminal.focus(nil, { cwd = LazyVim.root() }) end, { desc = "终端（根目录）" })
 map({"n","t"}, "<c-_>",function() Snacks.terminal.focus(nil, { cwd = LazyVim.root() }) end, { desc = "which_key_ignore" })
 
--- windows
-map("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })
-map("n", "<leader>|", "<C-W>v", { desc = "Split Window Right", remap = true })
-map("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
+-- 窗口
+map("n", "<leader>-", "<C-W>s", { desc = "向下拆分窗口", remap = true })
+map("n", "<leader>|", "<C-W>v", { desc = "向右拆分窗口", remap = true })
+map("n", "<leader>wd", "<C-W>c", { desc = "关闭窗口", remap = true })
 Snacks.toggle.zoom():map("<leader>wm"):map("<leader>uZ")
 Snacks.toggle.zen():map("<leader>uz")
 
--- tabs
-map("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
-map("n", "<leader><tab>o", "<cmd>tabonly<cr>", { desc = "Close Other Tabs" })
-map("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
-map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
-map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
-map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
-map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+-- 标签页
+map("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "最后一个标签页" })
+map("n", "<leader><tab>o", "<cmd>tabonly<cr>", { desc = "关闭其它标签页" })
+map("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "第一个标签页" })
+map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "新建标签页" })
+map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "下一个标签页" })
+map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "关闭标签页" })
+map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "上一个标签页" })
 
 -- lua
-map({"n", "x"}, "<localleader>r", function() Snacks.debug.run() end, { desc = "Run Lua", ft = "lua" })
+map({"n", "x"}, "<localleader>r", function() Snacks.debug.run() end, { desc = "运行 Lua 代码", ft = "lua" })

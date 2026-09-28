@@ -1,6 +1,6 @@
 return {
 
-  -- file explorer
+  -- 文件浏览器
   {
     "nvim-neo-tree/neo-tree.nvim",
     cmd = "Neotree",
@@ -10,41 +10,41 @@ return {
         function()
           require("neo-tree.command").execute({ toggle = true, dir = LazyVim.root() })
         end,
-        desc = "Explorer NeoTree (Root Dir)",
+        desc = "文件浏览器 NeoTree（根目录）",
       },
       {
         "<leader>fE",
         function()
           require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
         end,
-        desc = "Explorer NeoTree (cwd)",
+        desc = "文件浏览器 NeoTree（cwd）",
       },
-      { "<leader>e", "<leader>fe", desc = "Explorer NeoTree (Root Dir)", remap = true },
-      { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
+      { "<leader>e", "<leader>fe", desc = "文件浏览器 NeoTree（根目录）", remap = true },
+      { "<leader>E", "<leader>fE", desc = "文件浏览器 NeoTree（cwd）", remap = true },
       {
         "<leader>ge",
         function()
           require("neo-tree.command").execute({ source = "git_status", toggle = true })
         end,
-        desc = "Git Explorer",
+        desc = "Git 浏览器",
       },
       {
         "<leader>be",
         function()
           require("neo-tree.command").execute({ source = "buffers", toggle = true })
         end,
-        desc = "Buffer Explorer",
+        desc = "缓冲区浏览器",
       },
     },
     deactivate = function()
       vim.cmd([[Neotree close]])
     end,
     init = function()
-      -- FIX: use `autocmd` for lazy-loading neo-tree instead of directly requiring it,
-      -- because `cwd` is not set up properly.
+      -- FIX：使用 `autocmd` 懒加载 neo-tree，而不是直接 require，
+      -- 因为这样 `cwd` 才能正确设置。
       vim.api.nvim_create_autocmd("BufEnter", {
         group = vim.api.nvim_create_augroup("Neotree_start_directory", { clear = true }),
-        desc = "Start Neo-tree with directory",
+        desc = "使用指定目录启动 Neo-tree",
         once = true,
         callback = function()
           if package.loaded["neo-tree"] then
@@ -77,13 +77,13 @@ return {
               local path = node:get_id()
               vim.fn.setreg("+", path, "c")
             end,
-            desc = "Copy Path to Clipboard",
+            desc = "复制路径到剪贴板",
           },
           ["O"] = {
             function(state)
               require("lazy.util").open(state.tree:get_node().path, { system = true })
             end,
-            desc = "Open with System Application",
+            desc = "使用系统默认应用打开",
           },
           ["P"] = { "toggle_preview", config = { use_float = false } },
         },

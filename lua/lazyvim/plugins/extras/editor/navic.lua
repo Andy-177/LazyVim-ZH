@@ -1,7 +1,6 @@
 return {
-  -- lsp symbol navigation for lualine. This shows where
-  -- in the code structure you are - within functions, classes,
-  -- etc - in the statusline.
+  -- 用于 lualine 的 lsp 符号导航。在状态栏中显示你当前在
+  -- 代码结构中的位置——位于哪个函数、类等之中。
   {
     "SmiteshP/nvim-navic",
     lazy = true,
@@ -22,7 +21,7 @@ return {
     end,
   },
 
-  -- lualine integration
+  -- lualine 集成
   {
     "nvim-lualine/lualine.nvim",
     optional = true,

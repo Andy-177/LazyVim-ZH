@@ -31,40 +31,40 @@ return {
       "AvanteToggle",
     },
     keys = {
-      { "<leader>aa", "<cmd>AvanteAsk<CR>", desc = "Ask Avante" },
-      { "<leader>ac", "<cmd>AvanteChat<CR>", desc = "Chat with Avante" },
-      { "<leader>ae", "<cmd>AvanteEdit<CR>", desc = "Edit Avante" },
-      { "<leader>af", "<cmd>AvanteFocus<CR>", desc = "Focus Avante" },
-      { "<leader>ah", "<cmd>AvanteHistory<CR>", desc = "Avante History" },
-      { "<leader>am", "<cmd>AvanteModels<CR>", desc = "Select Avante Model" },
-      { "<leader>an", "<cmd>AvanteChatNew<CR>", desc = "New Avante Chat" },
-      { "<leader>ap", "<cmd>AvanteSwitchProvider<CR>", desc = "Switch Avante Provider" },
-      { "<leader>ar", "<cmd>AvanteRefresh<CR>", desc = "Refresh Avante" },
-      { "<leader>as", "<cmd>AvanteStop<CR>", desc = "Stop Avante" },
-      { "<leader>at", "<cmd>AvanteToggle<CR>", desc = "Toggle Avante" },
+      { "<leader>aa", "<cmd>AvanteAsk<CR>", desc = "向 Avante 提问" },
+      { "<leader>ac", "<cmd>AvanteChat<CR>", desc = "与 Avante 对话" },
+      { "<leader>ae", "<cmd>AvanteEdit<CR>", desc = "Avante 编辑" },
+      { "<leader>af", "<cmd>AvanteFocus<CR>", desc = "聚焦 Avante" },
+      { "<leader>ah", "<cmd>AvanteHistory<CR>", desc = "Avante 历史" },
+      { "<leader>am", "<cmd>AvanteModels<CR>", desc = "选择 Avante 模型" },
+      { "<leader>an", "<cmd>AvanteChatNew<CR>", desc = "新建 Avante 对话" },
+      { "<leader>ap", "<cmd>AvanteSwitchProvider<CR>", desc = "切换 Avante 提供方" },
+      { "<leader>ar", "<cmd>AvanteRefresh<CR>", desc = "刷新 Avante" },
+      { "<leader>as", "<cmd>AvanteStop<CR>", desc = "停止 Avante" },
+      { "<leader>at", "<cmd>AvanteToggle<CR>", desc = "切换 Avante" },
     },
   },
 
-  -- support for image pasting
+  -- 支持粘贴图片
   {
     "HakonHarnes/img-clip.nvim",
     event = "VeryLazy",
     optional = true,
     opts = {
-      -- recommended settings
+      -- 推荐设置
       default = {
         embed_image_as_base64 = false,
         prompt_for_file_name = false,
         drag_and_drop = {
           insert_mode = true,
         },
-        -- required for Windows users
+        -- Windows 用户必需
         use_absolute_path = true,
       },
     },
   },
 
-  -- Make sure to set this up properly if you have lazy=true
+  -- 如果你使用 lazy=true，请确保正确配置此项
   {
     "MeanderingProgrammer/render-markdown.nvim",
     optional = true,
@@ -74,7 +74,7 @@ return {
     ft = { "markdown", "Avante" },
   },
 
-  -- blink.cmp source for avante.nvim
+  -- avante.nvim 的 blink.cmp 数据源
   {
     "saghen/blink.cmp",
     optional = true,

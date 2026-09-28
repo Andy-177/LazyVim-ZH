@@ -1,13 +1,13 @@
 return {
-  desc = "Aerial Symbol Browser",
+  desc = "Aerial 符号浏览器",
   {
     "stevearc/aerial.nvim",
     event = "LazyFile",
     opts = function()
       local icons = vim.deepcopy(LazyVim.config.icons.kinds)
 
-      -- HACK: fix lua's weird choice for `Package` for control
-      -- structures like if/else/for/etc.
+      -- HACK：修正 lua 把 `Package` 当作控制结构的奇怪写法
+      -- 比如 if/else/for 等
       icons.lua = { Package = icons.Control }
 
       ---@type table<string, string[]>|false
@@ -43,7 +43,7 @@ return {
       return opts
     end,
     keys = {
-      { "<leader>cs", "<cmd>AerialToggle<cr>", desc = "Aerial (Symbols)" },
+      { "<leader>cs", "<cmd>AerialToggle<cr>", desc = "Aerial（符号）" },
     },
   },
 
@@ -55,7 +55,7 @@ return {
     },
   },
 
-  -- Telescope integration
+  -- Telescope 集成
   {
     "nvim-telescope/telescope.nvim",
     optional = true,
@@ -68,12 +68,12 @@ return {
       {
         "<leader>ss",
         "<cmd>Telescope aerial<cr>",
-        desc = "Goto Symbol (Aerial)",
+        desc = "转到符号 (Aerial)",
       },
     },
   },
 
-  -- edgy integration
+  -- edgy 集成
   {
     "folke/edgy.nvim",
     optional = true,
@@ -82,7 +82,7 @@ return {
       local aerial_idx = LazyVim.plugin.extra_idx("editor.aerial")
 
       if edgy_idx and edgy_idx > aerial_idx then
-        LazyVim.warn("The `edgy.nvim` extra must be **imported** before the `aerial.nvim` extra to work properly.", {
+        LazyVim.warn("必须先 **导入** `edgy.nvim` extra，再导入 `aerial.nvim` extra，才能正常工作。", {
           title = "LazyVim",
         })
       end
@@ -97,7 +97,7 @@ return {
     end,
   },
 
-  -- lualine integration
+  -- lualine 集成
   {
     "nvim-lualine/lualine.nvim",
     optional = true,
@@ -108,20 +108,18 @@ return {
           sep = " ", -- separator between symbols
           sep_icon = "", -- separator between icon and symbol
 
-          -- The number of symbols to render top-down. In order to render only 'N' last
-          -- symbols, negative numbers may be supplied. For instance, 'depth = -1' can
-          -- be used in order to render only current symbol.
+          -- 从上到下渲染的符号数量。要只渲染最后 'N' 个符号，
+          -- 可以传入负数。例如 'depth = -1' 会只渲染当前符号。
           depth = 5,
 
-          -- When 'dense' mode is on, icons are not rendered near their symbols. Only
-          -- a single icon that represents the kind of current symbol is rendered at
-          -- the beginning of status line.
+          -- 启用 'dense' 模式时，不会在符号旁渲染图标。只会在
+          -- 状态栏开头渲染一个代表当前符号种类的图标。
           dense = false,
 
-          -- The separator to be used to separate symbols in dense mode.
+          -- dense 模式下用于分隔符号的分隔符。
           dense_sep = ".",
 
-          -- Color the symbol icons.
+          -- 为符号图标着色。
           colored = true,
         })
       end

@@ -1,5 +1,5 @@
 return {
-  desc = "Snacks File Explorer",
+  desc = "Snacks 文件浏览器",
   recommended = true,
   "folke/snacks.nvim",
   opts = { explorer = {} },
@@ -9,16 +9,16 @@ return {
       function()
         Snacks.explorer({ cwd = LazyVim.root() })
       end,
-      desc = "Explorer Snacks (root dir)",
+      desc = "文件浏览器 Snacks（根目录）",
     },
     {
       "<leader>fE",
       function()
         Snacks.explorer()
       end,
-      desc = "Explorer Snacks (cwd)",
+      desc = "文件浏览器 Snacks（cwd）",
     },
-    { "<leader>e", "<leader>fe", desc = "Explorer Snacks (root dir)", remap = true },
-    { "<leader>E", "<leader>fE", desc = "Explorer Snacks (cwd)", remap = true },
+    { "<leader>e", "<leader>fe", desc = "文件浏览器 Snacks（根目录）", remap = true },
+    { "<leader>E", "<leader>fE", desc = "文件浏览器 Snacks（cwd）", remap = true },
   },
 }

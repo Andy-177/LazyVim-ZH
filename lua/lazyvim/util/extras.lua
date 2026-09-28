@@ -28,8 +28,8 @@ M.buf = 0
 
 ---@type LazyExtraSource[]
 M.sources = {
-  { name = "LazyVim", desc = "LazyVim extras", module = "lazyvim.plugins.extras" },
-  { name = "User", desc = "User extras", module = "plugins.extras" },
+  { name = "LazyVim", desc = "LazyVim 扩展", module = "lazyvim.plugins.extras" },
+  { name = "用户", desc = "用户扩展", module = "plugins.extras" },
 }
 
 M.ns = vim.api.nvim_create_namespace("lazyvim.extras")
@@ -115,7 +115,7 @@ function M.get_extra(source, modname)
     recommended = M.wants(recommended)
   end
 
-  -- language extras that are disabled because a conflict with another extra is enabled are not recommended
+  -- 因与其它已启用扩展冲突而被禁用的语言扩展不会标记为推荐
   local defaults = LazyVim.config.get_defaults()
   local def = defaults[modname]
   if def and def.enabled == false and vim.startswith(modname, "lazyvim.plugins.extras.lang.") then
@@ -148,10 +148,10 @@ local X = {}
 function X.new()
   local self = setmetatable({}, { __index = X })
   M.buf = vim.api.nvim_get_current_buf()
-  self.float = Float.new({ title = "LazyVim Extras" })
+  self.float = Float.new({ title = "LazyVim 扩展" })
   self.float:on_key("x", function()
     self:toggle()
-  end, "Toggle extra")
+  end, "切换扩展")
   self.diag = {}
   self:update()
   return self
@@ -170,7 +170,7 @@ function X:toggle()
     if extra.row == pos[1] then
       if not extra.managed then
         LazyVim.error(
-          "Not managed by LazyExtras. Remove from your config to enable/disable here.",
+          "不受 LazyExtras 管理。请从你的配置中移除后再在此启用/禁用。",
           { title = "LazyExtras" }
         )
         return
@@ -193,8 +193,8 @@ function X:toggle()
           .. extra.name
           .. "`"
           .. " "
-          .. (extra.enabled and "**enabled**" or "**disabled**")
-          .. "\nPlease restart LazyVim to apply the changes.",
+          .. (extra.enabled and "**已启用**" or "**已禁用**")
+          .. "\n请重启 LazyVim 以应用这些更改。",
         { title = "LazyExtras" }
       )
       self:update()
@@ -227,15 +227,15 @@ function X:update()
 end
 
 function X:render()
-  self.text:nl():nl():append("LazyVim Extras", "LazyH1"):nl():nl()
+  self.text:nl():nl():append("LazyVim 扩展", "LazyH1"):nl():nl()
   self.text
-    :append("This is a list of all enabled/disabled LazyVim extras.", "LazyComment")
+    :append("这是所有已启用/已禁用的 LazyVim 扩展列表。", "LazyComment")
     :nl()
-    :append("Each extra shows the required and optional plugins it may install.", "LazyComment")
+    :append("每个扩展都会显示它可能安装的必需插件和可选插件。", "LazyComment")
     :nl()
-    :append("Enable/disable extras with the ", "LazyComment")
+    :append("使用 ", "LazyComment")
     :append("<x>", "LazySpecial")
-    :append(" key", "LazyComment")
+    :append(" 键启用/禁用扩展", "LazyComment")
     :nl()
   for _, extra in ipairs(self.extras) do
     extra.section = nil
@@ -244,14 +244,14 @@ function X:render()
     recommended = true,
     enabled = false,
     include = "^lang%.",
-    title = "Recommended Languages",
+    title = "推荐的语言",
     empty = false,
   })
-  self:section({ enabled = true, exclude = "^lang%.", title = "Enabled Plugins" })
-  self:section({ enabled = true, title = "Enabled Languages" })
-  self:section({ recommended = true, title = "Recommended Plugins", empty = false })
-  self:section({ title = "Plugins", exclude = "^lang%." })
-  self:section({ title = "Languages" })
+  self:section({ enabled = true, exclude = "^lang%.", title = "已启用的插件" })
+  self:section({ enabled = true, title = "已启用的语言" })
+  self:section({ recommended = true, title = "推荐的插件", empty = false })
+  self:section({ title = "插件", exclude = "^lang%." })
+  self:section({ title = "语言" })
 end
 
 ---@param extra LazyExtra
@@ -272,15 +272,15 @@ function X:extra(extra)
         return x.name
       end, parents)
       self:diagnostic({
-        message = "Required by " .. table.concat(pp, ", "),
+        message = "被以下扩展依赖：" .. table.concat(pp, "、"),
       })
     elseif vim.tbl_contains(LazyVim.plugin.core_imports, extra.module) or origin == "default" then
       self:diagnostic({
-        message = "This extra is included by default",
+        message = "该扩展默认已包含",
       })
     else
       self:diagnostic({
-        message = "Not managed by LazyExtras (config)",
+        message = "不受 LazyExtras 管理（配置中）",
         severity = vim.diagnostic.severity.WARN,
       })
     end

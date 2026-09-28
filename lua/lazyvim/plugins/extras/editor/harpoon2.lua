@@ -16,7 +16,7 @@ return {
         function()
           require("harpoon"):list():add()
         end,
-        desc = "Harpoon File",
+        desc = "Harpoon 文件",
       },
       {
         "<leader>h",
@@ -24,7 +24,7 @@ return {
           local harpoon = require("harpoon")
           harpoon.ui:toggle_quick_menu(harpoon:list())
         end,
-        desc = "Harpoon Quick Menu",
+        desc = "Harpoon 快速菜单",
       },
     }
 
@@ -34,7 +34,7 @@ return {
         function()
           require("harpoon"):list():select(i)
         end,
-        desc = "Harpoon to File " .. i,
+        desc = "Harpoon 到文件 " .. i,
       })
     end
     return keys

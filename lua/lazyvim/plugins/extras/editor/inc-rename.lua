@@ -1,15 +1,15 @@
 return {
 
-  -- Rename with cmdpreview
+  -- 使用 cmdpreview 重命名
   recommended = true,
-  desc = "Incremental LSP renaming based on Neovim's command-preview feature",
+  desc = "基于 Neovim 命令预览功能的增量式 LSP 重命名",
   {
     "smjonas/inc-rename.nvim",
     cmd = "IncRename",
     opts = {},
   },
 
-  -- LSP Keymaps
+  -- LSP 键位
   {
     "neovim/nvim-lspconfig",
     opts = {
@@ -23,7 +23,7 @@ return {
                 return ":" .. inc_rename.config.cmd_name .. " " .. vim.fn.expand("<cword>")
               end,
               expr = true,
-              desc = "Rename (inc-rename.nvim)",
+              desc = "重命名 (inc-rename.nvim)",
               has = "rename",
             },
           },
@@ -32,7 +32,7 @@ return {
     },
   },
 
-  --- Noice integration
+  --- Noice 集成
   {
     "folke/noice.nvim",
     optional = true,

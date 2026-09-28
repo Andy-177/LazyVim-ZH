@@ -1,5 +1,5 @@
 return {
-  -- Create and display predefined window layouts.
+  -- 创建并显示预定义的窗口布局。
   {
     "folke/edgy.nvim",
     event = "VeryLazy",
@@ -9,10 +9,10 @@ return {
         function()
           require("edgy").toggle()
         end,
-        desc = "Edgy Toggle",
+        desc = "切换 Edgy",
       },
       -- stylua: ignore
-      { "<leader>uE", function() require("edgy").select() end, desc = "Edgy Select Window" },
+      { "<leader>uE", function() require("edgy").select() end, desc = "Edgy 选择窗口" },
     },
     opts = function()
       local opts = {
@@ -32,39 +32,39 @@ return {
             end,
           },
           "Trouble",
-          { ft = "qf", title = "QuickFix" },
+          { ft = "qf", title = "快速修复" },
           {
             ft = "help",
             size = { height = 20 },
-            -- don't open help files in edgy that we're editing
+            -- 不要在 edgy 中打开我们正在编辑的帮助文件
             filter = function(buf)
               return vim.bo[buf].buftype == "help"
             end,
           },
           { title = "Spectre", ft = "spectre_panel", size = { height = 0.4 } },
-          { title = "Neotest Output", ft = "neotest-output-panel", size = { height = 15 } },
+          { title = "Neotest 输出", ft = "neotest-output-panel", size = { height = 15 } },
         },
         left = {
-          { title = "Neotest Summary", ft = "neotest-summary" },
+          { title = "Neotest 摘要", ft = "neotest-summary" },
           -- "neo-tree",
         },
         right = {
           { title = "Grug Far", ft = "grug-far", size = { width = 0.4 } },
         },
         keys = {
-          -- increase width
+          -- 增加宽度
           ["<c-Right>"] = function(win)
             win:resize("width", 2)
           end,
-          -- decrease width
+          -- 减少宽度
           ["<c-Left>"] = function(win)
             win:resize("width", -2)
           end,
-          -- increase height
+          -- 增加高度
           ["<c-Up>"] = function(win)
             win:resize("height", 2)
           end,
-          -- decrease height
+          -- 减少高度
           ["<c-Down>"] = function(win)
             win:resize("height", -2)
           end,
@@ -110,7 +110,7 @@ return {
         })
       end
 
-      -- snacks terminal
+      -- snacks 终端
       for _, pos in ipairs({ "top", "bottom", "left", "right" }) do
         opts[pos] = opts[pos] or {}
         table.insert(opts[pos], {
@@ -129,7 +129,7 @@ return {
     end,
   },
 
-  -- use edgy's selection window
+  -- 使用 edgy 的选择窗口
   {
     "nvim-telescope/telescope.nvim",
     optional = true,
@@ -143,7 +143,7 @@ return {
     },
   },
 
-  -- prevent neo-tree from opening files in edgy windows
+  -- 阻止 neo-tree 在 edgy 窗口中打开文件
   {
     "nvim-neo-tree/neo-tree.nvim",
     optional = true,
@@ -154,7 +154,7 @@ return {
     end,
   },
 
-  -- Fix bufferline offsets when edgy is loaded
+  -- edgy 加载时修复 bufferline 偏移
   {
     "akinsho/bufferline.nvim",
     optional = true,
@@ -169,7 +169,7 @@ return {
             local ret = { left = "", left_size = 0, right = "", right_size = 0 }
             for _, pos in ipairs({ "left", "right" }) do
               local sb = layout[pos]
-              local title = " Sidebar" .. string.rep(" ", sb.bounds.width - 8)
+              local title = " 侧边栏" .. string.rep(" ", sb.bounds.width - 8)
               if sb and #sb.wins > 0 then
                 ret[pos] = old_offset[pos .. "_size"] > 0 and old_offset[pos]
                   or pos == "left" and ("%#Bold#" .. title .. "%*" .. "%#BufferLineOffsetSeparator#│%*")

@@ -8,14 +8,14 @@ return {
     },
     opts = {
       keymaps = {
-        accept_suggestion = nil, -- handled by nvim-cmp / blink.cmp
+        accept_suggestion = nil, -- 由 nvim-cmp / blink.cmp 处理
       },
       disable_inline_completion = vim.g.ai_cmp,
       ignore_filetypes = { "bigfile", "snacks_input", "snacks_notif" },
     },
   },
 
-  -- add ai_accept action
+  -- 添加 ai_accept 操作
   {
     "supermaven-inc/supermaven-nvim",
     opts = function()
@@ -33,7 +33,7 @@ return {
     end,
   },
 
-  -- cmp integration
+  -- cmp 集成
   {
     "hrsh7th/nvim-cmp",
     optional = true,

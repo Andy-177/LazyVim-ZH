@@ -18,7 +18,7 @@ _G.LazyVim = require("lazyvim.util")
 ---@class vim.api.keyset.create_autocmd.opts: vim.api.keyset.create_autocmd
 ---@field callback? fun(ev:vim.api.create_autocmd.callback.args):boolean?
 
---- @param event any (string|array) Event(s) that will trigger the handler
+--- @param event any (string|array) 触发处理器的事件
 --- @param opts vim.api.keyset.create_autocmd.opts
 --- @return integer
 function vim.api.nvim_create_autocmd(event, opts) end

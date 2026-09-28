@@ -1,5 +1,5 @@
 return {
-  -- disable snacks indent when indent-blankline is enabled
+  -- 启用 indent-blankline 时禁用 snacks indent
   {
     "snacks.nvim",
     opts = {

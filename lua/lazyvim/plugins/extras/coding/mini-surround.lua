@@ -1,20 +1,20 @@
--- Fast and feature-rich surround actions. For text that includes
--- surrounding characters like brackets or quotes, this allows you
--- to select the text inside, change or modify the surrounding characters,
--- and more.
+-- 快速且功能丰富的包围操作。对于包含
+-- 括号或引号等包围字符的文本，它可以让你
+-- 选中内部文本、更改或修改包围字符、
+-- 等等。
 return {
   "nvim-mini/mini.surround",
   keys = function(_, keys)
-    -- Populate the keys based on the user's options
+    -- 根据用户选项填充按键
     local opts = LazyVim.opts("mini.surround")
     local mappings = {
-      { opts.mappings.add, desc = "Add Surrounding", mode = { "n", "x" } },
-      { opts.mappings.delete, desc = "Delete Surrounding" },
-      { opts.mappings.find, desc = "Find Right Surrounding" },
-      { opts.mappings.find_left, desc = "Find Left Surrounding" },
-      { opts.mappings.highlight, desc = "Highlight Surrounding" },
-      { opts.mappings.replace, desc = "Replace Surrounding" },
-      { opts.mappings.update_n_lines, desc = "Update `MiniSurround.config.n_lines`" },
+      { opts.mappings.add, desc = "添加包围", mode = { "n", "x" } },
+      { opts.mappings.delete, desc = "删除包围" },
+      { opts.mappings.find, desc = "查找右侧包围符" },
+      { opts.mappings.find_left, desc = "查找左侧包围符" },
+      { opts.mappings.highlight, desc = "高亮包围符" },
+      { opts.mappings.replace, desc = "替换包围符" },
+      { opts.mappings.update_n_lines, desc = "更新 `MiniSurround.config.n_lines`" },
     }
     mappings = vim.tbl_filter(function(m)
       return m[1] and #m[1] > 0

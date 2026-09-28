@@ -32,7 +32,7 @@ return {
         oxlint = {
           -- capabilities = { textDocument = { diagnostic = vim.NIL } },
           root_dir = function(bufnr, on_dir)
-            -- prefer the top-level oxlint config if it exists (monorepo support)
+            -- 如果存在顶层 oxlint 配置则优先使用（支持 monorepo）
             local git = vim.fs.root(bufnr, ".git")
             local markers = { ".oxlintrc.json", ".oxlintrc.jsonc", "oxlint.config.ts" }
             local root = git and vim.fs.root(git, markers) or vim.fs.root(bufnr, markers)
@@ -45,7 +45,7 @@ return {
             -- run = "onType",
           },
         },
-        --- disable the oxfmt lsp server since we use conform for formatting
+        --- 由于使用 conform 进行格式化，禁用 oxfmt lsp 服务器
         oxfmt = { enabled = false },
       },
     },

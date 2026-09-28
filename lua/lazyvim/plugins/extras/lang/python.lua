@@ -1,8 +1,8 @@
 if lazyvim_docs then
-  -- LSP Server to use for Python.
-  -- Set to "basedpyright" to use basedpyright instead of pyright.
+  -- 用于 Python 的 LSP 服务器。
+  -- 设为 "basedpyright" 可使用 basedpyright 代替 pyright。
   vim.g.lazyvim_python_lsp = "pyright"
-  -- Set to "ruff_lsp" to use the old LSP implementation version.
+  -- 设为 "ruff_lsp" 可使用旧版 LSP 实现。
   vim.g.lazyvim_python_ruff = "ruff"
 end
 
@@ -44,7 +44,7 @@ return {
       setup = {
         [ruff] = function()
           Snacks.util.lsp.on({ name = ruff }, function(_, client)
-            -- Disable hover in favor of Pyright
+            -- 禁用 hover，改用 Pyright
             client.server_capabilities.hoverProvider = false
           end)
         end,
@@ -70,7 +70,7 @@ return {
     opts = {
       adapters = {
         ["neotest-python"] = {
-          -- Here you can specify the settings for the adapter, i.e.
+          -- 在这里可以指定适配器的设置，即：
           -- runner = "pytest",
           -- python = ".venv/bin/python",
         },
@@ -84,8 +84,8 @@ return {
       "mfussenegger/nvim-dap-python",
       -- stylua: ignore
       keys = {
-        { "<leader>dPt", function() require('dap-python').test_method() end, desc = "Debug Method", ft = "python" },
-        { "<leader>dPc", function() require('dap-python').test_class() end, desc = "Debug Class", ft = "python" },
+        { "<leader>dPt", function() require('dap-python').test_method() end, desc = "调试方法", ft = "python" },
+        { "<leader>dPc", function() require('dap-python').test_class() end, desc = "调试类", ft = "python" },
       },
       config = function()
         require("dap-python").setup("debugpy-adapter")
@@ -102,9 +102,9 @@ return {
         override_notify = false,
       },
     },
-    --  Call config for Python files and load the cached venv automatically
+    --  为 Python 文件调用配置，并自动加载缓存的 venv
     ft = "python",
-    keys = { { "<leader>cv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv", ft = "python" } },
+    keys = { { "<leader>cv", "<cmd>:VenvSelect<cr>", desc = "选择虚拟环境", ft = "python" } },
   },
 
   {
@@ -116,7 +116,7 @@ return {
     end,
   },
 
-  -- Don't mess up DAP adapters provided by nvim-dap-python
+  -- 不要破坏 nvim-dap-python 提供的 DAP adapter
   {
     "jay-babu/mason-nvim-dap.nvim",
     optional = true,

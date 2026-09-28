@@ -9,13 +9,13 @@ return {
       },
     })
   end,
-  -- Add Solidity & related to treesitter
+  -- 将 Solidity 及相关内容添加到 treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     opts = { ensure_installed = { "solidity" } },
   },
 
-  -- Correctly setup lspconfig for Solidity
+  -- 正确配置 Solidity 的 lspconfig
   {
     "neovim/nvim-lspconfig",
     opts = {
@@ -24,7 +24,7 @@ return {
       },
     },
   },
-  -- Formatter for Solidity
+  -- Solidity 的格式化工具
   {
     "stevearc/conform.nvim",
     optional = true,

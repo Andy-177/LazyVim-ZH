@@ -10,9 +10,9 @@ function M.check()
   start("LazyVim")
 
   if vim.fn.has("nvim-0.11.2") == 1 then
-    ok("Using Neovim >= 0.11.2")
+    ok("正在使用 Neovim >= 0.11.2")
   else
-    error("Neovim >= 0.11.2 is required")
+    error("需要 Neovim >= 0.11.2")
   end
 
   for _, cmd in ipairs({ "git", "rg", { "fd", "fdfind" }, "lazygit", "fzf", "curl" }) do
@@ -29,9 +29,9 @@ function M.check()
     end
 
     if found then
-      ok(("`%s` is installed"):format(name))
+      ok(("`%s` 已安装"):format(name))
     else
-      warn(("`%s` is not installed"):format(name))
+      warn(("`%s` 未安装"):format(name))
     end
   end
 
@@ -40,15 +40,15 @@ function M.check()
   local keys = vim.tbl_keys(health) ---@type string[]
   table.sort(keys)
   for _, k in pairs(keys) do
-    (health[k] and ok or error)(("`%s` is %s"):format(k, health[k] and "installed" or "not installed"))
+    (health[k] and ok or error)("`%s` %s"):format(k, health[k] and "已安装" or "未安装")
   end
   if not tsok then
     info(
-      "See the requirements at [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter/tree/main?tab=readme-ov-file#requirements)"
+      "请查看 [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter/tree/main?tab=readme-ov-file#requirements) 中的依赖要求"
     )
-    info("Run `:checkhealth nvim-treesitter` for more information.")
-    if vim.fn.has("win32") == 1 and not health["C compiler"] then
-      info("Install a C compiler with `winget install --id=BrechtSanders.WinLibs.POSIX.UCRT -e`")
+    info("运行 `:checkhealth nvim-treesitter` 查看更多信息。")
+    if vim.fn.has("win32") == 1 and not health["C 编译器"] then
+      info("使用 `winget install --id=BrechtSanders.WinLibs.POSIX.UCRT -e` 安装 C 编译器")
     end
   end
 end

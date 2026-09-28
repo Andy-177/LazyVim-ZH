@@ -1,8 +1,8 @@
 return {
-  -- disable flash
+  -- 禁用 flash
   { "folke/flash.nvim", enabled = false, optional = true },
 
-  -- easily jump to any location and enhanced f/t motions for Leap
+  -- 轻松跳转到任意位置，并为 Leap 增强 f/t 移动
   {
     url = "https://codeberg.org/andyg/leap.nvim.git",
     enabled = true,
@@ -20,9 +20,9 @@ return {
     url = "https://codeberg.org/andyg/leap.nvim.git",
     enabled = true,
     keys = {
-      { "s", mode = { "n", "x", "o" }, desc = "Leap Forward to" },
-      { "S", mode = { "n", "x", "o" }, desc = "Leap Backward to" },
-      { "gs", mode = { "n", "x", "o" }, desc = "Leap from Windows" },
+      { "s", mode = { "n", "x", "o" }, desc = "Leap 向前跳到" },
+      { "S", mode = { "n", "x", "o" }, desc = "Leap 向后跳到" },
+      { "gs", mode = { "n", "x", "o" }, desc = "从窗口 Leap" },
     },
     config = function(_, opts)
       local leap = require("leap")
@@ -35,7 +35,7 @@ return {
     end,
   },
 
-  -- rename surround mappings from gs to gz to prevent conflict with leap
+  -- 将 surround 映射从 gs 重命名为 gz，以避免与 leap 冲突
   {
     "nvim-mini/mini.surround",
     optional = true,
@@ -55,6 +55,6 @@ return {
     },
   },
 
-  -- makes some plugins dot-repeatable like leap
+  -- 让一些插件像 leap 一样支持点重复
   { "tpope/vim-repeat", event = "VeryLazy" },
 }

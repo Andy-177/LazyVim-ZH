@@ -1,6 +1,6 @@
 if lazyvim_docs then
-  -- LSP Server to use for Ruby.
-  -- Set to "solargraph" to use solargraph instead of ruby_lsp.
+  -- 用于 Ruby 的 LSP 服务器。
+  -- 设为 "solargraph" 可使用 solargraph 代替 ruby_lsp。
   vim.g.lazyvim_ruby_lsp = "ruby_lsp"
   vim.g.lazyvim_ruby_formatter = "rubocop"
 end
@@ -31,9 +31,9 @@ return {
           enabled = lsp == "solargraph",
         },
         rubocop = {
-          -- If Solargraph and Rubocop are both enabled as an LSP,
-          -- diagnostics will be duplicated because Solargraph
-          -- already calls Rubocop if it is installed
+          -- 如果 Solargraph 和 Rubocop 都作为 LSP 启用，
+          -- 诊断会重复，因为 Solargraph 在安装了 Rubocop 时
+          -- 已经会调用 Rubocop
           enabled = formatter == "rubocop" and lsp ~= "solargraph",
         },
         standardrb = {
@@ -75,7 +75,7 @@ return {
     opts = {
       adapters = {
         ["neotest-rspec"] = {
-          -- NOTE: By default neotest-rspec uses the system wide rspec gem instead of the one through bundler
+          -- 注意：默认情况下 neotest-rspec 使用系统全局的 rspec gem，而不是通过 bundler 提供的那个
           -- rspec_cmd = function()
           --   return vim.tbl_flatten({
           --     "bundle",

@@ -18,17 +18,17 @@ return {
     opts = {
       servers = {
         tailwindcss = {
-          -- exclude a filetype from the default_config
+          -- 从 default_config 中排除某个文件类型
           filetypes_exclude = { "markdown" },
-          -- add additional filetypes to the default_config
+          -- 为 default_config 额外添加文件类型
           filetypes_include = {},
-          -- to fully override the default_config, change the below
+          -- 若要完全覆盖 default_config，请修改下面这行
           -- filetypes = {}
 
-          -- additional settings for the server, e.g:
+          -- 服务器的额外设置，例如：
           -- tailwindCSS = { includeLanguages = { someLang = "html" } }
-          -- can be addeded to the settings table and will be merged with
-          -- this defaults for Phoenix projects
+          -- 可以添加到 settings 表中，并会与下面的默认值合并
+          -- 这部分 Phoenix 项目的默认值
           settings = {
             tailwindCSS = {
               includeLanguages = {
@@ -44,16 +44,16 @@ return {
         tailwindcss = function(_, opts)
           opts.filetypes = opts.filetypes or {}
 
-          -- Add default filetypes
+          -- 添加默认文件类型
           vim.list_extend(opts.filetypes, vim.lsp.config.tailwindcss.filetypes)
 
-          -- Remove excluded filetypes
+          -- 移除被排除的文件类型
           --- @param ft string
           opts.filetypes = vim.tbl_filter(function(ft)
             return not vim.tbl_contains(opts.filetypes_exclude or {}, ft)
           end, opts.filetypes)
 
-          -- Add additional filetypes
+          -- 添加额外的文件类型
           vim.list_extend(opts.filetypes, opts.filetypes_include or {})
         end,
       },
@@ -66,7 +66,7 @@ return {
       { "roobert/tailwindcss-colorizer-cmp.nvim", opts = {} },
     },
     opts = function(_, opts)
-      -- original LazyVim kind icon formatter
+      -- 原有的 LazyVim kind 图标格式化器
       local format_kinds = opts.formatting.format
       opts.formatting.format = function(entry, item)
         format_kinds(entry, item) -- add icons

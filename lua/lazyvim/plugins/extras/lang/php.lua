@@ -1,6 +1,6 @@
 if lazyvim_docs then
-  -- LSP Server to use for PHP.
-  -- Set to "intelephense" to use intelephense instead of phpactor.
+  -- 用于 PHP 的 LSP 服务器。
+  -- 设为 "intelephense" 可使用 intelephense 代替 phpactor。
   vim.g.lazyvim_php_lsp = "intelephense"
 end
 

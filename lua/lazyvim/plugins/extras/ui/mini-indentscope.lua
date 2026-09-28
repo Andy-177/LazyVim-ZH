@@ -1,7 +1,7 @@
 return {
-  -- Active indent guide and indent text objects. When you're browsing
-  -- code, this highlights the current level of indentation, and animates
-  -- the highlighting.
+  -- 活动的缩进参考线和缩进文本对象。当你在浏览
+  -- 代码时，它会高亮当前的缩进级别，并让高亮
+  -- 带动画效果。
   {
     "nvim-mini/mini.indentscope",
     version = false, -- wait till new 0.7.0 release to put it back on semver
@@ -45,7 +45,7 @@ return {
     end,
   },
 
-  -- disable indent-blankline scope when mini-indentscope is enabled
+  -- 启用 mini-indentscope 时禁用 indent-blankline 的 scope
   {
     "lukas-reineke/indent-blankline.nvim",
     optional = true,
@@ -55,7 +55,7 @@ return {
     },
   },
 
-  -- disable snacks scope when mini-indentscope is enabled
+  -- 启用 mini-indentscope 时禁用 snacks scope
   {
     "snacks.nvim",
     opts = {

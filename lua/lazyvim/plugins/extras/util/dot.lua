@@ -8,7 +8,7 @@ end
 
 return {
   recommended = true,
-  desc = "Language support for dotfiles",
+  desc = "dotfiles 的语言支持",
   {
     "neovim/nvim-lspconfig",
     opts = {
@@ -21,7 +21,7 @@ return {
     "mason-org/mason.nvim",
     opts = { ensure_installed = { "shellcheck" } },
   },
-  -- add some stuff to treesitter
+  -- 给 treesitter 添加一些内容
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)

@@ -53,7 +53,7 @@ function M.save()
 end
 
 function M.migrate()
-  LazyVim.info("Migrating `lazyvim.json` to version `" .. LazyVim.config.json.version .. "`")
+  LazyVim.info("正在将 `lazyvim.json` 迁移到版本 `" .. LazyVim.config.json.version .. "`")
   local json = LazyVim.config.json
 
   -- v0
@@ -67,7 +67,7 @@ function M.migrate()
     end, json.data.extras or {})
   elseif json.data.version == 1 then
     json.data.extras = vim.tbl_map(function(extra)
-      -- replace double extras module name
+      -- 替换重复的扩展模块名
       return extra:gsub("^lazyvim%.plugins%.extras%.lazyvim%.plugins%.extras%.", "lazyvim.plugins.extras.")
     end, json.data.extras or {})
   elseif json.data.version == 2 then

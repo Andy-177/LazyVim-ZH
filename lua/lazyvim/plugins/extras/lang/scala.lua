@@ -20,21 +20,21 @@ return {
         function()
           require("telescope").extensions.metals.commands()
         end,
-        desc = "Metals commands",
+        desc = "Metals 命令",
       },
       {
         "<leader>mc",
         function()
           require("metals").compile_cascade()
         end,
-        desc = "Metals compile cascade",
+        desc = "Metals 级联编译",
       },
       {
         "<leader>mh",
         function()
           require("metals").hover_worksheet()
         end,
-        desc = "Metals hover worksheet",
+        desc = "Metals 悬停工作表",
       },
     },
     ft = { "scala", "sbt", "java" },
@@ -58,7 +58,7 @@ return {
       }
 
       metals_config.on_attach = function(client, bufnr)
-        -- your on_attach function
+        -- 你的 on_attach 函数
         require("metals").setup_dap()
       end
 
@@ -79,7 +79,7 @@ return {
     "mfussenegger/nvim-dap",
     optional = true,
     opts = function()
-      -- Debug settings
+      -- 调试设置
       local dap = require("dap")
       dap.configurations.scala = {
         {
@@ -88,7 +88,7 @@ return {
           name = "RunOrTest",
           metals = {
             runType = "runOrTestFile",
-            --args = { "firstArg", "secondArg", "thirdArg" }, -- here just as an example
+            --args = { "firstArg", "secondArg", "thirdArg" }, -- 这里仅作为示例
           },
         },
         {

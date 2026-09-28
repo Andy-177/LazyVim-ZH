@@ -1,4 +1,4 @@
--- Show context of the current function
+-- 显示当前函数的上下文
 return {
   "nvim-treesitter/nvim-treesitter-context",
   event = "LazyFile",

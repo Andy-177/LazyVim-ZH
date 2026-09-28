@@ -1,5 +1,5 @@
 if lazyvim_docs then
-  -- Set to false to disable auto format
+  -- 设为 false 可禁用自动格式化
   vim.g.lazyvim_eslint_auto_format = true
 end
 
@@ -8,13 +8,13 @@ local auto_format = vim.g.lazyvim_eslint_auto_format == nil or vim.g.lazyvim_esl
 return {
   {
     "neovim/nvim-lspconfig",
-    -- other settings removed for brevity
+    -- 其它设置出于简洁已省略
     opts = {
       ---@type table<string, vim.lsp.Config>
       servers = {
         eslint = {
           settings = {
-            -- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
+            -- 当 eslintrc 位于子文件夹而非 cwd 根目录时，帮助 eslint 找到它
             workingDirectories = { mode = "auto" },
             format = auto_format,
           },
@@ -33,7 +33,7 @@ return {
             filter = "eslint",
           })
 
-          -- register the formatter with LazyVim
+          -- 向 LazyVim 注册格式化程序
           LazyVim.format.register(formatter)
         end,
       },

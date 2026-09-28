@@ -101,12 +101,12 @@ function M.pretty_path(opts)
     local root = LazyVim.root.get({ normalize = true })
     local cwd = LazyVim.root.cwd()
 
-    -- original path is preserved to provide user with expected result of pretty_path, not a normalized one,
-    -- which might be confusing
+    -- 保留原始路径，以便为用户提供 pretty_path 的预期结果，而不是规范化后的路径，
+    -- 后者可能会让人感到困惑
     local norm_path = path
 
     if LazyVim.is_win() then
-      -- in case any of the provided paths involved mixed case, an additional normalization step for windows
+      -- 考虑到提供的路径可能大小写混杂，Windows 下额外做一次规范化处理
       norm_path = norm_path:lower()
       root = root:lower()
       cwd = cwd:lower()
@@ -167,16 +167,16 @@ function M.root_dir(opts)
     local name = vim.fs.basename(root)
 
     if root == cwd then
-      -- root is cwd
+      -- root 就是 cwd
       return opts.cwd and name
     elseif root:find(cwd, 1, true) == 1 then
-      -- root is subdirectory of cwd
+      -- root 是 cwd 的子目录
       return opts.subdirectory and name
     elseif cwd:find(root, 1, true) == 1 then
-      -- root is parent directory of cwd
+      -- root 是 cwd 的父目录
       return opts.parent and name
     else
-      -- root and cwd are not related
+      -- root 与 cwd 无关联
       return opts.other and name
     end
   end

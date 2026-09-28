@@ -22,7 +22,7 @@ return {
                   arguments = { "toPipe", params.textDocument.uri, params.position.line, params.position.character },
                 })
               end,
-              desc = "To Pipe",
+              desc = "转换为管道",
             },
             {
               "<leader>cP",
@@ -35,7 +35,7 @@ return {
                   arguments = { "fromPipe", params.textDocument.uri, params.position.line, params.position.character },
                 })
               end,
-              desc = "From Pipe",
+              desc = "从管道转换",
             },
           },
         },

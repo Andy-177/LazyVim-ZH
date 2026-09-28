@@ -12,7 +12,7 @@ return {
     })
   end,
 
-  -- depends on the typescript extra
+  -- 依赖 typescript extra
   { import = "lazyvim.plugins.extras.lang.typescript" },
 
   {
@@ -20,7 +20,7 @@ return {
     opts = { ensure_installed = { "astro", "css" } },
   },
 
-  -- LSP Servers
+  -- LSP 服务器
   {
     "neovim/nvim-lspconfig",
     opts = {
@@ -30,7 +30,7 @@ return {
     },
   },
 
-  -- Configure tsserver plugin
+  -- 配置 tsserver 插件
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)

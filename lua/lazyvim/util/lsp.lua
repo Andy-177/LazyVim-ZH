@@ -37,11 +37,11 @@ end
 function M.format(opts)
   opts = vim.tbl_deep_extend("force", {}, opts or {}, LazyVim.opts("nvim-lspconfig").format or {})
   local ok, conform = pcall(require, "conform")
-  -- use conform for formatting with LSP when available,
-  -- since it has better format diffing
+  -- 在可用时使用 conform 通过 LSP 进行格式化，
+  -- 因为它的格式化差异对比更好
   if ok then
-    -- It should be `nil`, otherwise it doesn't fetch options from `formatters_by_ft`,
-    -- see https://github.com/stevearc/conform.nvim/blob/5420c4b5ea0aeb99c09cfbd4fd0b70d257b44f25/lua/conform/init.lua#L417-L418
+    -- 这里必须是 `nil`，否则不会从 `formatters_by_ft` 中获取选项，
+    -- 参见 https://github.com/stevearc/conform.nvim/blob/5420c4b5ea0aeb99c09cfbd4fd0b70d257b44f25/lua/conform/init.lua#L417-L418
     opts.formatters = nil
     conform.format(opts)
   else
@@ -99,9 +99,9 @@ function M.code_actions(filter)
   local ret = {} ---@type string[]
   local clients = vim.lsp.get_clients(filter)
   for _, client in ipairs(clients) do
-    -- check server cababilities first
+    -- 先检查服务器能力
     vim.list_extend(ret, vim.tbl_get(client, "server_capabilities", "codeActionProvider", "codeActionKinds") or {})
-    -- check dynamic capabilities
+    -- 检查动态能力
     local regs = client.dynamic_capabilities:get("codeActionProvider", filter)
     for _, reg in ipairs(regs or {}) do
       vim.list_extend(ret, vim.tbl_get(reg, "registerOptions", "codeActionKinds") or {})

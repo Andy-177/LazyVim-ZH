@@ -12,18 +12,18 @@ M.lazy_file_events = { "BufReadPost", "BufNewFile", "BufWritePre" }
 
 ---@type table<string, string>
 M.deprecated_extras = {
-  ["lazyvim.plugins.extras.formatting.conform"] = "`conform.nvim` is now the default **LazyVim** formatter.",
-  ["lazyvim.plugins.extras.linting.nvim-lint"] = "`nvim-lint` is now the default **LazyVim** linter.",
-  ["lazyvim.plugins.extras.ui.dashboard"] = "`dashboard.nvim` is now the default **LazyVim** starter.",
-  ["lazyvim.plugins.extras.coding.native_snippets"] = "Native snippets are now the default for **Neovim >= 0.10**",
-  ["lazyvim.plugins.extras.ui.treesitter-rewrite"] = "Disabled `treesitter-rewrite` extra for now. Not ready yet.",
-  ["lazyvim.plugins.extras.ui.treesitter-main"] = "the `nvim-treesitter` main branch is now used by default",
-  ["lazyvim.plugins.extras.coding.mini-ai"] = "`mini.ai` is now a core LazyVim plugin (again)",
-  ["lazyvim.plugins.extras.lazyrc"] = "local spec files are now a lazy.nvim feature",
-  ["lazyvim.plugins.extras.editor.trouble-v3"] = "Trouble v3 has been merged in main",
-  ["lazyvim.plugins.extras.lang.python-semshi"] = [[The python-semshi extra has been removed,
-  because it's causing too many issues.
-  Either use `basedpyright`, or copy the [old extra](https://github.com/LazyVim/LazyVim/blob/c1f5fcf9c7ed2659c9d5ac41b3bb8a93e0a3c6a0/lua/lazyvim/plugins/extras/lang/python-semshi.lua#L1) to your own config.
+  ["lazyvim.plugins.extras.formatting.conform"] = "`conform.nvim` 现已是 **LazyVim** 默认的格式化程序。",
+  ["lazyvim.plugins.extras.linting.nvim-lint"] = "`nvim-lint` 现已是 **LazyVim** 默认的代码检查器。",
+  ["lazyvim.plugins.extras.ui.dashboard"] = "`dashboard.nvim` 现已是 **LazyVim** 默认的启动界面。",
+  ["lazyvim.plugins.extras.coding.native_snippets"] = "**Neovim >= 0.10** 现已默认使用原生代码片段",
+  ["lazyvim.plugins.extras.ui.treesitter-rewrite"] = "`treesitter-rewrite` 扩展暂时禁用。尚未准备就绪。",
+  ["lazyvim.plugins.extras.ui.treesitter-main"] = "现默认使用 `nvim-treesitter` 的 main 分支",
+  ["lazyvim.plugins.extras.coding.mini-ai"] = "`mini.ai` 重新成为 LazyVim 的核心插件",
+  ["lazyvim.plugins.extras.lazyrc"] = "本地 spec 文件现已是 lazy.nvim 的特性",
+  ["lazyvim.plugins.extras.editor.trouble-v3"] = "Trouble v3 已合并进 main 分支",
+  ["lazyvim.plugins.extras.lang.python-semshi"] = [[python-semshi 扩展已被移除，
+  因为它引发了太多问题。
+  你可以改用 `basedpyright`，或把[旧扩展](https://github.com/LazyVim/LazyVim/blob/c1f5fcf9c7ed2659c9d5ac41b3bb8a93e0a3c6a0/lua/lazyvim/plugins/extras/lang/python-semshi.lua#L1)复制到你自己的配置中。
   ]],
 }
 M.renamed_extras = {
@@ -61,7 +61,7 @@ function M.setup()
   table.insert(package.loaders, function(module)
     if M.deprecated_modules[module] then
       LazyVim.warn(
-        ("`%s` is no longer included by default in **LazyVim**.\nPlease install the `%s` extra if you still want to use it."):format(
+        ("`%s` 已不再默认包含在 **LazyVim** 中。\n如果你仍想使用它，请安装 `%s` 扩展。"):format(
           module,
           M.deprecated_modules[module]
         ),
@@ -82,7 +82,7 @@ function M.extra_idx(name)
 end
 
 function M.lazy_file()
-  -- Add support for the LazyFile event
+  -- 添加对 LazyFile 事件的支持
   local Event = require("lazy.core.handler.event")
 
   Event.mappings.LazyFile = { id = "LazyFile", event = M.lazy_file_events }
@@ -93,7 +93,7 @@ function M.fix_imports()
   local defaults ---@type table<string, LazyVimDefault>
   Plugin.Spec.import = LazyVim.inject.args(Plugin.Spec.import, function(_, spec)
     if M.handle_defaults and LazyVim.config.json.loaded then
-      -- extra disabled by defaults?
+      -- 扩展被默认配置禁用？
       defaults = defaults or LazyVim.config.get_defaults()
       local def = defaults[spec.import]
       if def and def.enabled == false then
@@ -103,7 +103,7 @@ function M.fix_imports()
     local rename = M.renamed_extras[spec.import]
     if rename then
       LazyVim.warn(
-        ("The extra `%s` was renamed to `%s`.\nPlease update your config for `%s`"):format(
+        ("扩展 `%s` 已重命名为 `%s`。\n请更新配置中的 `%s`"):format(
           spec.import,
           rename,
           spec.importing or "LazyVim"
@@ -114,7 +114,7 @@ function M.fix_imports()
     end
     local dep = M.deprecated_extras[spec.import]
     if dep then
-      dep = dep .. "\n" .. "Please remove the extra from `lazyvim.json` to hide this warning."
+      dep = dep .. "\n" .. "请从 `lazyvim.json` 中移除该扩展以隐藏此警告。"
       LazyVim.warn(dep, { title = "LazyVim", once = true, stacktrace = true, stacklevel = 6 })
       return false
     end
@@ -140,7 +140,7 @@ function M.single_import(spec)
     if mod then
       local ret, foo = mod()
       if foo then
-        return nil, "Spec module returned more than one value. Expected a single value."
+        return nil, "Spec 模块返回了多个值，但预期只返回一个值。"
       end
       return ret
     else
@@ -162,7 +162,7 @@ function M.fix_renames()
       end
       if M.renames[name] then
         LazyVim.warn(
-          ("Plugin `%s` was renamed to `%s`.\nPlease update your config for `%s`"):format(
+          ("插件 `%s` 已重命名为 `%s`。\n请更新配置中的 `%s`"):format(
             plugin[1],
             M.renames[plugin[1]],
             self.importing or "LazyVim"

@@ -1,50 +1,50 @@
-name: Bug Report
-description: File a bug/issue
+name: 问题反馈
+description: 报告一个缺陷/问题
 title: "bug: "
 labels: [bug]
 body:
   - type: markdown
     attributes:
       value: |
-        **Before** reporting an issue, make sure to read the [documentation](https://github.com/LazyVim/LazyVim)
-        and search [existing issues](https://github.com/LazyVim/LazyVim/issues).
+        **在**报告问题**之前**，请确保已阅读[文档](https://github.com/LazyVim/LazyVim)
+        并搜索[已有 issue](https://github.com/LazyVim/LazyVim/issues)。
 
-        Usage questions such as ***"How do I...?"*** belong in [Discussions](https://github.com/LazyVim/LazyVim/discussions) and will be closed.
+        诸如 ***“我该怎么……？”*** 之类的使用问题请发到[讨论区](https://github.com/LazyVim/LazyVim/discussions)，此类 issue 会被关闭。
   - type: checkboxes
     attributes:
-      label: Did you check docs and existing issues?
-      description: Make sure you checked all of the below before submitting an issue
+      label: 你是否已查看文档和已有 issue？
+      description: 提交 issue 前请确认以下各项均已检查
       options:
-        - label: I have read all the LazyVim docs
+        - label: 我已阅读全部 LazyVim 文档
           required: true
-        - label: I have updated the plugin to the latest version before submitting this issue
+        - label: 提交此 issue 前，我已将插件更新到最新版本
           required: true
-        - label: I have searched the existing issues of LazyVim
+        - label: 我已搜索 LazyVim 的已有 issue
           required: true
-        - label: I have searched the existing issues of plugins related to this issue
+        - label: 我已搜索与此 issue 相关的插件的已有 issue
           required: true
   - type: input
     attributes:
-      label: "Neovim version (nvim -v)"
+      label: "Neovim 版本（nvim -v）"
       placeholder: "0.8.0 commit db1b0ee3b30f"
     validations:
       required: true
   - type: input
     attributes:
-      label: "Operating system/version"
+      label: "操作系统/版本"
       placeholder: "MacOS 11.5"
     validations:
       required: true
   - type: textarea
     attributes:
-      label: Describe the bug
-      description: A clear and concise description of what the bug is. Please include any related errors you see in Neovim.
+      label: 描述该缺陷
+      description: 清晰、简洁地描述这个缺陷是什么。请附上你在 Neovim 中看到的所有相关报错。
     validations:
       required: true
   - type: textarea
     attributes:
-      label: Steps To Reproduce
-      description: Steps to reproduce the behavior.
+      label: 复现步骤
+      description: 能够复现该问题的步骤。
       placeholder: |
         1.
         2. 
@@ -53,14 +53,14 @@ body:
       required: true
   - type: textarea
     attributes:
-      label: Expected Behavior
-      description: A concise description of what you expected to happen.
+      label: 期望的行为
+      description: 简洁地描述你期望发生的结果。
     validations:
       required: true
   - type: textarea
     attributes:
-      label: Repro
-      description: Minimal `init.lua` to reproduce this issue. Save as `repro.lua` and run with `nvim -u repro.lua`
+      label: 复现用例
+      description: 用于复现此问题的最小 `init.lua`。保存为 `repro.lua` 并用 `nvim -u repro.lua` 运行
       value: |
         vim.env.LAZY_STDPATH = ".repro"
         load(vim.fn.system("curl -s https://raw.githubusercontent.com/folke/lazy.nvim/main/bootstrap.lua"))()
@@ -68,7 +68,7 @@ body:
         require("lazy.minit").repro({
           spec = {
             { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-            -- add any other plugins here
+            -- 在这里添加其他插件
           },
         })
       render: lua

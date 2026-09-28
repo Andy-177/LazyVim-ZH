@@ -2,7 +2,7 @@
 
 ---@diagnostic disable: inject-field
 if lazyvim_docs then
-  -- Enable this option to avoid conflicts with Prettier.
+  -- 启用此选项以避免与 Prettier 冲突。
   vim.g.lazyvim_prettier_needs_config = true
 end
 
@@ -60,7 +60,7 @@ return {
     end,
   },
 
-  -- none-ls support
+  -- none-ls 支持
   {
     "nvimtools/none-ls.nvim",
     optional = true,

@@ -10,8 +10,8 @@ M._keys = {}
 ---@return LazyKeysLspSpec[]
 function M.get()
   LazyVim.warn({
-    'Adding LSP keymaps via `require("lazyvim.plugins.lsp.keymaps").get()` is deprecated.',
-    "Please set keymaps via the `keys` field in the LSP server config.",
+    '通过 `require("lazyvim.plugins.lsp.keymaps").get()` 添加 LSP 键位的方式已废弃。',
+    "请改用 LSP 服务器配置中的 `keys` 字段来设置键位。",
     [[
 ```lua
 {

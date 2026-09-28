@@ -23,10 +23,10 @@ return {
     end,
   },
 
-  -- angularls depends on typescript
+  -- angularls 依赖 typescript
   { import = "lazyvim.plugins.extras.lang.typescript" },
 
-  -- LSP Servers
+  -- LSP 服务器
   {
     "neovim/nvim-lspconfig",
     opts = {
@@ -36,7 +36,7 @@ return {
       setup = {
         angularls = function()
           Snacks.util.lsp.on({ name = "angularls" }, function(_, client)
-            --HACK: disable angular renaming capability due to duplicate rename popping up
+            --HACK：由于会重复弹出重命名，禁用 angular 的重命名能力
             client.server_capabilities.renameProvider = false
           end)
         end,
@@ -44,7 +44,7 @@ return {
     },
   },
 
-  -- Configure tsserver plugin
+  -- 配置 tsserver 插件
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
@@ -58,7 +58,7 @@ return {
     end,
   },
 
-  -- formatting
+  -- 格式化
   {
     "conform.nvim",
     opts = function(_, opts)

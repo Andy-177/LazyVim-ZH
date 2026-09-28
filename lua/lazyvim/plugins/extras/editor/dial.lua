@@ -4,7 +4,7 @@ local M = {}
 ---@param g? boolean
 function M.dial(increment, g)
   local mode = vim.fn.mode(true)
-  -- Use visual commands for VISUAL 'v', VISUAL LINE 'V' and VISUAL BLOCK '\22'
+  -- 为 VISUAL 'v'、VISUAL LINE 'V' 和 VISUAL BLOCK '\22' 使用可视模式命令
   local is_visual = mode == "v" or mode == "V" or mode == "\22"
   local func = (increment and "inc" or "dec") .. (g and "_g" or "_") .. (is_visual and "visual" or "normal")
   local group = vim.g.dials_by_ft[vim.bo.filetype] or "default"
@@ -14,13 +14,13 @@ end
 return {
   "monaqa/dial.nvim",
   recommended = true,
-  desc = "Increment and decrement numbers, dates, and more",
+  desc = "递增和递减数字、日期等",
   -- stylua: ignore
   keys = {
-    { "<C-a>", function() return M.dial(true) end, expr = true, desc = "Increment", mode = {"n", "v"} },
-    { "<C-x>", function() return M.dial(false) end, expr = true, desc = "Decrement", mode = {"n", "v"} },
-    { "g<C-a>", function() return M.dial(true, true) end, expr = true, desc = "Increment", mode = {"n", "x"} },
-    { "g<C-x>", function() return M.dial(false, true) end, expr = true, desc = "Decrement", mode = {"n", "x"} },
+    { "<C-a>", function() return M.dial(true) end, expr = true, desc = "递增", mode = {"n", "v"} },
+    { "<C-x>", function() return M.dial(false) end, expr = true, desc = "递减", mode = {"n", "v"} },
+    { "g<C-a>", function() return M.dial(true, true) end, expr = true, desc = "递增", mode = {"n", "x"} },
+    { "g<C-x>", function() return M.dial(false, true) end, expr = true, desc = "递减", mode = {"n", "x"} },
   },
   opts = function()
     local augend = require("dial.augend")
@@ -32,8 +32,7 @@ return {
     })
 
     local ordinal_numbers = augend.constant.new({
-      -- elements through which we cycle. When we increment, we go down
-      -- On decrement we go up
+      -- 循环遍历的元素。递增时向下走，递减时向上走
       elements = {
         "first",
         "second",
@@ -46,10 +45,10 @@ return {
         "ninth",
         "tenth",
       },
-      -- if true, it only matches strings with word boundary. firstDate wouldn't work for example
+      -- 如果为 true，则只匹配带单词边界的字符串。例如 firstDate 不会生效
       word = false,
-      -- do we cycle back and forth (tenth to first on increment, first to tenth on decrement).
-      -- Otherwise nothing will happen when there are no further values
+      -- 是否循环往返（递增时从 tenth 回到 first，递减时从 first 回到 tenth）。
+      -- 否则在没有更多值时不会发生任何变化
       cyclic = true,
     })
 
@@ -144,7 +143,7 @@ return {
     }
   end,
   config = function(_, opts)
-    -- copy defaults to each group
+    -- 将默认值复制到每个分组
     for name, group in pairs(opts.groups) do
       if name ~= "default" then
         vim.list_extend(group, opts.groups.default)

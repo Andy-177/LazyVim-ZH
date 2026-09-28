@@ -8,7 +8,7 @@ return {
       function()
         require("neogen").generate()
       end,
-      desc = "Generate Annotations (Neogen)",
+      desc = "生成注解 (Neogen)",
     },
   },
   opts = function(_, opts)

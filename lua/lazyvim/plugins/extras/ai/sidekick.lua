@@ -1,5 +1,5 @@
 return {
-  desc = "Next edit suggestions with the Copilot LSP server",
+  desc = "使用 Copilot LSP 服务器的下一处编辑建议",
 
   -- copilot-language-server
   {
@@ -58,7 +58,7 @@ return {
   {
     "folke/sidekick.nvim",
     opts = function()
-      -- Accept inline suggestions or next edits
+      -- 接受内联建议或后续编辑
       LazyVim.cmp.actions.ai_nes = function()
         local Nes = require("sidekick.nes")
         if Nes.have() and (Nes.jump() or Nes.apply()) then
@@ -77,54 +77,54 @@ return {
     end,
     -- stylua: ignore
     keys = {
-      -- nes is also useful in normal mode
+      -- nes 在普通模式下也很有用
       { "<tab>", LazyVim.cmp.map({ "ai_nes" }, "<tab>"), mode = { "n" }, expr = true },
       { "<leader>a", "", desc = "+ai", mode = { "n", "v" } },
       {
         "<c-.>",
         function() require("sidekick.cli").focus() end,
-        desc = "Sidekick Focus",
+        desc = "Sidekick 聚焦",
         mode = { "n", "t", "i", "x" },
       },
       {
         "<leader>aa",
         function() require("sidekick.cli").toggle() end,
-        desc = "Sidekick Toggle CLI",
+        desc = "Sidekick 切换 CLI",
       },
       {
         "<leader>as",
         function() require("sidekick.cli").select() end,
-        -- Or to select only installed tools:
+        -- 或者只选择已安装的工具：
         -- require("sidekick.cli").select({ filter = { installed = true } })
-        desc = "Select CLI",
+        desc = "选择 CLI",
       },
       {
         "<leader>ad",
         function() require("sidekick.cli").close() end,
-        desc = "Detach a CLI Session",
+        desc = "分离 CLI 会话",
       },
       {
         "<leader>at",
         function() require("sidekick.cli").send({ msg = "{this}" }) end,
         mode = { "x", "n" },
-        desc = "Send This",
+        desc = "发送此内容",
       },
       {
         "<leader>af",
         function() require("sidekick.cli").send({ msg = "{file}" }) end,
-        desc = "Send File",
+        desc = "发送文件",
       },
       {
         "<leader>av",
         function() require("sidekick.cli").send({ msg = "{selection}" }) end,
         mode = { "x" },
-        desc = "Send Visual Selection",
+        desc = "发送可视区域选区",
       },
       {
         "<leader>ap",
         function() require("sidekick.cli").prompt() end,
         mode = { "n", "x" },
-        desc = "Sidekick Select Prompt",
+        desc = "Sidekick 选择提示词",
       },
     },
   },

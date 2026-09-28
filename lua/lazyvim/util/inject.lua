@@ -44,7 +44,7 @@ function M.set_upvalue(func, name, value)
     end
     i = i + 1
   end
-  LazyVim.error("upvalue not found: " .. name)
+  LazyVim.error("未找到 upvalue：" .. name)
 end
 
 return M

@@ -1,9 +1,9 @@
--- This is the same as in lspconfig.configs.jdtls, but avoids
--- needing to require that when this module loads.
+-- 这与 lspconfig.configs.jdtls 中的做法相同，但避免了
+-- 在加载此模块时 require 它。
 local java_filetypes = { "java" }
 
--- Utility function to extend or override a config table, similar to the way
--- that Plugin.opts works.
+-- 用于扩展或覆盖配置表的工具函数，类似于
+-- Plugin.opts 的工作方式。
 ---@param config table
 ---@param custom function | table | nil
 local function extend_or_override(config, custom, ...)
@@ -30,19 +30,19 @@ return {
     })
   end,
 
-  -- Add java to treesitter.
+  -- 将 java 添加到 treesitter。
   {
     "nvim-treesitter/nvim-treesitter",
     opts = { ensure_installed = { "java" } },
   },
 
-  -- Ensure java debugger and test packages are installed.
+  -- 确保已安装 java 调试器和测试包。
   {
     "mfussenegger/nvim-dap",
     optional = true,
     opts = function()
-      -- Simple configuration to attach to remote java debug process
-      -- Taken directly from https://github.com/mfussenegger/nvim-dap/wiki/Java
+      -- 用于附加到远程 java 调试进程的简单配置
+      -- 直接取自 https://github.com/mfussenegger/nvim-dap/wiki/Java
       local dap = require("dap")
       dap.configurations.java = {
         {
@@ -62,12 +62,12 @@ return {
     },
   },
 
-  -- Configure nvim-lspconfig to install the server automatically via mason, but
-  -- defer actually starting it to our configuration of nvim-jtdls below.
+  -- 配置 nvim-lspconfig 通过 mason 自动安装服务器，但
+  -- 将实际启动推迟到下面我们对 nvim-jtdls 的配置中。
   {
     "neovim/nvim-lspconfig",
     opts = {
-      -- make sure mason installs the server
+      -- 确保 mason 安装该服务器
       servers = {
         jdtls = {},
       },
@@ -79,7 +79,7 @@ return {
     },
   },
 
-  -- Set up nvim-jdtls to attach to java files.
+  -- 配置 nvim-jdtls 以附加到 java 文件。
   {
     "mfussenegger/nvim-jdtls",
     dependencies = { "folke/which-key.nvim" },
@@ -95,12 +95,12 @@ return {
           return vim.fs.root(path, vim.lsp.config.jdtls.root_markers)
         end,
 
-        -- How to find the project name for a given root dir.
+        -- 如何为给定的根目录找到项目名称。
         project_name = function(root_dir)
           return root_dir and vim.fs.basename(root_dir)
         end,
 
-        -- Where are the config and workspace dirs for a project?
+        -- 项目的 config 和 workspace 目录在哪里？
         jdtls_config_dir = function(project_name)
           return vim.fn.stdpath("cache") .. "/jdtls/" .. project_name .. "/config"
         end,
@@ -108,8 +108,8 @@ return {
           return vim.fn.stdpath("cache") .. "/jdtls/" .. project_name .. "/workspace"
         end,
 
-        -- How to run jdtls. This can be overridden to a full java command-line
-        -- if the Python wrapper script doesn't suffice.
+        -- 如何运行 jdtls。如果 Python 包装脚本不够用，
+        -- 可以将其覆盖为完整的 java 命令行。
         cmd = cmd,
         full_cmd = function(opts)
           local fname = vim.api.nvim_buf_get_name(0)
@@ -127,9 +127,9 @@ return {
           return cmd
         end,
 
-        -- These depend on nvim-dap, but can additionally be disabled by setting false here.
+        -- 这些依赖 nvim-dap，但也可以通过在此处设为 false 来额外禁用。
         dap = { hotcodereplace = "auto", config_overrides = {} },
-        -- Can set this to false to disable main class scan, which is a performance killer for large project
+        -- 可以设为 false 以禁用主类扫描，这对大型项目影响性能很大
         dap_main = {},
         test = true,
         settings = {
@@ -144,14 +144,14 @@ return {
       }
     end,
     config = function(_, opts)
-      -- Find the extra bundles that should be passed on the jdtls command-line
-      -- if nvim-dap is enabled with java debug/test.
+      -- 查找应该传递给 jdtls 命令行的额外 bundle
+      -- 当 nvim-dap 启用了 java 调试/测试时。
       local bundles = {} ---@type string[]
       if LazyVim.has("mason.nvim") then
         local mason_registry = require("mason-registry")
         if opts.dap and LazyVim.has("nvim-dap") and mason_registry.is_installed("java-debug-adapter") then
           bundles = vim.fn.glob("$MASON/share/java-debug-adapter/com.microsoft.java.debug.plugin-*jar", false, true)
-          -- java-test also depends on java-debug-adapter.
+          -- java-test 还依赖 java-debug-adapter。
           if opts.test and mason_registry.is_installed("java-test") then
             vim.list_extend(bundles, vim.fn.glob("$MASON/share/java-test/*.jar", false, true))
           end
@@ -160,7 +160,7 @@ return {
       local function attach_jdtls()
         local fname = vim.api.nvim_buf_get_name(0)
 
-        -- Configuration can be augmented and overridden by opts.jdtls
+        -- 配置可以通过 opts.jdtls 补充和覆盖
         local config = extend_or_override({
           cmd = opts.full_cmd(opts),
           root_dir = opts.root_dir(fname),
@@ -168,26 +168,26 @@ return {
             bundles = bundles,
           },
           settings = opts.settings,
-          -- enable CMP capabilities
+          -- 启用 CMP 能力
           capabilities = LazyVim.has("blink.cmp") and require("blink.cmp").get_lsp_capabilities() or LazyVim.has(
             "cmp-nvim-lsp"
           ) and require("cmp_nvim_lsp").default_capabilities() or nil,
         }, opts.jdtls)
 
-        -- Existing server will be reused if the root_dir matches.
+        -- 如果 root_dir 匹配，将复用已有的服务器。
         require("jdtls").start_or_attach(config)
-        -- not need to require("jdtls.setup").add_commands(), start automatically adds commands
+        -- 不需要 require("jdtls.setup").add_commands()，start 会自动添加命令
       end
 
-      -- Attach the jdtls for each java buffer. HOWEVER, this plugin loads
-      -- depending on filetype, so this autocmd doesn't run for the first file.
-      -- For that, we call directly below.
+      -- 为每个 java 缓冲区附加 jdtls。但是，此插件是
+      -- 根据文件类型加载的，因此该 autocmd 不会为第一个文件触发。
+      -- 为此，我们在下面直接调用。
       vim.api.nvim_create_autocmd("FileType", {
         pattern = java_filetypes,
         callback = attach_jdtls,
       })
 
-      -- Setup keymap and dap after the lsp is fully attached.
+      -- 在 lsp 完全附加后设置键位和 dap。
       -- https://github.com/mfussenegger/nvim-jdtls#nvim-dap-configuration
       -- https://neovim.io/doc/user/lsp.html#LspAttach
       vim.api.nvim_create_autocmd("LspAttach", {
@@ -200,11 +200,11 @@ return {
                 mode = "n",
                 buffer = args.buf,
                 { "<leader>cx", group = "extract" },
-                { "<leader>cxv", require("jdtls").extract_variable_all, desc = "Extract Variable" },
-                { "<leader>cxc", require("jdtls").extract_constant, desc = "Extract Constant" },
-                { "<leader>cgs", require("jdtls").super_implementation, desc = "Goto Super" },
-                { "<leader>cgS", require("jdtls.tests").goto_subjects, desc = "Goto Subjects" },
-                { "<leader>co", require("jdtls").organize_imports, desc = "Organize Imports" },
+                { "<leader>cxv", require("jdtls").extract_variable_all, desc = "提取变量" },
+                { "<leader>cxc", require("jdtls").extract_constant, desc = "提取常量" },
+                { "<leader>cgs", require("jdtls").super_implementation, desc = "转到父类" },
+                { "<leader>cgS", require("jdtls.tests").goto_subjects, desc = "转到主题" },
+                { "<leader>co", require("jdtls").organize_imports, desc = "整理导入" },
               },
             })
             wk.add({
@@ -215,17 +215,17 @@ return {
                 {
                   "<leader>cxm",
                   [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]],
-                  desc = "Extract Method",
+                  desc = "提取方法",
                 },
                 {
                   "<leader>cxv",
                   [[<ESC><CMD>lua require('jdtls').extract_variable_all(true)<CR>]],
-                  desc = "Extract Variable",
+                  desc = "提取变量",
                 },
                 {
                   "<leader>cxc",
                   [[<ESC><CMD>lua require('jdtls').extract_constant(true)<CR>]],
-                  desc = "Extract Constant",
+                  desc = "提取常量",
                 },
               },
             })
@@ -233,15 +233,15 @@ return {
             if LazyVim.has("mason.nvim") then
               local mason_registry = require("mason-registry")
               if opts.dap and LazyVim.has("nvim-dap") and mason_registry.is_installed("java-debug-adapter") then
-                -- custom init for Java debugger
+                -- Java 调试器的自定义初始化
                 require("jdtls").setup_dap(opts.dap)
                 if opts.dap_main then
                   require("jdtls.dap").setup_dap_main_class_configs(opts.dap_main)
                 end
 
-                -- Java Test require Java debugger to work
+                -- Java 测试需要 Java 调试器才能工作
                 if opts.test and mason_registry.is_installed("java-test") then
-                  -- custom keymaps for Java test runner (not yet compatible with neotest)
+                  -- Java 测试运行器的自定义键位（尚不兼容 neotest）
                   wk.add({
                     {
                       mode = "n",
@@ -254,7 +254,7 @@ return {
                             config_overrides = type(opts.test) ~= "boolean" and opts.test.config_overrides or nil,
                           })
                         end,
-                        desc = "Run All Test",
+                        desc = "运行全部测试",
                       },
                       {
                         "<leader>tr",
@@ -263,16 +263,16 @@ return {
                             config_overrides = type(opts.test) ~= "boolean" and opts.test.config_overrides or nil,
                           })
                         end,
-                        desc = "Run Nearest Test",
+                        desc = "运行最近的测试",
                       },
-                      { "<leader>tT", require("jdtls.dap").pick_test, desc = "Run Test" },
+                      { "<leader>tT", require("jdtls.dap").pick_test, desc = "运行测试" },
                     },
                   })
                 end
               end
             end
 
-            -- User can set additional keymaps in opts.on_attach
+            -- 用户可以在 opts.on_attach 中设置额外的键位
             if opts.on_attach then
               opts.on_attach(args)
             end
@@ -280,7 +280,7 @@ return {
         end,
       })
 
-      -- Avoid race condition by calling attach the first time, since the autocmd won't fire.
+      -- 由于 autocmd 不会触发，首次直接调用 attach 以避免竞态条件。
       attach_jdtls()
     end,
   },

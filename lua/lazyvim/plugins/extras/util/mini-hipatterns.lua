@@ -6,12 +6,12 @@ M.hl = {}
 M.plugin = {
   "nvim-mini/mini.hipatterns",
   recommended = true,
-  desc = "Highlight colors in your code. Also includes Tailwind CSS support.",
+  desc = "高亮代码中的颜色，同时支持 Tailwind CSS。",
   event = "LazyFile",
   opts = function()
     local hi = require("mini.hipatterns")
     return {
-      -- custom LazyVim option to enable the tailwind integration
+      -- 用于启用 tailwind 集成的 LazyVim 自定义选项
       tailwind = {
         enabled = true,
         ft = {
@@ -28,8 +28,8 @@ M.plugin = {
           "typescriptreact",
           "vue",
         },
-        -- full: the whole css class will be highlighted
-        -- compact: only the color will be highlighted
+        -- full：会高亮整个 css class
+        -- compact：只高亮颜色部分
         style = "full",
       },
       highlighters = {
@@ -54,7 +54,7 @@ M.plugin = {
   end,
   config = function(_, opts)
     if type(opts.tailwind) == "table" and opts.tailwind.enabled then
-      -- reset hl groups when colorscheme changes
+      -- 切换配色方案时重置高亮组
       vim.api.nvim_create_autocmd("ColorScheme", {
         callback = function()
           M.hl = {}

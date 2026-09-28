@@ -1,7 +1,7 @@
 ---@diagnostic disable: inject-field
 if lazyvim_docs then
-  -- Enable the option to require a Prettier config file
-  -- If no prettier config file is found, the formatter will not be used
+  -- 启用「必须有 Prettier 配置文件」选项
+  -- 如果找不到 prettier 配置文件，就不会使用该格式化程序
   vim.g.lazyvim_prettier_needs_config = false
 end
 
@@ -27,24 +27,24 @@ local supported = {
   "yaml",
 }
 
---- Checks if a Prettier config file exists for the given context
+--- 检查给定的上下文中是否存在 Prettier 配置文件
 ---@param ctx ConformCtx
 function M.has_config(ctx)
   vim.fn.system({ "prettier", "--find-config-path", ctx.filename })
   return vim.v.shell_error == 0
 end
 
---- Checks if a parser can be inferred for the given context:
---- * If the filetype is in the supported list, return true
---- * Otherwise, check if a parser can be inferred
+--- 检查能否为给定的上下文推断出解析器：
+--- * 如果文件类型在支持列表中，返回 true
+--- * 否则，检查能否推断出解析器
 ---@param ctx ConformCtx
 function M.has_parser(ctx)
   local ft = vim.bo[ctx.buf].filetype --[[@as string]]
-  -- default filetypes are always supported
+  -- 默认的文件类型始终受支持
   if vim.tbl_contains(supported, ft) then
     return true
   end
-  -- otherwise, check if a parser can be inferred
+  -- 否则，检查能否推断出解析器
   local ret = vim.fn.system({ "prettier", "--file-info", ctx.filename })
   ---@type boolean, string?
   local ok, parser = pcall(function()
@@ -83,7 +83,7 @@ return {
     end,
   },
 
-  -- none-ls support
+  -- none-ls 支持
   {
     "nvimtools/none-ls.nvim",
     optional = true,

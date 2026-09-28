@@ -76,8 +76,8 @@ function M.check()
 
   ---@class lazyvim.util.treesitter.Health: table<string,boolean>
   local ret = {
-    ["tree-sitter (CLI)"] = have("tree-sitter"),
-    ["C compiler"] = have_cc,
+    ["tree-sitter（命令行工具）"] = have("tree-sitter"),
+    ["C 编译器"] = have_cc,
     tar = have("tar"),
     curl = have("curl"),
   }
@@ -95,7 +95,7 @@ function M.build(cb)
     if ok then
       return cb()
     else
-      local lines = { "Unmet requirements for **nvim-treesitter** `main`:" }
+      local lines = { "**nvim-treesitter** `main` 的依赖要求未满足：" }
       local keys = vim.tbl_keys(health) ---@type string[]
       table.sort(keys)
       for _, k in pairs(keys) do
@@ -103,11 +103,11 @@ function M.build(cb)
       end
       vim.list_extend(lines, {
         "",
-        "See the requirements at [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter/tree/main?tab=readme-ov-file#requirements)",
-        "Run `:checkhealth nvim-treesitter` for more information.",
+        "请查看 [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter/tree/main?tab=readme-ov-file#requirements) 中的依赖要求",
+        "运行 `:checkhealth nvim-treesitter` 查看更多信息。",
       })
-      if vim.fn.has("win32") == 1 and not health["C compiler"] then
-        lines[#lines + 1] = "Install a C compiler with `winget install --id=BrechtSanders.WinLibs.POSIX.UCRT -e`"
+      if vim.fn.has("win32") == 1 and not health["C 编译器"] then
+        lines[#lines + 1] = "使用 `winget install --id=BrechtSanders.WinLibs.POSIX.UCRT -e` 安装 C 编译器"
       end
       vim.list_extend(lines, err and { "", err } or {})
       LazyVim.error(lines, { title = "LazyVim Treesitter" })
@@ -121,12 +121,12 @@ function M.ensure_treesitter_cli(cb)
     return cb(true)
   end
 
-  -- try installing with mason
+  -- 尝试使用 mason 安装
   if not pcall(require, "mason") then
-    return cb(false, "`mason.nvim` is disabled in your config, so we cannot install it automatically.")
+    return cb(false, "你的配置中禁用了 `mason.nvim`，因此无法自动安装。")
   end
 
-  -- check again since we might have installed it already
+  -- 再检查一次，因为可能已经安装过了
   if vim.fn.executable("tree-sitter") == 1 then
     return cb(true)
   end
@@ -135,15 +135,15 @@ function M.ensure_treesitter_cli(cb)
   mr.refresh(function()
     local p = mr.get_package("tree-sitter-cli")
     if not p:is_installed() then
-      LazyVim.info("Installing `tree-sitter-cli` with `mason.nvim`...")
+      LazyVim.info("正在使用 `mason.nvim` 安装 `tree-sitter-cli`……")
       p:install(
         nil,
         vim.schedule_wrap(function(success)
           if success then
-            LazyVim.info("Installed `tree-sitter-cli` with `mason.nvim`.")
+            LazyVim.info("已使用 `mason.nvim` 安装 `tree-sitter-cli`。")
             cb(true)
           else
-            cb(false, "Failed to install `tree-sitter-cli` with `mason.nvim`.")
+            cb(false, "使用 `mason.nvim` 安装 `tree-sitter-cli` 失败。")
           end
         end)
       )

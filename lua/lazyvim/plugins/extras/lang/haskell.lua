@@ -6,7 +6,7 @@ return {
     })
   end,
 
-  -- Add Haskell to treesitter
+  -- 将 Haskell 添加到 treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     opts = { ensure_installed = { "haskell" } },
@@ -21,7 +21,7 @@ return {
         "<localleader>e",
         "<cmd>HlsEvalAll<cr>",
         ft = "haskell",
-        desc = "Evaluate All",
+        desc = "全部求值",
       },
       {
         "<localleader>h",
@@ -29,7 +29,7 @@ return {
           require("haskell-tools").hoogle.hoogle_signature()
         end,
         ft = "haskell",
-        desc = "Hoogle Signature",
+        desc = "Hoogle 签名",
       },
       {
         "<localleader>r",
@@ -37,7 +37,7 @@ return {
           require("haskell-tools").repl.toggle()
         end,
         ft = "haskell",
-        desc = "REPL (Package)",
+        desc = "REPL（包）",
       },
       {
         "<localleader>R",
@@ -45,7 +45,7 @@ return {
           require("haskell-tools").repl.toggle(vim.api.nvim_buf_get_name(0))
         end,
         ft = "haskell",
-        desc = "REPL (Buffer)",
+        desc = "REPL（缓冲区）",
       },
     },
   },
@@ -134,8 +134,8 @@ return {
     },
   },
 
-  -- Make sure lspconfig doesn't start hls,
-  -- as it conflicts with haskell-tools
+  -- 确保 lspconfig 不会启动 hls，
+  -- 因为它与 haskell-tools 冲突
   {
     "neovim/nvim-lspconfig",
     opts = {

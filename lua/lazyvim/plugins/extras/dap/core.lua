@@ -20,11 +20,11 @@ return {
   {
     "mfussenegger/nvim-dap",
     recommended = true,
-    desc = "Debugging support. Requires language specific adapters to be configured. (see lang extras)",
+    desc = "调试支持，需要配置特定语言的适配器（参见 lang 扩展）",
 
     dependencies = {
       "rcarriga/nvim-dap-ui",
-      -- virtual text for the debugger
+      -- 调试器的虚拟文本
       {
         "theHamsta/nvim-dap-virtual-text",
         opts = {},
@@ -33,27 +33,27 @@ return {
 
     -- stylua: ignore
     keys = {
-      { "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input('Breakpoint condition: ')) end, desc = "Breakpoint Condition" },
-      { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
-      { "<leader>dc", function() require("dap").continue() end, desc = "Run/Continue" },
-      { "<leader>da", function() require("dap").continue({ before = get_args }) end, desc = "Run with Args" },
-      { "<leader>dC", function() require("dap").run_to_cursor() end, desc = "Run to Cursor" },
-      { "<leader>dg", function() require("dap").goto_() end, desc = "Go to Line (No Execute)" },
-      { "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
-      { "<leader>dj", function() require("dap").down() end, desc = "Down" },
-      { "<leader>dk", function() require("dap").up() end, desc = "Up" },
-      { "<leader>dl", function() require("dap").run_last() end, desc = "Run Last" },
-      { "<leader>do", function() require("dap").step_out() end, desc = "Step Out" },
-      { "<leader>dO", function() require("dap").step_over() end, desc = "Step Over" },
-      { "<leader>dP", function() require("dap").pause() end, desc = "Pause" },
-      { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
-      { "<leader>ds", function() require("dap").session() end, desc = "Session" },
-      { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
-      { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
+      { "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input('断点条件：')) end, desc = "断点条件" },
+      { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "切换断点" },
+      { "<leader>dc", function() require("dap").continue() end, desc = "运行/继续" },
+      { "<leader>da", function() require("dap").continue({ before = get_args }) end, desc = "带参数运行" },
+      { "<leader>dC", function() require("dap").run_to_cursor() end, desc = "运行到光标处" },
+      { "<leader>dg", function() require("dap").goto_() end, desc = "转到行（不执行）" },
+      { "<leader>di", function() require("dap").step_into() end, desc = "单步进入" },
+      { "<leader>dj", function() require("dap").down() end, desc = "向下" },
+      { "<leader>dk", function() require("dap").up() end, desc = "向上" },
+      { "<leader>dl", function() require("dap").run_last() end, desc = "运行上一个" },
+      { "<leader>do", function() require("dap").step_out() end, desc = "单步跳出" },
+      { "<leader>dO", function() require("dap").step_over() end, desc = "单步跳过" },
+      { "<leader>dP", function() require("dap").pause() end, desc = "暂停" },
+      { "<leader>dr", function() require("dap").repl.toggle() end, desc = "切换 REPL" },
+      { "<leader>ds", function() require("dap").session() end, desc = "会话" },
+      { "<leader>dt", function() require("dap").terminate() end, desc = "终止" },
+      { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "组件" },
     },
 
     config = function()
-      -- load mason-nvim-dap here, after all adapters have been setup
+      -- 在所有适配器配置完成之后，于此处加载 mason-nvim-dap
       if LazyVim.has("mason-nvim-dap.nvim") then
         require("mason-nvim-dap").setup(LazyVim.opts("mason-nvim-dap.nvim"))
       end
@@ -68,7 +68,7 @@ return {
         )
       end
 
-      -- setup dap config by VsCode launch.json file
+      -- 通过 VsCode 的 launch.json 文件配置 dap
       local vscode = require("dap.ext.vscode")
       local json = require("plenary.json")
       vscode.json_decode = function(str)
@@ -77,14 +77,14 @@ return {
     end,
   },
 
-  -- fancy UI for the debugger
+  -- 调试器的高颜值界面
   {
     "rcarriga/nvim-dap-ui",
     dependencies = { "nvim-neotest/nvim-nio" },
     -- stylua: ignore
     keys = {
-      { "<leader>du", function() require("dapui").toggle({ }) end, desc = "Dap UI" },
-      { "<leader>de", function() require("dapui").eval() end, desc = "Eval", mode = {"n", "x"} },
+      { "<leader>du", function() require("dapui").toggle({ }) end, desc = "Dap 界面" },
+      { "<leader>de", function() require("dapui").eval() end, desc = "求值", mode = {"n", "x"} },
     },
     opts = {},
     config = function(_, opts)
@@ -103,27 +103,27 @@ return {
     end,
   },
 
-  -- mason.nvim integration
+  -- mason.nvim 集成
   {
     "jay-babu/mason-nvim-dap.nvim",
     dependencies = "mason.nvim",
     cmd = { "DapInstall", "DapUninstall" },
     opts = {
-      -- Makes a best effort to setup the various debuggers with
-      -- reasonable debug configurations
+      -- 尽力为各种调试器设置
+      -- 合理的调试配置
       automatic_installation = true,
 
-      -- You can provide additional configuration to the handlers,
-      -- see mason-nvim-dap README for more information
+      -- 你可以向 handlers 提供额外的配置，
+      -- 更多信息请参阅 mason-nvim-dap 的 README
       handlers = {},
 
-      -- You'll need to check that you have the required things installed
-      -- online, please don't ask me how to install them :)
+      -- 你需要确认所需的东西已经安装
+      -- 在线安装，别问我怎么装 :)
       ensure_installed = {
-        -- Update this to ensure that you have the debuggers for the langs you want
+        -- 更新此项以确保拥有你所需语言的调试器
       },
     },
-    -- mason-nvim-dap is loaded when nvim-dap loads
+    -- nvim-dap 加载时会同时加载 mason-nvim-dap
     config = function() end,
   },
 }
